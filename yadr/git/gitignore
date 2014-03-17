@@ -1,0 +1,80 @@
+# General   taken from: https://help.github.com/articles/ignoring-files
+# ----------------------------------------------------------------------------------------------
+# Compiled source #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+*.log
+# *.sql
+*.sqlite
+
+# OSX       taken from: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
+# ----------------------------------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
+# ----------------------------------------------------------------------------------------------
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+# Folder config file
+Desktop.ini
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
+# ----------------------------------------------------------------------------------------------
+# Ignore tags created by etags and ctags
+TAGS
+tags
+
+# Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
+# ----------------------------------------------------------------------------------------------
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# Sublime   taken from: https://github.com/github/gitignore/blob/master/Global/SublimeText.gitignore
+# ----------------------------------------------------------------------------------------------
+*.sublime-workspace
+
+# TextMate  taken from: https://github.com/github/gitignore/blob/master/Global/TextMate.gitignore
+# ----------------------------------------------------------------------------------------------
+*.tmproj
+*.tmproject
+tmtags
+
+# SASS
+# ----------------------------------------------------------------------------------------------
+.sass-cache
+
+# Rails
+vendor/bundle
+
+# Zeus
+custom_plan.rb
+zeus.json
+

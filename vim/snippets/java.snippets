@@ -1,0 +1,31 @@
+snippet get
+public ${2:type} get`!p snip.rv = t[1][0].upper() + t[1][1:]`() {
+  return ${1:var};
+}
+endsnippet
+
+snippet set
+public void set`!p snip.rv = t[1][0].upper() + t[1][1:]`(${0:type} $1) {
+  this.$1 = ${1:var};
+}
+endsnippet
+
+snippet getset
+public ${2:type} get`!p snip.rv = t[1][0].upper() + t[1][1:]`() {
+  return ${1:var};
+}
+
+public void set`!p snip.rv = t[1][0].upper() + t[1][1:]`($2 $1) {
+  this.$1 = $1;
+}
+endsnippet
+
+snippet sql
+String sql${1} = "${2}";
+PreparedStatement pstmt$1 = con.prepareStatement(sql$1);
+ResultSet rs$1 = pstmt$1.executeQuery();
+endsnippet
+
+snippet currentuser
+User currentUser = new User(con, (String)session.getAttribute("user.username"));
+endsnippet

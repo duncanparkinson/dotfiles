@@ -1,0 +1,15 @@
+snippet intp
+try { $1 = Integer.parseInt(request.getParameter("$2")); } catch (Exception e) {}
+endsnippet
+
+snippet doublep
+try { $1 = Double.parseDouble(request.getParameter("$2")); } catch (Exception e) {}
+endsnippet
+
+snippet stringp
+$1 = request.getParameter("$2");
+endsnippet
+
+snippet booleanp
+$1 = Boolean.parseBoolean(request.getParameter("$2"));
+endsnippet
