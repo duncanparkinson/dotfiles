@@ -65,7 +65,7 @@ alias gf='git fetch'
 git_current_branch() {
   cat "$(git rev-parse --git-dir 2>/dev/null)/HEAD" | sed -e 's/^.*refs\/heads\///'
 }
-alias glog='git log --date-order --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
+alias glog='git log --date-order --date=short --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ad (%ar)%Creset"'
 alias gl='glog --graph'
 alias gl20='gl -20'
 alias gla='gl --all'

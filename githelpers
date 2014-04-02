@@ -14,12 +14,14 @@
 # break this.
 
 HASH="%C(yellow)%h%Creset"
-RELATIVE_TIME="%Cgreen(%ar)%Creset"
+RELATIVE_TIME="%Cgreen%ar%Creset"
+ABSOLUTE_TIME="%Cgreen%ad%Creset"
+ABSOLUTE_AND_RELATIVE_TIME="$ABSOLUTE_TIME ($RELATIVE_TIME)"
 AUTHOR="%C(bold blue)<%an>%Creset"
 REFS="%C(bold red)%d%Creset"
 SUBJECT="%s"
 
-FORMAT="$HASH~$RELATIVE_TIME~$AUTHOR~$REFS $SUBJECT"
+FORMAT="$HASH~$ABSOLUTE_AND_RELATIVE_TIME~$AUTHOR~$REFS $SUBJECT"
 
 ANSI_BLACK='\033[30m'
 ANSI_BLACK_BOLD='\033[0;30;1m'
@@ -46,7 +48,7 @@ show_git_head() {
 }
 
 pretty_git_log() {
-    git log --graph --pretty="tformat:${FORMAT}" $* |
+    git log --graph --date=short --pretty="tformat:${FORMAT}" $* |
     # Replace (2 years ago) with (2 years)
     sed -Ee 's/(^[^<]*) ago\)/\1)/' |
     # Replace (2 years, 5 months) with (2 years)
