@@ -95,10 +95,11 @@ alias gup='git smart-pull'
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
 
-alias aliases='vim ~/.zsh/aliases.zsh'
+alias aliases='vim ~/.zsh/aliases.zsh; soaliases'
 alias das='cd ~/Documents/Screencasts/Destroy\ All\ Software'
 alias retag='ctags -R --exclude=.svn --exclude=.git --exclude=log --exclude=tmp *'
-alias rst='restart-tomcat.sh'
+alias tcsd='/Library/Tomcat/bin/shutdown.sh'
+alias tcsu='/Library/Tomcat/bin/startup.sh'
 alias sqlbackup='cd /Volumes/C/Program\ Files/Microsoft\ SQL\ Server/MSSQL.1/MSSQL/Backup'
 alias soaliases='source ~/.zsh/aliases.zsh'
 

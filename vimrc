@@ -56,10 +56,13 @@ Bundle 'gcmt/taboo.vim'
 Bundle 'vim-scripts/AutoTag'
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'ervandew/supertab'
-Bundle 'sjl/badwolf'
-Bundle 'gilsondev/lizard'
 Bundle 'wikitopian/hardmode'
 Bundle 'rking/ag.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'vim-scripts/lastpos.vim'
+Bundle 'thinca/vim-guicolorscheme'
+Bundle 'reedes/vim-colors-pencil'
+Bundle 'tomasr/molokai'
 
 filetype plugin indent on
 
@@ -205,6 +208,8 @@ nnoremap <Leader>F :CommandTFlush<cr>\|:CommandT %:p:h<cr>
 nnoremap <Leader>f :CommandTFlush<cr>\|:CommandT<cr>
 nnoremap <Leader>gVS :CommandTFlush<cr>\|:CommandT NotForDeployment/coffeescript/vessel_schedule<cr>
 nnoremap <Leader>gn :CommandTFlush<cr>\|:CommandT NotForDeployment/src<cr>
+
+nmap cop :RainbowParenthesesToggleAll<cr>
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
@@ -378,11 +383,6 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
   autocmd FileType text setlocal textwidth=78
-  " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") && &ft != 'gitcommit' |
-    \   exe "normal g`\"" |
-    \ endif
 
   "for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,note set ai sw=2 sts=2 et
@@ -480,7 +480,7 @@ function! InlineVariable()
 endfunction
 
 "====================== UltiSnips =========================
-let g:UltiSnipsSnippetDirectories=["snippets"]
+let g:UltiSnipsSnippetDirectories=["ultisnip_snippets"]
 let g:UltiSnipsExpandTrigger="<c-c>"
 let g:UltiSnipsJumpForwardTrigger="<c-c>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-v>"
