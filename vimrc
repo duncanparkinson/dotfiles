@@ -1,4 +1,3 @@
-" Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
@@ -14,16 +13,16 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Plugins
-Bundle 'chrisbra/color_highlight'
+Bundle 'chrisbra/colorizer'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-dispatch'
+" Bundle 'tpope/vim-dispatch'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-pathogen'
+" Bundle 'tpope/vim-haml'
+" Bundle 'tpope/vim-pathogen'
 Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-rake'
@@ -32,45 +31,44 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-eunuch'
 Bundle 'wincent/Command-T'
-Bundle 'godlygeek/tabular'
-Bundle 'gregsexton/gitv'
+" Bundle 'godlygeek/tabular'
+" Bundle 'gregsexton/gitv'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'majutsushi/tagbar'
+" Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'kana/vim-textobj-user'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'skwp/greplace.vim'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'xolox/vim-misc'
-Bundle 'duncanparkinson/vim-notes'
+" Bundle 'vim-scripts/taglist.vim'
+" Bundle 'xolox/vim-misc'
+" Bundle 'duncanparkinson/vim-notes'
 Bundle 'edsono/vim-matchit'
-Bundle 'duncanparkinson/vim-cucumber'
+" Bundle 'duncanparkinson/vim-cucumber'
 Bundle 'AndrewRadev/splitjoin.vim'
-Bundle 'SirVer/ultisnips'
 Bundle 'nono/vim-handlebars'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'gcmt/taboo.vim'
 Bundle 'vim-scripts/AutoTag'
 Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'ervandew/supertab'
-Bundle 'wikitopian/hardmode'
 Bundle 'rking/ag.vim'
-Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'vim-scripts/lastpos.vim'
-Bundle 'thinca/vim-guicolorscheme'
+" Bundle 'tomasr/molokai'
+Bundle 'roman/golden-ratio'
+Bundle 'msanders/snipmate.vim'
+Bundle 'christoomey/vim-conflicted'
+" Bundle 'morhetz/gruvbox'
+Bundle 'hwartig/vim-seeing-is-believing'
 Bundle 'reedes/vim-colors-pencil'
-Bundle 'tomasr/molokai'
+Bundle 'bling/vim-airline'
+Bundle 'airblade/vim-gitgutter'
 
 filetype plugin indent on
 
 " ================ General Config ====================
-
 let mapleader=","
 set number                      "Line numbers are good
-set relativenumber
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
@@ -84,13 +82,12 @@ set hidden
 syntax on
 set wrap
 set linebreak
-set nofoldenable        "dont fold by default
 
 " Insert only one space when joining lines that contain sentence-terminating
 " punctuation like `.`
 set nojoinspaces
 
-set winwidth=180
+" set winwidth=180
 set winheight=5
 set winminheight=5
 set winheight=999
@@ -109,28 +106,13 @@ set t_ti= t_te=
 
 set spelllang=en_gb
 
-"allow saving, etc. with capital letters
-if has("user_commands")
-    command! -bang -nargs=? -complete=file E e<bang> <args>
-    command! -bang -nargs=? -complete=file W w<bang> <args>
-    command! -bang -nargs=? -complete=file Wq wq<bang> <args>
-    command! -bang -nargs=? -complete=file WQ wq<bang> <args>
-    command! -bang Wa wa<bang>
-    command! -bang WA wa<bang>
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
-endif
-
 " ================ Search Settings  =================
-
 set incsearch        "Find the next match as we type the search
 set ignorecase smartcase  " make searches case-sensitive only if they contain upper-case characters
 set hlsearch         "Hilight searches by default
 set viminfo='100,f1  "Save up to 100 marks, enable capital marks
 
 " ================ Turn Off Swap Files ==============
-
 set noswapfile
 set nobackup
 set nowb
@@ -138,13 +120,11 @@ set nowb
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 " Only works all the time.
-
 silent !mkdir ~/.vim/backups > /dev/null 2>&1
 set undodir=~/.vim/backups
 set undofile
 
 " ================ Indentation ======================
-
 set autoindent
 set smartindent
 set smarttab
@@ -154,7 +134,8 @@ set tabstop=2
 set expandtab
 
 " Display tabs and trailing spaces visually
-" set list listchars=tab:\ \ ,trail:·
+" set list listchars=tab:\ \ ,trail:ÃÂ·
+" set list listchars=tab:>.,extends:#,nbsp:.,trail:â¢
 set list listchars=tab:>.,extends:#,nbsp:.,trail:•
 
 " " Highlight EOL whitespace,
@@ -177,9 +158,6 @@ function! MapCR()
 endfunction
 call MapCR()
 
-imap <silent> <C-k> _
-imap <silent> <C-L> <%=  %><Esc>2hi
-imap <silent> <C-J> <%  %><Esc>2hi
 imap <c-h> <space>=><space>
 
 map <C-s> <esc>:w<CR>
@@ -197,25 +175,15 @@ vmap < <gv
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
 nnoremap <Leader>B :%s/{\([^ ]\)/{ \1/gc\|%s/\([^ ]\)}/\1 }/gc<CR>
 
-" Command-T / Selecta
-" Find all files in all non-dot directories starting in the working directory.
-" Fuzzy select one of those. Open the selected file with :e.
-" nnoremap <leader>f :call SelectaCommand("find * -type f ! -path '*.DS_Store' \| head -10000", "", ":e")<cr>
-" nnoremap <leader>F :call SelectaCommand("breadth-first-find " . expand('%:h') . " -type f \| head -10000", ":e")<cr>
-" nnoremap <leader>gVS :call SelectaCommand("breadth-first-find NotForDeployment/coffeescript/vessel_schedule -type f \| head -10000", ":e")<cr>
-" nnoremap <Leader>gn :call SelectaCommand("breadth-first-find NotForDeployment/src -type f ! -path '*jxl/*' ! -path '*json/*' ! -path '*.DS_Store' \| head -10000", ":e")<cr>
-nnoremap <Leader>F :CommandTFlush<cr>\|:CommandT %:p:h<cr>
-nnoremap <Leader>f :CommandTFlush<cr>\|:CommandT<cr>
-nnoremap <Leader>gVS :CommandTFlush<cr>\|:CommandT NotForDeployment/coffeescript/vessel_schedule<cr>
-nnoremap <Leader>gn :CommandTFlush<cr>\|:CommandT NotForDeployment/src<cr>
-
-nmap cop :RainbowParenthesesToggleAll<cr>
+nnoremap <Leader>F :CommandT %:p:h<cr>
+nnoremap <Leader>f :CommandT<cr>
+nnoremap <Leader>gVS :CommandT NotForDeployment/coffeescript/vessel_schedule<cr>
+nnoremap <Leader>gn :CommandT NotForDeployment/src<cr>
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :call OpenTestAlternate()<cr>
 map <Leader>= mqgg=G`q
-map <Leader>M :TagbarToggle<CR>
 map <Leader>T :w<cr>:call RunCurrentLineInTest()<CR>
 map <Leader>\| <C-w>H
 map <Leader>a :call RunTestCommand("spring rspec spec/ features/")<cr>
@@ -223,8 +191,6 @@ map <Leader>aa :call RunTestCommand("CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da57
 map <Leader>au :call RunTestCommand("spring rspec spec/")<cr>
 map <Leader>af :call RunTestCommand("spring rspec feautures/")<cr>
 map <Leader>c oconsole.log<Space>
-map <Leader>dt :topleft 100 :split<cr>:Note Daily Todos (taskpaper)<cr>
-map <Leader>dc :call DefineClass()<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
@@ -304,18 +270,16 @@ nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-j> <C-w>j
 nmap <C-t> <esc>:tabnew<CR>
 nmap <C-w>t <esc>:tabnew<CR>
-nnoremap <silent> vv :wincmd v<cr>:wincmd h<cr>:vertical resize 80<cr>:wincmd l<cr>
-nnoremap <silent> ss :wincmd s<cr>:wincmd k<cr>:resize 5<cr>:wincmd j<cr>
+nnoremap <silent> vv :wincmd v<cr>
+nnoremap <silent> ss :wincmd s<cr>
 
 " ================ Appearance =======================
 "tell the term has 256 colors
 set t_Co=256
 
-colorscheme grb256
+colorscheme pencil
 " LuciusWhite
 set background=dark
-
-let g:Powerline_symbols = 'fancy'
 
 set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -326,10 +290,9 @@ let g:CSApprox_loaded = 1
 " ================ Status Line ======================
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 set laststatus=2 "always show the status line
-set cmdheight=1
+set cmdheight=2
 
 " ================ Completion =======================
-
 set wildmode=list:longest
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
@@ -347,7 +310,6 @@ set wildignore+=*.class,WEB-INF/*,*jxl/*,*.log
 set wildignore+=node_modules/*,FusionCharts*
 
 " ================ Scrolling ========================
-
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
@@ -402,7 +364,7 @@ augroup vimrcEx
   autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
 
   " Treat JSPs as Java
-  " autocmd FileType jsp set ft=java
+  autocmd FileType jsp set ft=jsp.html.java
 
   autocmd FileType * set list
   autocmd FileType gitcommit,jsp set nolist
@@ -411,8 +373,6 @@ augroup vimrcEx
 
   " Don't syntax highlight markdown because it's often wrong
   autocmd! FileType mkd setlocal syn=off
-
-  autocmd FileType jsp UltiSnipsAddFiletypes jsp.java
 
   " Leave the return key alone when in command line windows, since it's used
   " to run commands there.
@@ -479,12 +439,6 @@ function! InlineVariable()
     :let @b = l:tmp_b
 endfunction
 
-"====================== UltiSnips =========================
-let g:UltiSnipsSnippetDirectories=["ultisnip_snippets"]
-let g:UltiSnipsExpandTrigger="<c-c>"
-let g:UltiSnipsJumpForwardTrigger="<c-c>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-v>"
-
 "====================== tmux ==============================
 
 if &term =~ '256color'
@@ -495,8 +449,8 @@ endif
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
-nmap <C-n> :cnext<cr>
-nmap <C-p> :cprev<cr>
+" nmap <C-n> :cnext<cr>
+" nmap <C-p> :cprev<cr>
 
 nmap <silent> gcp <c-_>p " comment paragraph
 
@@ -641,86 +595,6 @@ function! PromoteToLet()
 endfunction
 :command! PromoteToLet :call PromoteToLet()
 
-
-" Refactor Stuct to use initialize method
-function! RefactorStructToInitialize()
-  :normal! gg^
-  :normal! f<h
-  :normal! df(
-  :.s/)//
-  :normal! f:D
-  :normal! o
-  :normal! o
-  :normal! p==
-  :normal! Idef initialize 
-  :.s/://g
-  :normal! 2wy$
-  :normal! o
-  :normal! p==
-  :normal! mb
-  :let beginning = line('.')
-  :.s/, /\r/g
-  :normal! me
-  :let ending = line('.')
-  :normal! oend
-  :normal! V`b
-  :normal! =
-  :let @q = '^yiwI@pa = '
-  :normal! `b
-  :let i = beginning
-  :while i <= ending
-  :  normal! @q
-  :  normal! j
-  :  let i += 1
-  :endwhile
-endfunction
-
-
-" vimscript function to rotate line number setting from [On -> Relative -> Off], set to <Leader>n
-" Author: Allen Fair, 2012
-" License: Public Domain
-
-function! RotateNumber()
-  if &l:number
-    let &l:number=0
-    let &l:relativenumber=1
-    echom "Relative Line Numbers"
-  " elseif &l:relativenumber
-  "   let &l:number=0
-  "   let &l:relativenumber=0
-  "   echom "No Line Numbers"
-  else
-    let &l:relativenumber=0
-    let &l:number=1
-    echom "Line Numbers"
-  endif
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Selecta Mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Run a given vim command on the results of fuzzy selecting from a given shell
-" command. See usage below.
-function! SelectaCommand(choice_command, selecta_args, vim_command)
-  try
-    silent let selection = system(a:choice_command . " | selecta " . a:selecta_args)
-  catch /Vim:Interrupt/
-    " Swallow the ^C so that the redraw below happens; otherwise there will be
-    " leftovers from selecta on the screen
-    redraw!
-    return
-  endtry
-  redraw!
-  exec a:vim_command . " " . selection
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TABOO
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:taboo_tab_format=" %N: %f%m "
-
-let g:notes_directories = ['~/Dropbox/Public/']
-
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
@@ -736,42 +610,38 @@ endif
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-function! DefineClass()
-  let old_a = @a
-  let old_b = @b
-  let old_c = @c
-  let class_name_underscored_with_extension = expand('%:t')
-  let class_name_underscored = substitute(class_name_underscored_with_extension, '.rb', '', '')
-  let class_name = substitute(class_name_underscored, '\v(^|_)(\a)', '\u\2', 'g')
-  let extends = ""
-  let nesting = substitute(expand('%:h'), '.*/', '', '')
-  if nesting != ""
-    let nesting = substitute(nesting, '\v(^|_)(\a)', '\u\2', 'g')
-    let @c = nesting . '::'
-  endif
-  echo nesting
-  if match(expand('%:h'), 'app/models') != -1
-    let extends = " < ActiveRecord::Base"
-  elseif match(expand('%:h'), 'app/controllers') != -1
-    let extends = " < ApplicationController"
-  endif
-  let @a = class_name
-  let @b = extends
-  :normal! ggiclass 
-  :normal! "cp
-  :normal! "ap
-  :normal! "bp
-  :normal! oend
-  let @a = old_a
-  let @b = old_b
-  let @c = old_c
-endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SPARKUP
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:sparkupExecuteMapping = '<C-e><C-e>'
+let g:sparkupNextMapping = '<C-e><C-n>'
 
-" Drag Visuals
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
-" Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1
+function! OpenCompiledJsp()
+  let current_file = expand("%")
+  let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
+  let new_file = current_file
+  let new_file = substitute(current_file, '\.jsp', '_jsp.java', '')
+  let new_file = '/Library/Tomcat/work/Catalina/localhost/_/org/apache/jsp/' . new_file
+  exec ':e ' . new_file
+endfunction
+:command! OpenCompiledJsp :call OpenCompiledJsp()
+
+" Seeing Is Believing
+nmap <buffer> <F5> <Plug>(seeing-is-believing-run)
+xmap <buffer> <F5> <Plug>(seeing-is-believing-run)
+imap <buffer> <F5> <Plug>(seeing-is-believing-run)
+
+nmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+xmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+imap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'pencil'
+let g:airline_right_sep=''
+let g:airline_left_sep=''
+
+highlight clear SignColumn
+highlight link GitGutterAdd DiffAdd
+highlight link GitGutterDelete DiffDelete
+highlight link GitGutterChange DiffChange
+highlight link GitGutterChangeDelete DiffChange

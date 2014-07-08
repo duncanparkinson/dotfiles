@@ -93,24 +93,24 @@ if &background == "dark"
   hi WildMenu     guibg=SkyBlue guifg=White
   hi lCursor      guibg=LightSlateGrey guifg=bg
 else
-  hi Boolean      gui=NONE guifg=Red3 guibg=NONE
-  hi Comment      gui=italic guifg=Blue2 guibg=NONE
-  hi Constant     gui=NONE guifg=DarkOrange guibg=NONE
+  hi Boolean      gui=NONE guifg=Red3 guibg=NONE ctermbg=NONE ctermfg=124
+  hi Comment      gui=italic guifg=Blue2 guibg=NONE ctermbg=NONE ctermfg=27
+  hi Constant     gui=NONE guifg=DarkOrange guibg=NONE ctermbg=NONE ctermfg=208
   hi Cursor       guibg=fg guifg=bg
   hi CursorColumn guibg=#F1F5FA
   hi CursorIM     guibg=fg guifg=bg
-  hi CursorLine   guibg=#F1F5FA
+  hi CursorLine   guibg=#F1F5FA ctermbg=254 ctermfg=NONE cterm=NONE
   hi DiffChange   guibg=DeepSkyBlue
   hi DiffDelete   gui=bold guifg=Black guibg=SlateBlue
   hi DiffText     gui=NONE guibg=Gold
   hi LineNr       guifg=#888888 guibg=#E6E6E6
-  hi MatchParen   guifg=White guibg=MediumPurple1
+  hi MatchParen   guifg=White guibg=MediumPurple1 ctermfg=255 ctermbg=98
   if has("gui_macvim")
     hi Normal       gui=NONE guifg=MacTextColor guibg=MacTextBackgroundColor
   else
     hi Normal       gui=NONE guifg=Black guibg=White
   endif
-  hi Search       guibg=CadetBlue1 guifg=NONE
+  hi Search       guibg=CadetBlue1 guifg=NONE ctermfg=NONE ctermbg=145
   hi Statement    gui=bold guifg=Maroon guibg=NONE
   hi Todo         gui=NONE guifg=DarkGreen guibg=PaleGreen1
   hi Type         gui=bold guifg=Green4 guibg=NONE

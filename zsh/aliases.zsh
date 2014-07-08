@@ -43,16 +43,10 @@ alias ga='git add -A'
 alias gap='ga -p'
 alias gau='git add -u'
 alias gbr='git branch -v'
-# alias gc='git commit -v'
-function gc {
-  git commit -vm "$*"
-}
-function gca {
-  git commit -vam "$*"
-}
-alias gcm='git commit --amend'
+alias gc='git commit -v'
+alias gca='git commit -av'
 alias gch='git cherry-pick'
-# alias gcm='git commit -v --amend'
+alias gcm='git commit -v --amend'
 alias gco='git checkout'
 alias gcob='git checkout `git branch --list | selecta`'
 alias gcop='gco -p'

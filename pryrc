@@ -30,12 +30,16 @@ begin
   # and it also enables paging
   # Pry.config.print = proc {|output, value| Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)}
 
-  require 'hirb'
-  Hirb.enable
+  begin
+    require 'hirb'
+    Hirb.enable
 
-  old_print = Pry.config.print
-  Pry.config.print = proc do |output, value|
-    Hirb::View.view_or_page_output(value) || old_print.call(output, value)
+    old_print = Pry.config.print
+    Pry.config.print = proc do |output, value|
+      Hirb::View.view_or_page_output(value) || old_print.call(output, value)
+    end
+  rescue LoadError => err
+    puts "gem install Hirb  # <-- highly recommended"
   end
 
   # If you want awesome_print without automatic pagination, use the line below

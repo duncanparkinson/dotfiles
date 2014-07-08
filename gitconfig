@@ -1,8 +1,8 @@
 # set your user tokens as enivornment variables, such as ~/.secrets
 # See the README for examples.
 [user]
-  name = Duncan Parkinson
-  email = duncan.parkinson@mac.com
+	name = Duncan Parkinson
+	email = duncan.parkinson@mac.com
 [color]
   ui = true
 [color "branch"]

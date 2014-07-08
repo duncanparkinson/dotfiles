@@ -45,3 +45,5 @@ git-escape-magic
 
 setopt auto_cd
 cdpath=($HOME/projects $HOME)
+
+[[ $(env | grep -c PATH) < 2 ]] || /usr/bin/login -f $USER
