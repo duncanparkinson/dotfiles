@@ -223,6 +223,7 @@ map <Leader>u :GundoToggle<CR>
 map <Leader>vb :source ~/.vimrc<cr>:BundleInstall<cr>
 map <Leader>vc yy:<C-f>p<C-c><CR>
 map <Leader>ve :tabe ~/.vimrc<CR>
+map <Leader>vg :tabe ~/.gvimrc<CR>
 map <Leader>vr :so %<CR>
 map <Leader>w :set wrap!<cr>
 map <Leader>x :bn<CR>
