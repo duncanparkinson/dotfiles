@@ -1,9 +1,17 @@
-snippet intp
+snippet tintp
 try { $1 = Integer.parseInt(request.getParameter("$2")); } catch (Exception e) {}
 endsnippet
 
-snippet doublep
+snippet tdoublep
 try { $1 = Double.parseDouble(request.getParameter("$2")); } catch (Exception e) {}
+endsnippet
+
+snippet intp
+Integer.parseInt(request.getParameter("$0"));
+endsnippet
+
+snippet doublep
+Double.parseDouble(request.getParameter("$2"));
 endsnippet
 
 snippet stringp
@@ -12,4 +20,12 @@ endsnippet
 
 snippet booleanp
 $1 = Boolean.parseBoolean(request.getParameter("$2"));
+endsnippet
+
+snippet req
+request.getParameter("$0")
+endsnippet
+
+snippet reqs
+request.getParameterValues("$0")
 endsnippet

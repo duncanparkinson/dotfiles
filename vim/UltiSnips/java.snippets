@@ -1,0 +1,26 @@
+snippet sql
+String sql${1} = "${2}";
+PreparedStatement pstmt$1 = con.prepareStatement(sql$1);
+ResultSet rs$1 = pstmt$1.executeQuery();
+endsnippet
+
+snippet currentuser
+User currentUser = new User(con, (String)session.getAttribute("user.username"));
+endsnippet
+
+snippet log
+System.${1:out}.println(${2});
+endsnippet
+
+snippet try
+try {
+	${1:${VISUAL}}
+} catch (${3:Exception} e) {
+	${2}
+}
+endsnippet
+
+snippet pa
+`!p
+snip.rv = 'package ' + path.replace('NotForDeployment/src/', '').replace('/' + fn, '').replace('/', '.') + ';'`
+endsnippet

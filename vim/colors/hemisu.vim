@@ -213,4 +213,14 @@ hi! link helpURL             Underlined
 
 "}}}
 
+" Highlights - Git ----------------------------------------{{{
+hi DiffAdded            ctermfg=green
+hi DiffRemoved          ctermfg=red
+highlight DiffAdd term=reverse cterm=bold ctermbg=lightgreen ctermfg=16
+highlight DiffChange term=reverse cterm=bold ctermbg=lightblue ctermfg=16
+highlight DiffText term=reverse cterm=bold ctermbg=lightgray ctermfg=16
+highlight DiffDelete term=reverse cterm=bold ctermbg=lightred ctermfg=16
+
+"}}}
+
 " vim: fdm=marker:sw=2:sts=2:et

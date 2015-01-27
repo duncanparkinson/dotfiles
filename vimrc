@@ -5,71 +5,81 @@ set nocompatible
 filetype on
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
 " Plugins
-Bundle 'chrisbra/colorizer'
-Bundle 'mileszs/ack.vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-bundler'
-" Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-git'
-" Bundle 'tpope/vim-haml'
-" Bundle 'tpope/vim-pathogen'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-vinegar'
-Bundle 'wincent/Command-T'
-" Bundle 'godlygeek/tabular'
-" Bundle 'gregsexton/gitv'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Bundle 'majutsushi/tagbar'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'kana/vim-textobj-user'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'skwp/greplace.vim'
-" Bundle 'vim-scripts/taglist.vim'
-" Bundle 'xolox/vim-misc'
-" Bundle 'duncanparkinson/vim-notes'
-Bundle 'edsono/vim-matchit'
-" Bundle 'duncanparkinson/vim-cucumber'
-Bundle 'AndrewRadev/splitjoin.vim'
-Bundle 'nono/vim-handlebars'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/AutoTag'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'rking/ag.vim'
-Bundle 'vim-scripts/lastpos.vim'
-" Bundle 'tomasr/molokai'
-Bundle 'roman/golden-ratio'
-Bundle 'msanders/snipmate.vim'
-Bundle 'christoomey/vim-conflicted'
-" Bundle 'morhetz/gruvbox'
-Bundle 'hwartig/vim-seeing-is-believing'
-Bundle 'reedes/vim-colors-pencil'
-Bundle 'bling/vim-airline'
-Bundle 'airblade/vim-gitgutter'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+" Plugin 'tpope/vim-haml'
+" Plugin 'tpope/vim-pathogen'
+Plugin 'tpope/vim-ragtag'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-vinegar'
+" Plugin 'wincent/Command-T'
+Plugin 'godlygeek/tabular'
+" Plugin 'gregsexton/gitv'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Plugin 'majutsushi/tagbar'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'sjl/gundo.vim'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'kana/vim-textobj-user'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'skwp/greplace.vim'
+" Plugin 'vim-scripts/taglist.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+Plugin 'edsono/vim-matchit'
+" Plugin 'duncanparkinson/vim-cucumber'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'nono/vim-handlebars'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/AutoTag'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'rking/ag.vim'
+Plugin 'vim-scripts/lastpos.vim'
+" Plugin 'tomasr/molokai'
+" Plugin 'roman/golden-ratio'
+Plugin 'christoomey/vim-conflicted'
+" Plugin 'morhetz/gruvbox'
+Plugin 'hwartig/vim-seeing-is-believing'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'kien/ctrlp.vim'
+Plugin 'duncanparkinson/vim-spec-runner'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'chriskempson/base16-vim'
+Plugin 'vim-scripts/YankRing.vim'
+Plugin 'wikitopian/hardmode'
+Plugin 'rizzatti/dash.vim'
+Plugin 'endel/vim-github-colorscheme'
+
+call vundle#end()
 
 filetype plugin indent on
 
 " ================ General Config ====================
 let mapleader=","
 set number                      "Line numbers are good
+set relativenumber
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
@@ -84,18 +94,21 @@ syntax on
 set wrap
 set linebreak
 
+set gdefault " substitute all matches by default. Use /g to disable
+
 " Insert only one space when joining lines that contain sentence-terminating
 " punctuation like `.`
 set nojoinspaces
 
 " set winwidth=180
-set winheight=5
-set winminheight=5
-set winheight=999
+" set winheight=5
+" set winminheight=5
+" set winheight=999
 
 set colorcolumn=80
 
-set shell=zsh
+" This makes RVM work inside Vim. I have no idea why.
+set shell=bash
 
 " change cursor for insert mode
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -106,6 +119,9 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set t_ti= t_te=
 
 set spelllang=en_gb
+
+" Auto-reload buffers when file changed on disk
+set autoread
 
 " ================ Search Settings  =================
 set incsearch        "Find the next match as we type the search
@@ -161,10 +177,10 @@ call MapCR()
 
 imap <c-h> <space>=><space>
 
-map <C-s> <esc>:w<CR>
-imap <C-s> <esc>:w<CR>
-map <C-q> <esc>:q<CR>
-imap <C-q> <esc>:q<CR>
+" map <C-s> <esc>:w<CR>
+" imap <C-s> <esc>:w<CR>
+" map <C-q> <esc>:q<CR>
+" imap <C-q> <esc>:q<CR>
 
 " expand current dir
 cnoremap %% <C-R>=expand('%:p:h').'/'<cr>
@@ -176,22 +192,27 @@ vmap < <gv
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
 nnoremap <Leader>B :%s/{\([^ ]\)/{ \1/gc\|%s/\([^ ]\)}/\1 }/gc<CR>
 
-nnoremap <Leader>F :CommandT %:p:h<cr>
-nnoremap <Leader>f :CommandT<cr>
-nnoremap <Leader>gVS :CommandT NotForDeployment/coffeescript/vessel_schedule<cr>
-nnoremap <Leader>gn :CommandT NotForDeployment/src<cr>
+nnoremap <Leader>b :CtrlPBuffer<cr>
+nnoremap <Leader>F :CtrlP %:p:h<cr>
+nnoremap <Leader>f :CtrlP<cr>
+nnoremap <Leader>gVS :CtrlP NotForDeployment/coffeescript/vessel_schedule<cr>
+nnoremap <Leader>gN :CtrlP NotForDeployment/src<cr>
+nnoremap <Leader>gA :CtrlP Admin/<cr>
+nnoremap <Leader>gB :CtrlP Bids/<cr>
+nnoremap <Leader>gE :CtrlP EHSQ/<cr>
+nnoremap <Leader>gO :CtrlP Operations/<cr>
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :call OpenTestAlternate()<cr>
 map <Leader>= mqgg=G`q
-map <Leader>T :w<cr>:call RunCurrentLineInTest()<CR>
+map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
-map <Leader>a :call RunTestCommand("spring rspec spec/ features/")<cr>
-map <Leader>aa :call RunTestCommand("CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/")<cr>
-map <Leader>au :call RunTestCommand("spring rspec spec/")<cr>
-map <Leader>af :call RunTestCommand("spring rspec feautures/")<cr>
-map <Leader>c oconsole.log<Space>
+map <Leader>a :!spring rspec spec/ features/<cr>
+map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
+map <Leader>au :!spring rspec spec/<cr>
+map <Leader>af :!spring rspec features/<cr>
+map <Leader>dt :topleft 30 :split<cr>:Note Daily Todos (taskpaper)<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
@@ -205,7 +226,7 @@ map <Leader>l :PromoteToLet<cr>
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
 map <Leader>rc :Rcontroller<Space>
-map <Leader>rf :CommandTFlush<cr>\|:CommandT features/<cr>
+nnoremap <Leader>rf :CtrlP features/<cr>
 map <Leader>rg :Rgenerate<Space>
 map <Leader>rh :Rhelper<Space>
 map <Leader>ri :Rintegrationtest<Space>
@@ -217,16 +238,14 @@ map <Leader>rt :Rspec<Space>
 map <Leader>rv :Rview<Space>
 map <Leader>sj :SplitjoinSplit<cr>
 map <Leader>sk :SplitjoinJoin<cr>
-map <Leader>so oSystem.out.println();<Esc>hi
 map <Leader>sws :StripTrailingWhitespaces<CR>
-map <Leader>t :w<cr>:call RunCurrentTest()<CR>
+map <Leader>t <Plug>RunCurrentSpecFile
 map <Leader>u :GundoToggle<CR>
-map <Leader>vb :source ~/.vimrc<cr>:BundleInstall<cr>
-map <Leader>vc yy:<C-f>p<C-c><CR>
+map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PluginInstall<cr>
+map <Leader>vc yy:<C-f>p<CR>
 map <Leader>ve :tabe ~/.vimrc<CR>
 map <Leader>vg :tabe ~/.gvimrc<CR>
 map <Leader>vr :so %<CR>
-map <Leader>w :set wrap!<cr>
 map <Leader>x :bn<CR>
 map <leader>y "*y
 map <Leader>z :bp<CR>
@@ -252,8 +271,8 @@ vmap <Leader>{ c{<C-R>"}<ESC>
 
 " Quick Fix last search
 map <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-" Ack for the last search.
-map <silent> <leader>qa/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
+" Ag for the last search.
+map <silent> <leader>qa/ :execute "Ag '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
 " GitGrep the last search
 map <silent> <leader>qg/ :execute "GitGrep '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
 
@@ -274,25 +293,24 @@ nmap <C-t> <esc>:tabnew<CR>
 nmap <C-w>t <esc>:tabnew<CR>
 nnoremap <silent> vv :wincmd v<cr>
 nnoremap <silent> ss :wincmd s<cr>
+nnoremap <Left> :vertical resize -5<cr>
+nnoremap <Right> :vertical resize +5<cr>
 
 " ================ Appearance =======================
 "tell the term has 256 colors
 set t_Co=256
 
-colorscheme pencil
+colorscheme solarized
 " LuciusWhite
-set background=dark
+set background=light
 
 set cursorline
 " set cursorcolumn " seems to cause slowness...
 
-" For GVim colour schemes
-let g:CSApprox_loaded = 1
-
 " ================ Status Line ======================
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 set laststatus=2 "always show the status line
-set cmdheight=2
+" set cmdheight=2
 
 " ================ Completion =======================
 set wildmode=list:longest
@@ -359,8 +377,8 @@ augroup vimrcEx
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
 
-  " Indent p tags
-  autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
+  " " Indent p tags
+  " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   " add pwd to path (particularly to allow rails.vim to work with namespaces)
   autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
@@ -369,7 +387,7 @@ augroup vimrcEx
   autocmd FileType jsp set ft=jsp.html.java
 
   autocmd FileType * set list
-  autocmd FileType gitcommit,jsp set nolist
+  autocmd FileType gitcommit,jsp set nolist | :normal gg
 
   autocmd Filetype gitcommit setlocal spell textwidth=72 nocursorline
 
@@ -527,64 +545,6 @@ function! AlternateForCurrentFile()
   return new_file
 endfunction
 
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " RUNNING TESTS
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RunTestCommand(test_command)
-  if filewritable(".test-commands")
-    exec ":silent !echo " . a:test_command . " > .test-commands"
-  else
-    exec ":!" . a:test_command
-  endif
-endfunction
-
-function! RunCurrentTest()
-  if InTestFile()
-    call SetTestFile()
-    call SetCorrectTestRunner()
-  endif
-  let cmd = "" . g:bjo_test_runner . " " . g:bjo_test_file
-  call RunTestCommand("" . cmd)
-endfunction
-
-function! RunCurrentLineInTest()
-  if InTestFile()
-    call SetTestFileWithLine()
-    call SetCorrectTestRunner()
-  endif
-  let cmd = "" . g:bjo_test_runner . " " . g:bjo_test_file . ":" . g:bjo_test_file_line
-  call RunTestCommand(cmd)
-endfunction
-
-function! SetCorrectTestRunner()
-  if match(expand('%'), '\.feature$') != -1
-    call SetTestRunner("zeus cucumber")
-  elseif match(expand('%'), '/lib/.*_spec\.rb$') != -1
-    call SetTestRunner("rspec")
-  elseif match(expand('%'), '_spec\.rb$') != -1
-    call SetTestRunner("spring rspec")
-  else
-    call SetTestRunner("ruby -Itest")
-  endif
-endfunction
-
-function! InTestFile()
-  return match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
-endfunction
-
-function! SetTestRunner(runner)
-  let g:bjo_test_runner=a:runner
-endfunction
-
-function! SetTestFile()
-  let g:bjo_test_file=@%
-endfunction
-
-function! SetTestFileWithLine()
-  call SetTestFile()
-  let g:bjo_test_file_line=line(".")
-endfunction
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROMOTE VARIABLE TO RSPEC LET
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -602,15 +562,19 @@ if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor\ --ignore=vendor\ --ignore=tmp
 
-  " " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-  " " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+let g:ctrlp_arg_map = 1
+
+let g:notes_directories = ['~/Dropbox/Public/Notes']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPARKUP
@@ -626,16 +590,16 @@ function! OpenCompiledJsp()
   let new_file = '/Library/Tomcat/work/Catalina/localhost/_/org/apache/jsp/' . new_file
   exec ':e ' . new_file
 endfunction
-:command! OpenCompiledJsp :call OpenCompiledJsp()
+:command! C :call OpenCompiledJsp()
 
 " Seeing Is Believing
-nmap <buffer> <F5> <Plug>(seeing-is-believing-run)
-xmap <buffer> <F5> <Plug>(seeing-is-believing-run)
-imap <buffer> <F5> <Plug>(seeing-is-believing-run)
+nmap <F5> <Plug>(seeing-is-believing-mark)
+xmap <F5> <Plug>(seeing-is-believing-mark)
+imap <F5> <Plug>(seeing-is-believing-mark)
 
-nmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
-xmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
-imap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+nmap <F6> <Plug>(seeing-is-believing-run)
+xmap <F6> <Plug>(seeing-is-believing-run)
+imap <F6> <Plug>(seeing-is-believing-run)
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'pencil'
@@ -643,7 +607,12 @@ let g:airline_right_sep=''
 let g:airline_left_sep=''
 
 highlight clear SignColumn
-highlight link GitGutterAdd DiffAdd
-highlight link GitGutterDelete DiffDelete
-highlight link GitGutterChange DiffChange
-highlight link GitGutterChangeDelete DiffChange
+highlight GitGutterAdd ctermfg=lightgreen
+highlight GitGutterDelete ctermfg=lightred
+highlight GitGutterChange ctermfg=lightblue
+highlight GitGutterChangeDelete ctermfg=lightblue
+
+let g:spec_runner_dispatcher = 'Dispatch {command}'
+
+" Dash
+nmap <silent> <leader>d <Plug>DashSearch
