@@ -1,8 +1,8 @@
 # set your user tokens as enivornment variables, such as ~/.secrets
 # See the README for examples.
 [user]
-	name = Duncan Parkinson
-	email = duncan.parkinson@mac.com
+  name = Duncan Parkinson
+  email = duncan.parkinson@mac.com
 [color]
   ui = true
 [color "branch"]
@@ -52,7 +52,9 @@
   ra = !git r --all
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
-	ctags = !.git/hooks/ctags
+  ctags = !.git/hooks/ctags
+  rad = !git ra --date-order
+	lad = !git la --date-order
 
 [diff]
   tool = Kaleidoscope
@@ -95,4 +97,4 @@
 [mailmap]
   file = ~/.mailmap
 [init]
-	templatedir = ~/.git_template
+  templatedir = ~/.git_template
