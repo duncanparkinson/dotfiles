@@ -60,7 +60,7 @@ Plugin 'christoomey/vim-conflicted'
 " Plugin 'morhetz/gruvbox'
 Plugin 'hwartig/vim-seeing-is-believing'
 Plugin 'reedes/vim-colors-pencil'
-Plugin 'bling/vim-airline'
+" Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'duncanparkinson/vim-spec-runner'
@@ -71,6 +71,10 @@ Plugin 'vim-scripts/YankRing.vim'
 Plugin 'wikitopian/hardmode'
 Plugin 'rizzatti/dash.vim'
 Plugin 'endel/vim-github-colorscheme'
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plugin 'stulzer/heroku-colorscheme'
+" Plugin 'edkolev/tmuxline.vim'
+Plugin 'noahfrederick/vim-noctu'
 
 call vundle#end()
 
@@ -225,6 +229,7 @@ map <Leader>p :set paste<CR>"*]p:set nopaste<cr>
 map <Leader>l :PromoteToLet<cr>
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
+map <Leader>qf :JavaCorrect<CR>
 map <Leader>rc :Rcontroller<Space>
 nnoremap <Leader>rf :CtrlP features/<cr>
 map <Leader>rg :Rgenerate<Space>
@@ -245,7 +250,7 @@ map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PluginInstall<cr>
 map <Leader>vc yy:<C-f>p<CR>
 map <Leader>ve :tabe ~/.vimrc<CR>
 map <Leader>vg :tabe ~/.gvimrc<CR>
-map <Leader>vr :so %<CR>
+map <Leader>vr :w<cr>:so %<CR>
 map <Leader>x :bn<CR>
 map <leader>y "*y
 map <Leader>z :bp<CR>
@@ -300,17 +305,55 @@ nnoremap <Right> :vertical resize +5<cr>
 "tell the term has 256 colors
 set t_Co=256
 
-colorscheme solarized
+colorscheme hemisu
 " LuciusWhite
-set background=light
+set background=dark
 
 set cursorline
 " set cursorcolumn " seems to cause slowness...
 
 " ================ Status Line ======================
-set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
-set laststatus=2 "always show the status line
+" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 " set cmdheight=2
+
+set laststatus=2 "always show the status line
+
+"" Noah Frederick
+let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
+let &statusline .= "%f"
+let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
+let &statusline .= '%2*%{&modified && !&readonly?"\u25cf":""}%*'
+let &statusline .= '%2*%{&modified && &readonly?"\u25cb":""}%*'
+let &statusline .= '%1*%{&modifiable?"":"\u25cb"}%*'
+let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
+let &statusline .= "%="
+let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
+let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
+let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
+let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
+let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
+
+" Git branch/commit in status line
+function! StatuslineGit()
+  if !exists('*fugitive#head')
+    return ''
+  endif
+  let l:out = fugitive#head(8)
+  if l:out !=# ''
+    let l:out = ' @ ' . l:out
+  endif
+  return l:out
+endfunction
+
+" Buffer indentation settings in status line
+function! StatuslineIndent()
+  if !&modifiable
+    return ''
+  endif
+  let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
+  let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
+  return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
+endfunction
 
 " ================ Completion =======================
 set wildmode=list:longest
@@ -601,10 +644,28 @@ nmap <F6> <Plug>(seeing-is-believing-run)
 xmap <F6> <Plug>(seeing-is-believing-run)
 imap <F6> <Plug>(seeing-is-believing-run)
 
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'pencil'
-let g:airline_right_sep=''
-let g:airline_left_sep=''
+" " airline
+" let g:airline_powerline_fonts = 1
+" let g:airline_theme = 'raven'
+" " let g:airline_theme = 'solarized'
+" let g:airline_right_sep=''
+" let g:airline_left_sep=''
+
+" " tmuxline
+" let g:tmuxline_separators = {
+"     \ 'left' : '',
+"     \ 'left_alt': '|',
+"     \ 'right' : '',
+"     \ 'right_alt' : '|',
+"     \ 'space' : ' '}
+"
+" let g:tmuxline_preset = {
+"       \'a'       : '#S',
+"       \'win'     : '#I:#W#F',
+"       \'cwin'    : '#I:#W#F',
+"       \'y'       : '#H',
+"       \'z'       : ['%R', '%b-%d-%Y'],
+"       \'options' : {'status-justify' : 'left'}}
 
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=lightgreen
