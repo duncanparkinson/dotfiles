@@ -144,9 +144,9 @@ call s:h("DiffAdd",      { "bg": s:faintGreen })
 call s:h("DiffChange",   { "bg": s:faintRed })
 call s:h("DiffDelete",   { "fg": s:normRed, "bg": s:faintRed })
 call s:h("DiffText",     { "bg": s:faintRed, "gui": "bold", "cterm": "bold" })
-call s:h("User1",        { "fg": s:bg, "bg": s:normGreen })
-call s:h("User2",        { "fg": s:bg, "bg": s:normRed })
-call s:h("User3",        { "fg": s:bg, "bg": s:normBlue })
+call s:h("User1",        { "fg": s:normGreen, "bg": s:faint })
+call s:h("User2",        { "fg": s:normRed, "bg": s:faint })
+call s:h("User3",        { "fg": s:normBlue, "bg": s:faint })
 hi! link WildMenu     IncSearch
 hi! link FoldColumn   SignColumn
 hi! link WarningMsg   ErrorMsg
