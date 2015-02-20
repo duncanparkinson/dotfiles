@@ -5,7 +5,7 @@
 "
 " License:
 "
-" Copyright (C) 2005 - 2012  Eric Van Dewoestine
+" Copyright (C) 2005 - 2014  Eric Van Dewoestine
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU General Public License as published by
@@ -59,6 +59,8 @@ exec 'CompilerSet errorformat=' .
   \ '\%-G%.%#[javadoc]\ javadoc:%.%#,' .
   \ '\%.%#[javadoc]\ %f:\ %m,' .
   \ '\%.%#[java]\ org\.apache\.jasper\.JasperException:\ file:%f(%l\\,%c)\ %m,' .
+  \ '\%.%#[java]\ %f:%l:%c:\ %m,' .
+  \ '\%.%#[java]\ %f:%l:\ %m,' .
   \ '\%+A%.%#[junit]\ %.%#Failures:\ %[%^0]%.%#\ Time\ elapsed:\ %.%#,' .
   \ '\%-Z%.%#[junit]\ Test\ %f\ FAILED,' .
   \ '\%+A%.%#[junit]\ %.%#Errors:\ %[%^0]%.%#\ Time\ elapsed:\ %.%#,' .
@@ -69,6 +71,12 @@ exec 'CompilerSet errorformat=' .
   \ '\%-Z%.%#[cactus]\ Test\ %f\ FAILED,' .
   \ '\%.%#[checkstyle]\ %f:%l:%c:\ %m,' .
   \ '\%.%#[checkstyle]\ %f:%l:\ %m,' .
+  \ '\%E%.%#[scalac]\ %f:%l:\ error:\ %m,' .
+  \ '\%-Z%.%#[scalac]\ %p^,' .
+  \ '\%W%.%#[scalac]\ %f:%l:\ warning:\ %m,' .
+  \ '\%-Z%.%#[scalac]\ %p^,' .
+  \ '\%A%.%#[scalac]\ %f:%l:\ %m,' .
+  \ '\%-Z%.%#[scalac]\ %p^,' .
   \ '\%+A%.%#eclim\ testng:\ %f:%m,' .
   \ '\%.%#\ ERROR\ %.%#\ line\ %l\ in\ file:\ %.%f%.:\ %m,' .
   \ g:EclimAntCompilerAdditionalErrorFormat .

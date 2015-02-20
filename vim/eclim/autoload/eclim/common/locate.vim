@@ -1,11 +1,8 @@
 " Author:  Eric Van Dewoestine
 "
-" Description: {{{
-"   Implements the :LocateFile functionality.
+" License: {{{
 "
-" License:
-"
-" Copyright (C) 2005 - 2012  Eric Van Dewoestine
+" Copyright (C) 2005 - 2014  Eric Van Dewoestine
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU General Public License as published by
@@ -23,27 +20,6 @@
 " }}}
 
 " Global Variables {{{
-if !exists('g:EclimLocateFileDefaultAction')
-  let g:EclimLocateFileDefaultAction = g:EclimDefaultFileOpenAction
-endif
-
-if !exists('g:EclimLocateFileScope')
-  let g:EclimLocateFileScope = 'project'
-endif
-
-if !exists('g:EclimLocateFileFuzzy')
-  let g:EclimLocateFileFuzzy = 1
-endif
-
-if !exists('g:EclimLocateFileCaseInsensitive')
-  " one of: 'lower', 'never', 'always'
-  let g:EclimLocateFileCaseInsensitive = 'lower'
-endif
-
-if !exists('g:EclimLocateUserScopes')
-  let g:EclimLocateUserScopes = []
-endif
-
 let g:eclim_locate_default_updatetime = &updatetime
 
 " disable autocomplpop in the locate prompt
@@ -75,14 +51,13 @@ let s:help = [
   \ ]
 " }}}
 
-" LocateFile(action, file, [scope]) {{{
-" Locates a file using the specified action for opening the file when found.
-"   action - '' (use user default), 'split', 'edit', etc.
-"   file - 'somefile.txt',
-"          '', (kick off completion mode),
-"          '<cursor>' (locate the file under the cursor)
-"   scope - optional scope to search in (project, workspace, buffers, etc.)
-function! eclim#common#locate#LocateFile(action, file, ...)
+function! eclim#common#locate#LocateFile(action, file, ...) " {{{
+  " Locates a file using the specified action for opening the file when found.
+  "   action - '' (use user default), 'split', 'edit', etc.
+  "   file - 'somefile.txt',
+  "          '', (kick off completion mode),
+  "          '<cursor>' (locate the file under the cursor)
+  "   scope - optional scope to search in (project, workspace, buffers, etc.)
   let project = eclim#project#util#GetCurrentProjectName()
   let scope = a:0 > 0 ? a:1 : g:EclimLocateFileScope
 
@@ -92,18 +67,22 @@ function! eclim#common#locate#LocateFile(action, file, ...)
     return
   endif
 
-  if scope == 'project' && project == ''
-    let scope = 'workspace'
+  if scope == 'project' && (project == '' || !eclim#EclimAvailable(0))
+    let scope = g:EclimLocateFileNonProjectScope
   endif
 
-  let workspace = eclim#eclipse#ChooseWorkspace()
-  if workspace == '0'
-    return
-  endif
+  let workspace = ''
+  if scope == 'project' || scope == 'workspace'
+    let instance = eclim#client#nailgun#ChooseEclimdInstance()
+    if type(instance) != g:DICT_TYPE
+      return
+    endif
 
-  if !eclim#PingEclim(0, workspace)
-    call eclim#util#EchoError('Unable to connect to eclimd.')
-    return
+    let workspace = instance.workspace
+    if !eclim#PingEclim(0, workspace)
+      call eclim#util#EchoError('Unable to connect to eclimd.')
+      return
+    endif
   endif
 
   let results = []
@@ -137,7 +116,7 @@ function! eclim#common#locate#LocateFile(action, file, ...)
     let b:project = project
     let results = s:LocateFileFunction(scope)(pattern)
   finally
-    unlet! b:workspce
+    unlet! b:workspace
     unlet! b:project
   endtry
 
@@ -151,7 +130,7 @@ function! eclim#common#locate#LocateFile(action, file, ...)
   " More than one result.
   elseif len(results) > 1
     let message = "Multiple results, choose the file to open"
-    let response = eclim#util#PromptList(message, results, g:EclimInfoHighlight)
+    let response = eclim#util#PromptList(message, results, g:EclimHighlightInfo)
     if response == -1
       return
     endif
@@ -235,6 +214,7 @@ endfunction " }}}
 function! s:LocateFileCompletionInit(action, scope, project, workspace) " {{{
   let file = expand('%')
   let bufnum = bufnr('%')
+  let winnr = winnr()
   let winrestcmd = winrestcmd()
 
   topleft 12split [Locate\ Results]
@@ -259,6 +239,7 @@ function! s:LocateFileCompletionInit(action, scope, project, workspace) " {{{
   setlocal buftype=nofile bufhidden=delete
 
   let b:bufnum = bufnum
+  let b:winnr = winnr
   let b:project = a:project
   let b:workspace = a:workspace
   let b:scope = a:scope
@@ -290,9 +271,11 @@ function! s:LocateFileCompletionInit(action, scope, project, workspace) " {{{
   call s:LocateFileCompletionAutocmdDeferred()
 
   imap <buffer> <silent> <tab> <c-r>=<SID>LocateFileSelection("n")<cr>
+  imap <buffer> <silent> <c-j> <c-r>=<SID>LocateFileSelection("n")<cr>
   imap <buffer> <silent> <down> <c-r>=<SID>LocateFileSelection("n")<cr>
   imap <buffer> <silent> <s-tab> <c-r>=<SID>LocateFileSelection("p")<cr>
   imap <buffer> <silent> <up> <c-r>=<SID>LocateFileSelection("p")<cr>
+  imap <buffer> <silent> <c-k> <c-r>=<SID>LocateFileSelection("p")<cr>
   exec 'imap <buffer> <silent> <cr> ' .
     \ '<c-r>=<SID>LocateFileSelect("' . a:action . '")<cr>'
   imap <buffer> <silent> <c-e> <c-r>=<SID>LocateFileSelect('edit')<cr>
@@ -378,6 +361,7 @@ function! s:LocateFileSelect(action) " {{{
     endif
 
     let bufnum = b:bufnum
+    let winnr = b:winnr
     let winrestcmd = b:winrestcmd
 
     " close locate windows
@@ -388,7 +372,8 @@ function! s:LocateFileSelect(action) " {{{
     exec winrestcmd
 
     " open the selected result
-    call eclim#util#GoToBufferWindow(bufnum)
+    exec winnr . "wincmd w"
+    " call eclim#util#GoToBufferWindow(bufnum)
     call eclim#util#GoToBufferWindowOrOpen(file, a:action)
     call feedkeys("\<esc>", 'n')
     doautocmd WinEnter
@@ -442,7 +427,6 @@ function! s:ChooseScope() " {{{
     return
   endif
 
-  let workspace = ''
   let project = ''
   let locate_in = scope
 
@@ -465,10 +449,30 @@ function! s:ChooseScope() " {{{
     endwhile
     let locate_in = project
     let workspace = eclim#project#util#GetProjectWorkspace(project)
+    if type(workspace) == g:LIST_TYPE
+      let workspaces = workspace
+      unlet workspace
+      let response = eclim#util#PromptList(
+        \ 'Muliple workspaces found, please choose the target workspace',
+        \ workspaces, g:EclimHighlightInfo)
+
+      " user cancelled, error, etc.
+      if response < 0
+        return
+      endif
+
+      let workspace = workspaces[response]
+    endif
 
   elseif scope == 'workspace'
     let project = ''
-    let workspace = eclim#eclipse#ChooseWorkspace()
+    let instance = eclim#client#nailgun#ChooseEclimdInstance()
+    if type(instance) != g:DICT_TYPE
+      return
+    endif
+    let workspace = instance.workspace
+  else
+    let workspace = ''
   endif
 
   call s:CloseScopeChooser()
@@ -552,8 +556,7 @@ endfunction " }}}
 
 function! s:LocateFile_workspace(pattern) " {{{
   let command = substitute(s:LocateFileCommand(a:pattern), '<scope>', 'workspace', '')
-  let port = eclim#client#nailgun#GetNgPort(b:workspace)
-  let results = eclim#ExecuteEclim(command, port)
+  let results = eclim#Execute(command, {'workspace': b:workspace})
   if type(results) != g:LIST_TYPE
     return []
   endif
@@ -563,8 +566,7 @@ endfunction " }}}
 function! s:LocateFile_project(pattern) " {{{
   let command = substitute(s:LocateFileCommand(a:pattern), '<scope>', 'project', '')
   let command .= ' -n "' . b:project . '"'
-  let port = eclim#client#nailgun#GetNgPort(b:workspace)
-  let results = eclim#ExecuteEclim(command, port)
+  let results = eclim#Execute(command, {'workspace': b:workspace})
   if type(results) != g:LIST_TYPE
     return []
   endif
@@ -625,13 +627,20 @@ function! eclim#common#locate#LocateFileFromFileList(pattern, file) " {{{
   if has('win32unix')
     let file = eclim#cygwin#WindowsPath(file)
   endif
-  let command = substitute(s:LocateFileCommand(a:pattern), '<scope>', 'list', '')
-  let command .= ' -f "' . file . '"'
-  let port = eclim#client#nailgun#GetNgPort(b:workspace)
-  let results = eclim#ExecuteEclim(command, port)
-  if type(results) != g:LIST_TYPE
-    return []
+  if eclim#EclimAvailable(0)
+    let command = substitute(s:LocateFileCommand(a:pattern), '<scope>', 'list', '')
+    let command .= ' -f "' . file . '"'
+    let results = eclim#Execute(command, {'workspace': b:workspace})
+    if type(results) != g:LIST_TYPE
+      return []
+    endif
+  else
+    let results = []
+    for result in readfile(file)
+      call add(results, {'name': fnamemodify(result, ':t'), 'path': result})
+    endfor
   endif
+
   return results
 endfunction " }}}
 
