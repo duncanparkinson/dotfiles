@@ -38,6 +38,8 @@ alias sl=ls # often screw this up
 
 alias afind='ack-grep -il'
 
+alias agi='ag -i'
+
 alias g='git'
 alias ga='git add -A'
 alias gap='ga -p'
