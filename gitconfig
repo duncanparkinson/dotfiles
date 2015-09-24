@@ -3,6 +3,7 @@
 [user]
   name = Duncan Parkinson
   email = duncan.parkinson@mac.com
+  signingkey = E8E22C42
 [color]
   ui = true
 [color "branch"]
@@ -54,7 +55,7 @@
   la = !git l --all
   ctags = !.git/hooks/ctags
   rad = !git ra --date-order
-	lad = !git la --date-order
+  lad = !git la --date-order
 
 [diff]
   tool = Kaleidoscope
@@ -80,6 +81,7 @@
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
   default = tracking
+  followTags = true
 [core]
   autocrlf = input
   editor = vim
@@ -98,3 +100,5 @@
   file = ~/.mailmap
 [init]
   templatedir = ~/.git_template
+[pull]
+  rebase = true

@@ -1,0 +1,49 @@
+snippet {{
+{{$1}}
+endsnippet
+
+snippet {{{
+{{{$1}}}
+endsnippet
+
+snippet {{!
+{{!$1}}
+endsnippet
+
+snippet {{>
+{{>$1}}
+endsnippet
+
+snippet {{<
+{{<$1}}
+endsnippet
+
+snippet #
+{{#${1:each}}}
+  ${2:${VISUAL}}
+{{/$1}}
+endsnippet
+
+snippet each
+{{#each ${1:model} as |${2:model}|}}
+  ${3:${VISUAL}}
+{{/each}}
+endsnippet
+
+snippet if
+{{#if ${1:condition}}}
+  ${2:${VISUAL}}
+{{/if}}
+endsnippet
+
+snippet ife
+{{#if ${1:condition}}}
+  ${2:${VISUAL}}
+{{else}}
+  $3
+{{/if}}
+endsnippet
+
+snippet link
+{{#link-to '${1:link name}' ${2:model}}}${3:${VISUAL}}{{/link-to}}
+endsnippet

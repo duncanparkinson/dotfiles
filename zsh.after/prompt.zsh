@@ -2,5 +2,5 @@ if [[ $TERM == 'dumb' ]];
 then
   PROMPT='$ '
 else
-  prompt grb
+  prompt drrp
 fi

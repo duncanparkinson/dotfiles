@@ -13,26 +13,25 @@ Plugin 'gmarik/Vundle.vim'
 
 " Plugins
 Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
 " Plugin 'tpope/vim-haml'
-" Plugin 'tpope/vim-pathogen'
+Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-ragtag'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-repeat'
+" Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-vinegar'
-" Plugin 'wincent/Command-T'
 Plugin 'godlygeek/tabular'
-" Plugin 'gregsexton/gitv'
+Plugin 'gregsexton/gitv'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Plugin 'majutsushi/tagbar'
@@ -43,24 +42,17 @@ Plugin 'kana/vim-textobj-user'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'skwp/greplace.vim'
 " Plugin 'vim-scripts/taglist.vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
 Plugin 'edsono/vim-matchit'
-" Plugin 'duncanparkinson/vim-cucumber'
 Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'nono/vim-handlebars'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/AutoTag'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'rking/ag.vim'
 Plugin 'vim-scripts/lastpos.vim'
-" Plugin 'tomasr/molokai'
-" Plugin 'roman/golden-ratio'
 Plugin 'christoomey/vim-conflicted'
-" Plugin 'morhetz/gruvbox'
 Plugin 'hwartig/vim-seeing-is-believing'
 Plugin 'reedes/vim-colors-pencil'
-" Plugin 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'duncanparkinson/vim-spec-runner'
@@ -68,13 +60,13 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'chriskempson/base16-vim'
 Plugin 'vim-scripts/YankRing.vim'
-Plugin 'wikitopian/hardmode'
 Plugin 'rizzatti/dash.vim'
-Plugin 'endel/vim-github-colorscheme'
-Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plugin 'stulzer/heroku-colorscheme'
 " Plugin 'edkolev/tmuxline.vim'
-Plugin 'noahfrederick/vim-noctu'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'davidoc/taskpaper.vim'
+Plugin 'NLKNguyen/papercolor-theme'
 
 call vundle#end()
 
@@ -124,9 +116,6 @@ set t_ti= t_te=
 
 set spelllang=en_gb
 
-" Auto-reload buffers when file changed on disk
-set autoread
-
 " ================ Search Settings  =================
 set incsearch        "Find the next match as we type the search
 set ignorecase smartcase  " make searches case-sensitive only if they contain upper-case characters
@@ -165,6 +154,7 @@ set list listchars=tab:>.,extends:#,nbsp:.,trail:•
 " autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg=darkred
 " autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 
+
 " ================ Key Maps =========================
 " sensible wrap handling
 nmap k gk
@@ -181,16 +171,19 @@ call MapCR()
 
 imap <c-h> <space>=><space>
 
-" map <C-s> <esc>:w<CR>
-" imap <C-s> <esc>:w<CR>
-" map <C-q> <esc>:q<CR>
-" imap <C-q> <esc>:q<CR>
-
 " expand current dir
 cnoremap %% <C-R>=expand('%:p:h').'/'<cr>
 
+" insert timestamp in command line mode
+cnoremap <C-t> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
+function! InsertTimeStamp()
+  :normal i<C-r>=echo strftime("%Y%m%d%H%M%S")<cr>
+endfunction
+
 vmap > >gv
 vmap < <gv
+
+imap ;; <esc>A;<esc>
 
 " Ruby refactoring
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
@@ -205,6 +198,7 @@ nnoremap <Leader>gA :CtrlP Admin/<cr>
 nnoremap <Leader>gB :CtrlP Bids/<cr>
 nnoremap <Leader>gE :CtrlP EHSQ/<cr>
 nnoremap <Leader>gO :CtrlP Operations/<cr>
+nnoremap <Leader>gS :CtrlP Secondary/<cr>
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
@@ -212,11 +206,12 @@ map <Leader>. :call OpenTestAlternate()<cr>
 map <Leader>= mqgg=G`q
 map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
-map <Leader>a :!spring rspec spec/ features/<cr>
-map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
-map <Leader>au :!spring rspec spec/<cr>
-map <Leader>af :!spring rspec features/<cr>
-map <Leader>dt :topleft 30 :split<cr>:Note Daily Todos (taskpaper)<cr>
+map <Leader>a :Dispatch rspec<cr>
+" map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/<cr>
+" map <Leader>au :!spring rspec spec/<cr>
+" map <Leader>af :!spring rspec features/<cr>
+map <Leader>c :ProjectBuild<cr>
+map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
@@ -230,17 +225,17 @@ map <Leader>l :PromoteToLet<cr>
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
 map <Leader>qf :JavaCorrect<CR>
-map <Leader>rc :Rcontroller<Space>
+map <Leader>rc :Econtroller<Space>
 nnoremap <Leader>rf :CtrlP features/<cr>
-map <Leader>rg :Rgenerate<Space>
-map <Leader>rh :Rhelper<Space>
-map <Leader>ri :Rintegrationtest<Space>
-map <Leader>rj :Rjavascript<Space>
-map <Leader>rl :Rlib<Space>
-map <Leader>rm :Rmodel<Space>
-map <Leader>rs :Rstylesheet<Space>
-map <Leader>rt :Rspec<Space>
-map <Leader>rv :Rview<Space>
+map <Leader>rg :Egenerate<Space>
+map <Leader>rh :Ehelper<Space>
+map <Leader>ri :Eintegrationtest<Space>
+map <Leader>rj :Ejavascript<Space>
+map <Leader>rl :Elib<Space>
+map <Leader>rm :Emodel<Space>
+map <Leader>rs :Estylesheet<Space>
+map <Leader>rt :Espec<Space>
+map <Leader>rv :Eview<Space>
 map <Leader>sj :SplitjoinSplit<cr>
 map <Leader>sk :SplitjoinJoin<cr>
 map <Leader>sws :StripTrailingWhitespaces<CR>
@@ -298,14 +293,20 @@ nmap <C-t> <esc>:tabnew<CR>
 nmap <C-w>t <esc>:tabnew<CR>
 nnoremap <silent> vv :wincmd v<cr>
 nnoremap <silent> ss :wincmd s<cr>
-nnoremap <Left> :vertical resize -5<cr>
-nnoremap <Right> :vertical resize +5<cr>
+nnoremap <Up> :resize +2<cr>
+nnoremap <Down> :resize -2<cr>
+nnoremap <Left> :vertical resize -2<cr>
+nnoremap <Right> :vertical resize +2<cr>
+nnoremap <S-Up> :resize +10<cr>
+nnoremap <S-Down> :resize -10<cr>
+nnoremap <S-Left> :vertical resize -10<cr>
+nnoremap <S-Right> :vertical resize +10<cr>
 
 " ================ Appearance =======================
 "tell the term has 256 colors
 set t_Co=256
 
-colorscheme hemisu
+colorscheme solarized
 " LuciusWhite
 set background=dark
 
@@ -313,25 +314,25 @@ set cursorline
 " set cursorcolumn " seems to cause slowness...
 
 " ================ Status Line ======================
-" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 " set cmdheight=2
 
 set laststatus=2 "always show the status line
 
 "" Noah Frederick
-let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
-let &statusline .= "%f"
-let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
-let &statusline .= '%2*%{&modified && !&readonly?"\u25cf":""}%*'
-let &statusline .= '%2*%{&modified && &readonly?"\u25cb":""}%*'
-let &statusline .= '%1*%{&modifiable?"":"\u25cb"}%*'
-let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
-let &statusline .= "%="
-let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
-let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
-let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
-let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
-let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
+" let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
+" let &statusline .= "%f"
+" let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
+" let &statusline .= '%2*%{&modified && !&readonly?"\u25cf":""}%*'
+" let &statusline .= '%2*%{&modified && &readonly?"\u25cb":""}%*'
+" let &statusline .= '%1*%{&modifiable?"":"\u25cb"}%*'
+" let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
+" let &statusline .= "%="
+" let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
+" let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
+" let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
+" let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
+" let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
 
 " Git branch/commit in status line
 function! StatuslineGit()
@@ -404,6 +405,12 @@ set formatoptions-=or
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>_ :wincmd _<cr>:wincmd \|<cr>
+
 augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
@@ -603,21 +610,19 @@ endfunction
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor\ --ignore=vendor\ --ignore=tmp
+  set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  " " ag is fast enough that CtrlP doesn't need to cache
+  " let g:ctrlp_use_caching = 0
 endif
 
 " bind K to grep word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 let g:ctrlp_arg_map = 1
-
-let g:notes_directories = ['~/Dropbox/Public/Notes']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPARKUP
@@ -644,36 +649,66 @@ nmap <F6> <Plug>(seeing-is-believing-run)
 xmap <F6> <Plug>(seeing-is-believing-run)
 imap <F6> <Plug>(seeing-is-believing-run)
 
-" " airline
-" let g:airline_powerline_fonts = 1
+" airline
+let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'raven'
-" " let g:airline_theme = 'solarized'
-" let g:airline_right_sep=''
-" let g:airline_left_sep=''
+" let g:airline_theme = 'solarized'
+let g:airline_theme = 'papercolor'
+let g:airline_right_sep=''
+let g:airline_left_sep=''
 
-" " tmuxline
-" let g:tmuxline_separators = {
-"     \ 'left' : '',
-"     \ 'left_alt': '|',
-"     \ 'right' : '',
-"     \ 'right_alt' : '|',
-"     \ 'space' : ' '}
-"
-" let g:tmuxline_preset = {
-"       \'a'       : '#S',
-"       \'win'     : '#I:#W#F',
-"       \'cwin'    : '#I:#W#F',
-"       \'y'       : '#H',
-"       \'z'       : ['%R', '%b-%d-%Y'],
-"       \'options' : {'status-justify' : 'left'}}
+" tmuxline
+let g:tmuxline_separators = {
+    \ 'left' : '',
+    \ 'left_alt': '|',
+    \ 'right' : '',
+    \ 'right_alt' : '|',
+    \ 'space' : ' '}
 
-highlight clear SignColumn
-highlight GitGutterAdd ctermfg=lightgreen
-highlight GitGutterDelete ctermfg=lightred
-highlight GitGutterChange ctermfg=lightblue
-highlight GitGutterChangeDelete ctermfg=lightblue
+let g:tmuxline_preset = {
+      \'a'       : '#S',
+      \'win'     : '#I:#W#F',
+      \'cwin'    : '#I:#W#F',
+      \'y'       : '#H',
+      \'z'       : ['%R', '%b-%d-%Y'],
+      \'options' : {'status-justify' : 'left'}}
+
+highlight! default link GitGutterAdd DiffAdd
+highlight! default link GitGutterDelete DiffDelete
+highlight! default link GitGutterChange DiffChange
+highlight! default link GitGutterChangeDelete DiffChange
 
 let g:spec_runner_dispatcher = 'Dispatch {command}'
 
+let g:dispatch_compilers = {
+      \ 'bundle exec': '',
+      \ 'spring': '',
+      \ 'zeus': ''}
+
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
+
+" Eclim
+" let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
+
+" " YouCompleteMe
+" let g:ycm_add_preview_to_completeopt = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
+" let g:ycm_key_list_select_completion = ['<Down>']
+" let g:ycm_key_list_previous_completion = ['<Up>']
+" let g:ycm_filetype_blacklist = {
+"       \ 'tagbar' : 1,
+"       \ 'qf' : 1,
+"       \ 'notes' : 1,
+"       \ 'markdown' : 1,
+"       \ 'unite' : 1,
+"       \ 'text' : 1,
+"       \ 'vimwiki' : 1,
+"       \ 'pandoc' : 1,
+"       \ 'infolog' : 1,
+"       \ 'mail' : 1,
+"       \ 'html': 1,
+"       \ 'gitcommit': 1,
+"       \ }
+

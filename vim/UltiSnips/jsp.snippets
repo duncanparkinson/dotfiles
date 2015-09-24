@@ -29,3 +29,29 @@ endsnippet
 snippet reqs
 request.getParameterValues("$0")
 endsnippet
+
+snippet _skel
+<%@ page errorPage="/error.jsp" %><%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*${1}" %>
+<%@ include file="/includes/master_config.inc.jsp" %>
+<%@ include file="/includes/Connection.jsp" %>
+<%
+  ${0}
+%>
+<%@ include file="/includes/TidyUp.jsp"%>
+endsnippet
+
+snippet con
+<%@ include file="/includes/Connection.jsp" %>
+endsnippet
+
+snippet tidy
+<%@ include file="/includes/TidyUp.jsp"%>
+endsnippet
+
+snippet acon
+<%@ include file="/includes/ActiveJdbcConnection.jsp" %>
+endsnippet
+
+snippet atidy
+<%@ include file="/includes/ActiveJdbcTidyUp.jsp"%>
+endsnippet

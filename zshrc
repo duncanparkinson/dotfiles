@@ -47,3 +47,14 @@ setopt auto_cd
 cdpath=($HOME/projects $HOME)
 
 [[ $(env | grep -c PATH) < 2 ]] || /usr/bin/login -f $USER
+
+# Always use Tmux!
+_not_inside_tmux() { [[ -z "$TMUX" ]] }
+
+ensure_tmux_is_running() {
+  if _not_inside_tmux; then
+    tat
+  fi
+}
+
+ensure_tmux_is_running

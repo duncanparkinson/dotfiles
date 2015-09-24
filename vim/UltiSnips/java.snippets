@@ -24,3 +24,13 @@ snippet pa
 `!p
 snip.rv = 'package ' + path.replace('NotForDeployment/src/', '').replace('/' + fn, '').replace('/', '.') + ';'`
 endsnippet
+
+snippet fore
+for (${1:Type} ${2:item} : ${3:collection}) {
+  ${4:${VISUAL}}
+}
+endsnippet
+
+snippet rsg
+this.${1:instance variable} = rs${4}.get${3:String}("${2:$1}");
+endsnippet
