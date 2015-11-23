@@ -11,9 +11,9 @@ Pry.commands.alias_command 'n', 'next' rescue nil
 Pry.prompt = [proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " }, proc { |obj, nest_level, _| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
 
 # === Listing config ===
-# Better colors - by default the headings for methods are too 
+# Better colors - by default the headings for methods are too
 # similar to method name colors leading to a "soup"
-# These colors are optimized for use with Solarized scheme 
+# These colors are optimized for use with Solarized scheme
 # for your terminal
 Pry.config.ls.separator = "\n" # new lines between methods
 Pry.config.ls.heading_color = :magenta
@@ -100,7 +100,7 @@ end
 
 # === COLOR CUSTOMIZATION ===
 # Everything below this line is for customizing colors, you have to use the ugly
-# color codes, but such is life. 
+# color codes, but such is life.
 # CodeRay.scan("example", :ruby).term # just to load necessary files
 # Token colors pulled from: https://github.com/rubychan/coderay/blob/master/lib/coderay/encoders/terminal.rb
 TERM_TOKEN_COLORS = {
@@ -165,7 +165,7 @@ TERM_TOKEN_COLORS = {
         :type => '1;34',
         :value => '36',
         :variable => '34',
-        
+
         :insert => '42',
         :delete => '41',
         :change => '44',
@@ -186,7 +186,7 @@ TERM_TOKEN_COLORS = {
 begin
   require 'pbcopy'
 rescue LoadError
-  $LOAD_PATH << '~/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/pbcopy-1.0.1/lib/'
-  $LOAD_PATH << '~/.rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/pasteboard-1.0/lib/'
+  $LOAD_PATH << '~/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/pbcopy-1.0.1/lib/'
+  $LOAD_PATH << '~/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/pasteboard-1.0/lib/'
   require 'pbcopy'
 end

@@ -67,6 +67,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'davidoc/taskpaper.vim'
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'groenewege/vim-less'
+Plugin 'chrisbra/csv.vim'
 
 call vundle#end()
 
@@ -210,14 +212,18 @@ map <Leader>a :Dispatch rspec<cr>
 " map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/<cr>
 " map <Leader>au :!spring rspec spec/<cr>
 " map <Leader>af :!spring rspec features/<cr>
-map <Leader>c :ProjectBuild<cr>
 map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
+map <Leader>gb :Gblame<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
-map <Leader>j :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
+" map <Leader>j :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
+map <Leader>jr :ProjectRefresh<cr>
+map <Leader>jb :ProjectBuild<cr>
+map <Leader>jk :!stop-tomcat<cr>
+map <Leader>js :!start-tomcat<cr>
 map <Leader>n :call RenameFile()<cr>
 map <Leader>ocf :OpenChangedFiles<CR>
 map <Leader>p :set paste<CR>"*]p:set nopaste<cr>
@@ -308,13 +314,13 @@ set t_Co=256
 
 colorscheme solarized
 " LuciusWhite
-set background=dark
+set background=light
 
 set cursorline
 " set cursorcolumn " seems to cause slowness...
 
 " ================ Status Line ======================
-set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+" set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 " set cmdheight=2
 
 set laststatus=2 "always show the status line
@@ -424,7 +430,8 @@ augroup vimrcEx
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
-  autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  autocmd BufRead *.md  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
 
   " " Indent p tags
@@ -440,9 +447,6 @@ augroup vimrcEx
   autocmd FileType gitcommit,jsp set nolist | :normal gg
 
   autocmd Filetype gitcommit setlocal spell textwidth=72 nocursorline
-
-  " Don't syntax highlight markdown because it's often wrong
-  autocmd! FileType mkd setlocal syn=off
 
   " Leave the return key alone when in command line windows, since it's used
   " to run commands there.

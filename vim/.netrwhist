@@ -1,8 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/Users/duncan/projects/j-insite/NotForDeployment/SQL'
 let g:netrw_dirhist_2='/Users/duncan/projects/j-insite/instanceConfig'
 let g:netrw_dirhist_3='/Users/duncan/projects/j-insite'
 let g:netrw_dirhist_4='/Users/duncan/projects'
 let g:netrw_dirhist_5='/usr/local/apache-tomcat-6.0.35/conf'
 let g:netrw_dirhist_6='/Users/duncan/projects/insite-offshore-website/app/javascripts'
+let g:netrw_dirhist_7='/Users/duncan/projects/j-insite/.git'
