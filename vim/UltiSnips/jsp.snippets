@@ -1,3 +1,23 @@
+snippet _skel
+<%@ page errorPage="/error.jsp" %><%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*${1}" %>
+<%@ include file="/includes/master_config.inc.jsp" %>
+<%@ include file="/includes/Connection.jsp" %>
+<%
+  ${0}
+%>
+<%@ include file="/includes/TidyUp.jsp"%>
+endsnippet
+
+snippet _ehsq
+<%@ page errorPage="/error.jsp" %><%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*,com.wilceco.ehsq.*" %>
+<%@ include file="/includes/master_config.inc.jsp" %>
+<%@ include file="/includes/Connection.jsp" %>
+<%
+  ${0}
+%>
+<%@ include file="/includes/TidyUp.jsp"%>
+endsnippet
+
 snippet tintp
 try { $1 = Integer.parseInt(request.getParameter("$2")); } catch (Exception e) {}
 endsnippet
@@ -28,16 +48,6 @@ endsnippet
 
 snippet reqs
 request.getParameterValues("$0")
-endsnippet
-
-snippet _skel
-<%@ page errorPage="/error.jsp" %><%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*${1}" %>
-<%@ include file="/includes/master_config.inc.jsp" %>
-<%@ include file="/includes/Connection.jsp" %>
-<%
-  ${0}
-%>
-<%@ include file="/includes/TidyUp.jsp"%>
 endsnippet
 
 snippet con

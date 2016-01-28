@@ -73,6 +73,7 @@ function git-new-remote-tracking {
   git checkout -b $1 && git push -u origin $1
 }
 alias gp='git push'
+alias gpnew='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gpthis='gp origin $(git_current_branch)'
 alias gr='git reset'
 alias grb='git rebase -p'

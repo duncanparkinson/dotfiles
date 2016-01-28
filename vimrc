@@ -1,80 +1,84 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-"for vundle
-filetype on
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-bundler'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-git'
-" Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-rake'
-Plugin 'tpope/vim-repeat'
-" Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-Plugin 'godlygeek/tabular'
-Plugin 'gregsexton/gitv'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Plugin 'majutsushi/tagbar'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'sjl/gundo.vim'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'kana/vim-textobj-user'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'skwp/greplace.vim'
-" Plugin 'vim-scripts/taglist.vim'
-Plugin 'edsono/vim-matchit'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'vim-scripts/AutoTag'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'rking/ag.vim'
-Plugin 'vim-scripts/lastpos.vim'
-Plugin 'christoomey/vim-conflicted'
-Plugin 'hwartig/vim-seeing-is-believing'
-Plugin 'reedes/vim-colors-pencil'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'kien/ctrlp.vim'
-Plugin 'duncanparkinson/vim-spec-runner'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'chriskempson/base16-vim'
-Plugin 'vim-scripts/YankRing.vim'
-Plugin 'rizzatti/dash.vim'
-" Plugin 'edkolev/tmuxline.vim'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'davidoc/taskpaper.vim'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'groenewege/vim-less'
-Plugin 'chrisbra/csv.vim'
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+" Plug 'tpope/vim-haml'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'godlygeek/tabular'
+Plug 'gregsexton/gitv'
+Plug 'kchmck/vim-coffee-script'
+Plug 'rstacruz/sparkup', { 'rtp': 'vim/' }
+" Plug 'majutsushi/tagbar'
+Plug 'sjl/gundo.vim'
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+Plug 'kana/vim-textobj-user'
+Plug 'altercation/vim-colors-solarized'
+Plug 'skwp/greplace.vim'
+" Plug 'vim-scripts/taglist.vim'
+Plug 'edsono/vim-matchit'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/AutoTag'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'rking/ag.vim'
+Plug 'vim-scripts/lastpos.vim'
+Plug 'christoomey/vim-conflicted'
+Plug 'hwartig/vim-seeing-is-believing'
+Plug 'reedes/vim-colors-pencil'
+Plug 'bling/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'kien/ctrlp.vim'
+Plug 'duncanparkinson/vim-spec-runner'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'chriskempson/base16-vim'
+" Plug 'vim-scripts/YankRing.vim'
+Plug 'rizzatti/dash.vim'
+" Plug 'edkolev/tmuxline.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'pangloss/vim-javascript'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'davidoc/taskpaper.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'groenewege/vim-less'
+Plug 'chrisbra/csv.vim'
+Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+" Plug 'gosukiwi/vim-atom-dark'
+Plug 'Chiel92/vim-autoformat'
+Plug 'joshdick/onedark.vim'
+Plug 'joshdick/airline-onedark.vim'
+Plug 'AndrewRadev/switch.vim'
+Plug 'lloeki/vim-one-colorschemes'
+Plug 'floobits/floobits-vim'
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 
 " ================ General Config ====================
+set exrc                        "Enable project-specific vimrcs
 let mapleader=","
 set number                      "Line numbers are good
 set relativenumber
@@ -116,7 +120,23 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " http://www.shallowsky.com/linux/noaltscreen.html
 set t_ti= t_te=
 
+" ================ Spell Check =====================
 set spelllang=en_gb
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" Spell-check Markdown files
+autocmd FileType markdown setlocal spell
+
+" Spell-check Git messages
+autocmd FileType gitcommit setlocal spell
+
+" Set spellfile to location that is guaranteed to exist,
+" can be symlinked to Dropbox or kept in Git
+" and managed outside of thoughtbot/dotfiles using rcm.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+
+" Autocomplete with dictionary words when spell check is on
+set complete+=kspell
 
 " ================ Search Settings  =================
 set incsearch        "Find the next match as we type the search
@@ -163,6 +183,7 @@ nmap k gk
 nmap j gj
 
 "make Y consistent with C and D
+call yankstack#setup()
 nnoremap Y y$
 
 "clear the search buffer when hitting return
@@ -202,6 +223,8 @@ nnoremap <Leader>gE :CtrlP EHSQ/<cr>
 nnoremap <Leader>gO :CtrlP Operations/<cr>
 nnoremap <Leader>gS :CtrlP Secondary/<cr>
 
+nmap yp :set paste<CR>"*]p:set nopaste<cr>
+
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :call OpenTestAlternate()<cr>
@@ -217,8 +240,10 @@ vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
 map <Leader>gb :Gblame<CR>
+map <Leader>gc :Gcommit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
+map <Leader>gw :Gwrite<CR>
 " map <Leader>j :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
 map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
@@ -226,8 +251,9 @@ map <Leader>jk :!stop-tomcat<cr>
 map <Leader>js :!start-tomcat<cr>
 map <Leader>n :call RenameFile()<cr>
 map <Leader>ocf :OpenChangedFiles<CR>
-map <Leader>p :set paste<CR>"*]p:set nopaste<cr>
 map <Leader>l :PromoteToLet<cr>
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
 map <Leader>qf :JavaCorrect<CR>
@@ -247,7 +273,7 @@ map <Leader>sk :SplitjoinJoin<cr>
 map <Leader>sws :StripTrailingWhitespaces<CR>
 map <Leader>t <Plug>RunCurrentSpecFile
 map <Leader>u :GundoToggle<CR>
-map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PluginInstall<cr>
+map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
 map <Leader>vc yy:<C-f>p<CR>
 map <Leader>ve :tabe ~/.vimrc<CR>
 map <Leader>vg :tabe ~/.gvimrc<CR>
@@ -314,9 +340,9 @@ set t_Co=256
 
 colorscheme solarized
 " LuciusWhite
-set background=light
+set background=dark
 
-set cursorline
+" set cursorline
 " set cursorcolumn " seems to cause slowness...
 
 " ================ Status Line ======================
@@ -326,41 +352,64 @@ set cursorline
 set laststatus=2 "always show the status line
 
 "" Noah Frederick
-" let &statusline  = "%#StatusLineNC# %{getcwd()==$HOME?'~':fnamemodify(getcwd(), ':t')}%* "
-" let &statusline .= "%f"
+" let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
+" let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
+" let &statusline .= "%* %f"
 " let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
-" let &statusline .= '%2*%{&modified && !&readonly?"\u25cf":""}%*'
-" let &statusline .= '%2*%{&modified && &readonly?"\u25cb":""}%*'
-" let &statusline .= '%1*%{&modifiable?"":"\u25cb"}%*'
+" let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
+" let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
+" let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
 " let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
 " let &statusline .= "%="
 " let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
-" let &statusline .= '%#StatuslineNC#%{strlen(&fileencoding)?&fileencoding." ":""}'
-" let &statusline .= '%{&fileformat!="unix"?" (".&fileformat.") ":""}%*'
+" let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
+" let &statusline .= '%{&fileformat!="unix"?" ".&fileformat." ":""}%*'
 " let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
-" let &statusline .= '%#Error#%{exists("*SyntasticStatuslineFlag")?SyntasticStatuslineFlag():""}%*'
+" let &statusline .= '%#Error#%{exists("*accio#statusline")?accio#statusline("  %d ", ""):""}'
+" let &statusline .= "%{StatuslineTrailingWhitespace()}%*"
 
-" Git branch/commit in status line
-function! StatuslineGit()
-  if !exists('*fugitive#head')
-    return ''
-  endif
-  let l:out = fugitive#head(8)
-  if l:out !=# ''
-    let l:out = ' @ ' . l:out
-  endif
-  return l:out
-endfunction
+" " Git branch/commit in status line
+" function! StatuslineGit()
+"   if !exists('*fugitive#head')
+"     return ''
+"   endif
+"   let l:out = fugitive#head(8)
+"   if l:out !=# ''
+"     let l:out = ' @ ' . l:out
+"   endif
+"   return l:out
+" endfunction
 
-" Buffer indentation settings in status line
-function! StatuslineIndent()
-  if !&modifiable
-    return ''
-  endif
-  let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
-  let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
-  return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
-endfunction
+" " Buffer indentation settings in status line
+" function! StatuslineIndent()
+"   if !&modifiable
+"     return ''
+"   endif
+"   let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
+"   let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
+"   return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
+" endfunction
+
+" function! StatuslineProject()
+"   return getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
+" endfunction
+
+" function! StatuslineTrailingWhitespace()
+"   if !exists("b:statusline_trailing_whitespace")
+"     if !&modifiable || search('\s\+$', 'nw') == 0
+"       let b:statusline_trailing_whitespace = ""
+"     else
+"       let b:statusline_trailing_whitespace = "  \u2334 "
+"     endif
+"   endif
+
+"   return b:statusline_trailing_whitespace
+" endfunction
+
+" augroup init_statusline
+"   autocmd!
+"   autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_whitespace
+" augroup END
 
 " ================ Completion =======================
 set wildmode=list:longest
@@ -446,7 +495,7 @@ augroup vimrcEx
   autocmd FileType * set list
   autocmd FileType gitcommit,jsp set nolist | :normal gg
 
-  autocmd Filetype gitcommit setlocal spell textwidth=72 nocursorline
+  autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 
   " Leave the return key alone when in command line windows, since it's used
   " to run commands there.
@@ -654,28 +703,29 @@ xmap <F6> <Plug>(seeing-is-believing-run)
 imap <F6> <Plug>(seeing-is-believing-run)
 
 " airline
-let g:airline_powerline_fonts = 1
-" let g:airline_theme = 'raven'
-" let g:airline_theme = 'solarized'
-let g:airline_theme = 'papercolor'
-let g:airline_right_sep=''
-let g:airline_left_sep=''
+ let g:airline_powerline_fonts = 1
+ " let g:airline_theme = 'raven'
+ " let g:airline_theme = 'solarized'
+ let g:airline_theme = 'papercolor'
+ let g:airline_right_sep=''
+ let g:airline_left_sep=''
+ let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
-" tmuxline
-let g:tmuxline_separators = {
-    \ 'left' : '',
-    \ 'left_alt': '|',
-    \ 'right' : '',
-    \ 'right_alt' : '|',
-    \ 'space' : ' '}
+ " tmuxline
+ let g:tmuxline_separators = {
+     \ 'left' : '',
+     \ 'left_alt': '|',
+     \ 'right' : '',
+     \ 'right_alt' : '|',
+     \ 'space' : ' '}
 
-let g:tmuxline_preset = {
-      \'a'       : '#S',
-      \'win'     : '#I:#W#F',
-      \'cwin'    : '#I:#W#F',
-      \'y'       : '#H',
-      \'z'       : ['%R', '%b-%d-%Y'],
-      \'options' : {'status-justify' : 'left'}}
+ let g:tmuxline_preset = {
+       \'a'       : '#S',
+       \'win'     : '#I:#W#F',
+       \'cwin'    : '#I:#W#F',
+       \'y'       : '#H',
+       \'z'       : ['%R', '%b-%d-%Y'],
+       \'options' : {'status-justify' : 'left'}}
 
 highlight! default link GitGutterAdd DiffAdd
 highlight! default link GitGutterDelete DiffDelete
@@ -693,26 +743,35 @@ let g:dispatch_compilers = {
 nmap <silent> <leader>d <Plug>DashSearch
 
 " Eclim
-" let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
+let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
 
 " " YouCompleteMe
-" let g:ycm_add_preview_to_completeopt = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-" " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
-" let g:ycm_key_list_select_completion = ['<Down>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-" let g:ycm_filetype_blacklist = {
-"       \ 'tagbar' : 1,
-"       \ 'qf' : 1,
-"       \ 'notes' : 1,
-"       \ 'markdown' : 1,
-"       \ 'unite' : 1,
-"       \ 'text' : 1,
-"       \ 'vimwiki' : 1,
-"       \ 'pandoc' : 1,
-"       \ 'infolog' : 1,
-"       \ 'mail' : 1,
-"       \ 'html': 1,
-"       \ 'gitcommit': 1,
-"       \ }
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+" Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'mail' : 1,
+      \ 'gitcommit': 1,
+      \ }
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
