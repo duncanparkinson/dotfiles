@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/duncan/projects/j-insite/NotForDeployment/src/com/test/ehsq'
-let g:netrw_dirhist_2='/Users/duncan/.dotfiles/vim/colors'
-let g:netrw_dirhist_3='/Users/duncan/projects/j-insite'
