@@ -71,7 +71,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'joshdick/airline-onedark.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'lloeki/vim-one-colorschemes'
-Plug 'floobits/floobits-vim'
 
 call plug#end()
 
