@@ -193,11 +193,8 @@ call MapCR()
 
 imap <c-h> <space>=><space>
 
-" expand current dir
-cnoremap %% <C-R>=expand('%:p:h').'/'<cr>
-
 " insert timestamp in command line mode
-cnoremap <C-t> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
+cnoremap <C-T> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
 function! InsertTimeStamp()
   :normal i<C-r>=echo strftime("%Y%m%d%H%M%S")<cr>
 endfunction
@@ -231,9 +228,9 @@ map <Leader>= mqgg=G`q
 map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
 map <Leader>a :Dispatch rspec<cr>
-" map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/<cr>
-" map <Leader>au :!spring rspec spec/<cr>
-" map <Leader>af :!spring rspec features/<cr>
+map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
+map <Leader>au :!spring rspec spec/<cr>
+map <Leader>af :!spring rspec features/<cr>
 map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
