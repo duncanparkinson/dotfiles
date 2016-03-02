@@ -338,6 +338,7 @@ set t_Co=256
 colorscheme solarized
 " LuciusWhite
 set background=dark
+highlight Comment cterm=italic
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
