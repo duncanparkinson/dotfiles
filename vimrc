@@ -72,6 +72,8 @@ Plug 'joshdick/airline-onedark.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'lloeki/vim-one-colorschemes'
 Plug 'justinmk/vim-sneak'
+Plug 'kana/vim-textobj-indent'
+Plug 'christoomey/vim-sort-motion'
 
 call plug#end()
 
@@ -241,7 +243,6 @@ map <Leader>gc :Gcommit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
-" map <Leader>j :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
 map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
 map <Leader>jk :!stop-tomcat<cr>
