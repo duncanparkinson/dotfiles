@@ -1,0 +1,11 @@
+#!/bin/sh
+source "$(git --exec-path)/git-sh-setup"
+
+if [[ -n $(git rev-parse --verify --quiet HEAD~) ]]; then
+  echo "Current tag status: `git describe HEAD`"
+  echo "Previous tagged version used for comparison: `git describe HEAD~ --abbrev=0`"
+  echo "\nChanged Files :-"
+  git diff `git describe HEAD~ --abbrev=0`.. --name-only
+else
+  die "HEAD~ does not exist"
+fi

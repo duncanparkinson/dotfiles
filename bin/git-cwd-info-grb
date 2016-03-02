@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Emits Git metadata for use in a Zsh prompt.
+#
+# Based on Geoffrey Grosenbach's modified version of:
+#   https://github.com/benhoskings/dot-files/blob/master/files/bin/git_cwd_info
+#
+# Rewritten as shell script simply for speed
+
+function minutes_since_last_commit {
+    now=`date +%s`
+    last_commit=`git log --pretty=format:'%at' -1 2>/dev/null`
+    if $lastcommit ; then
+      seconds_since_last_commit=$((now-last_commit))
+      minutes_since_last_commit=$((seconds_since_last_commit/60))
+      echo $minutes_since_last_commit
+    else
+      echo "-1"
+    fi
+}
+
+function prompt_grb_scm_time_since_commit() {
+    local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
+    if [ "$MINUTES_SINCE_LAST_COMMIT" -eq -1 ]; then
+      COLOR="%{%F{magenta}%}"
+      local SINCE_LAST_COMMIT="${COLOR}uncommitted%{%F{reset}%}"
+    elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 1440 ]; then
+      COLOR="%{%F{magenta}%}"
+      local SINCE_LAST_COMMIT="${COLOR}>day%{%F{reset}%}"
+    elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 60 ]; then
+      COLOR="%{%F{red}%}"
+      local HOURS_SINCE_LAST_COMMIT=$((MINUTES_SINCE_LAST_COMMIT / 60))
+      local SINCE_LAST_COMMIT="${COLOR}$[HOURS_SINCE_LAST_COMMIT]h%{%F{reset}%}"
+    else
+      if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
+        COLOR="%{%F{red}%}"
+      elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 10 ]; then
+        COLOR="%{%F{yellow}%}"
+      else
+        COLOR="%{%F{green}%}"
+      fi
+      local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m%{%F{reset}%}"
+    fi
+    echo $SINCE_LAST_COMMIT
+}
+
+GIT_REPO_PATH=`git rev-parse --git-dir 2>/dev/null`
+
+if [[ $GIT_REPO_PATH != '' && $GIT_REPO_PATH != '~' && $GIT_REPO_PATH != "$HOME/.git" ]]; then
+
+  GIT_BRANCH=`git symbolic-ref -q HEAD | sed 's/refs\/heads\///'`
+  GIT_COMMIT_ID=`git rev-parse --short HEAD 2>/dev/null`
+
+  GIT_MODE=""
+  if [[ -e "$GIT_REPO_PATH/BISECT_LOG" ]]; then
+    GIT_MODE=" +bisect"
+  elif [[ -e "$GIT_REPO_PATH/MERGE_HEAD" ]]; then
+    GIT_MODE=" +merge"
+  elif [[ -e "$GIT_REPO_PATH/rebase" || -e "$GIT_REPO_PATH/rebase-apply" || -e "$GIT_REPO_PATH/rebase-merge" || -e "$GIT_REPO_PATH/../.dotest" ]]; then
+    GIT_MODE=" +rebase"
+  fi
+
+  GIT_UNTRACKED=""
+  if [[ "$GIT_REPO_PATH" != '.' && `git ls-files --others --exclude-standard` != "" ]]; then
+    GIT_UNTRACKED="%{%F{red}%}?%{%F{reset}%}"
+  fi
+
+  GIT_UNMERGED=""
+  if [[ "$GIT_REPO_PATH" != '.' && `git ls-files -u` != "" ]]; then
+    GIT_UNMERGED="%{%F{red}%}*%{%F{reset}%}"
+  fi
+
+  GIT_DIRTY=""
+  if [[ "$GIT_REPO_PATH" != '.' && `git ls-files -m` != "" ]]; then
+    GIT_DIRTY="%{%F{red}%}!%{%F{reset}%}"
+  fi
+
+  GIT_STAGED_FILES=""
+  if [[ "$GIT_REPO_PATH" != '.' && `git diff --cached 2>/dev/null` != "" ]]; then
+    GIT_STAGED_FILES="%{%F{green}%}+%{%F{reset}%}"
+  fi
+
+  echo "%{%F{reset}%}(%{%F{green}%}$GIT_BRANCH%{%F{reset}%}@%{%F{blue}%}$GIT_COMMIT_ID%{%F{reset}%})$GIT_MODE$GIT_STAGED_FILES$GIT_DIRTY$GIT_UNMERGED$GIT_UNTRACKED"
+fi
