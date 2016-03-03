@@ -704,10 +704,10 @@ imap <F6> <Plug>(seeing-is-believing-run)
 " airline
  let g:airline_powerline_fonts = 1
  " let g:airline_theme = 'raven'
- " let g:airline_theme = 'solarized'
- let g:airline_theme = 'papercolor'
- let g:airline_right_sep=''
- let g:airline_left_sep=''
+ let g:airline_theme = 'solarized'
+ " let g:airline_theme = 'papercolor'
+ " let g:airline_right_sep=''
+ " let g:airline_left_sep=''
  let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
  " tmuxline
