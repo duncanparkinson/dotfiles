@@ -40,7 +40,18 @@ alias afind='ack-grep -il'
 
 alias agi='ag -i'
 
-alias g='git'
+# No arguments: `git status`
+# With arguments: acts like `git`
+g() {
+  if [[ $# > 0 ]]; then
+    git $@
+  else
+    git status
+  fi
+}
+# Complete g like git
+compdef g=git
+
 alias ga='git add -A'
 alias gap='ga -p'
 alias gau='git add -u'
