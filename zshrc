@@ -58,3 +58,5 @@ ensure_tmux_is_running() {
 }
 
 ensure_tmux_is_running
+
+[[ -f ~/.aliases ]] && source ~/.aliases
