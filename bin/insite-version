@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+if [ $# -eq 0 ]; then
+  echo "No URL provided"
+  exit 1
+fi
+
+url=$1
+echo "$url: `curl -s $url/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"

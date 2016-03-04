@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-echo "Dubai: `curl -s dxb-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "Naila: `curl -s naila-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "BPASA: `curl -s bpa-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "Asima: `curl -s asima-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "Alima: `curl -s alima-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "Amani: `curl -s amani-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
-echo "Adira: `curl -s adira-insite.polarcus.com/includes/version.jsp | sed -e 's|<div style="display: none;">||' -e 's|</div>||' | tr -d '[[:space:]]'`"
+insite-version dxb-insite.polarcus.com
+insite-version naila-insite.polarcus.com
+insite-version bpa-insite.polarcus.com
+insite-version asima-insite.polarcus.com
+insite-version alima-insite.polarcus.com
+insite-version amani-insite.polarcus.com
+insite-version adira-insite.polarcus.com
