@@ -54,7 +54,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
-Plug 'rizzatti/dash.vim'
+Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 " Plug 'edkolev/tmuxline.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
