@@ -55,7 +55,7 @@ Plug 'honza/vim-snippets'
 Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
 Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
-" Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
@@ -705,17 +705,15 @@ imap <F6> <Plug>(seeing-is-believing-run)
 " airline
  let g:airline_powerline_fonts = 1
  " let g:airline_theme = 'raven'
- let g:airline_theme = 'solarized'
- " let g:airline_theme = 'papercolor'
- " let g:airline_right_sep=''
- " let g:airline_left_sep=''
+ " let g:airline_theme = 'solarized'
+ let g:airline_theme = 'papercolor'
  let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
  " tmuxline
  let g:tmuxline_separators = {
-     \ 'left' : '',
+     \ 'left' : '',
      \ 'left_alt': '|',
-     \ 'right' : '',
+     \ 'right' : '',
      \ 'right_alt' : '|',
      \ 'space' : ' '}
 
@@ -723,7 +721,8 @@ imap <F6> <Plug>(seeing-is-believing-run)
        \'a'       : '#S',
        \'win'     : '#I:#W#F',
        \'cwin'    : '#I:#W#F',
-       \'y'       : '#H',
+       \'x'       : '#(battery-life)#(battery-time)',
+       \'y'       : '#(cat ~/.weather.cache)',
        \'z'       : ['%R', '%b-%d-%Y'],
        \'options' : {'status-justify' : 'left'}}
 
