@@ -9,13 +9,21 @@ antigen use oh-my-zsh
 # antigen bundle pip
 # antigen bundle lein
 # antigen bundle command-not-found
+antigen bundle tmuxinator
+antigen bundle rbenv
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
 # antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-antigen theme bhilburn/powerlevel9k powerlevel9k
+POWERLEVEL9K_MODE='awesome-patched'
+antigen bundle bhilburn/powerlevel9k --branch=next --loc=powerlevel9k.zsh-theme
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
+POWERLEVEL9K_HOME_ICON=''
+POWERLEVEL9K_HOME_SUB_ICON=''
+POWERLEVEL9K_FOLDER_ICON=''
 
 # Tell antigen that you're done.
 antigen apply
