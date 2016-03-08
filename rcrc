@@ -1,1 +1,1 @@
-SYMLINK_DIRS="emacs.d git_template zsh zprezto zsh.after zsh.prompts yadr vim oh-my-zsh"
+SYMLINK_DIRS="emacs.d git_template zsh zprezto zsh.after zsh.prompts yadr vim oh-my-zsh bin"
