@@ -75,6 +75,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 Plug 'dansomething/vim-eclim'
+Plug 'elzr/vim-json'
 
 call plug#end()
 
