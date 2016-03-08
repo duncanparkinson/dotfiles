@@ -102,6 +102,7 @@ alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
 
 alias aliases='vim ~/.dotfiles/aliases; soaliases'
+alias dotfiles='cd ~/.dotfiles/'
 alias retag='ctags -R --exclude=.svn --exclude=.git --exclude=log --exclude=tmp *'
 alias tcsd='/Library/Tomcat/bin/shutdown.sh'
 alias tcsu='/Library/Tomcat/bin/startup.sh'
