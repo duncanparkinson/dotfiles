@@ -26,10 +26,6 @@ alias sp='spec_runner'
 alias v='vim'
 alias vi='vim'
 
-# Dotfile
-alias home='git --work-tree=$HOME --git-dir=$HOME/.files.git'
-alias h='home'
-
 # List direcory contents
 alias lsa='ls -lah'
 alias l='ls -la'
@@ -106,7 +102,6 @@ alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
 
 alias aliases='vim ~/.dotfiles/aliases; soaliases'
-alias das='cd ~/Documents/Screencasts/Destroy\ All\ Software'
 alias retag='ctags -R --exclude=.svn --exclude=.git --exclude=log --exclude=tmp *'
 alias tcsd='/Library/Tomcat/bin/shutdown.sh'
 alias tcsu='/Library/Tomcat/bin/startup.sh'
