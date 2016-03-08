@@ -748,6 +748,7 @@ let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
 " " YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
