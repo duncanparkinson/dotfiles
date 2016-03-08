@@ -74,6 +74,7 @@ Plug 'lloeki/vim-one-colorschemes'
 Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
+Plug 'dansomething/vim-eclim'
 
 call plug#end()
 
