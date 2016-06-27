@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-insite-version dxb-insite.polarcus.com
-insite-version naila-insite.polarcus.com
-insite-version bpa-insite.polarcus.com
-insite-version asima-insite.polarcus.com
-insite-version alima-insite.polarcus.com
-insite-version amani-insite.polarcus.com
-insite-version adira-insite.polarcus.com
+insite-version https://dxb-insite.polarcus.com
+insite-version https://naila-insite.polarcus.com
+insite-version https://bpa-insite.polarcus.com
+insite-version https://asima-insite.polarcus.com
+insite-version https://alima-insite.polarcus.com
+insite-version https://amani-insite.polarcus.com
+insite-version https://adira-insite.polarcus.com

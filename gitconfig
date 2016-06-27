@@ -16,9 +16,25 @@
   old = red
   new = green
 [alias]
-  st = status
-  ci = commit
+  a = add -A
+  ap = add -Ap
+  au = add -u
+  br = branch -v
+  c = commit -v
+  ca = commit -av
+  ch = cherry-pick
+  cm = commit -v --amend
   co = checkout
+  cop = checkout -p
+  d = diff -M
+  dw = diff -M --color-words="."
+  dc = diff --cached -M
+  dcw = diff --cached -M --color-words="."
+  dt = difftool
+  f = fetch
+  rh = reset --hard
+  st = status
+  ci = commit -v
   di = diff
   dc = diff --cached
   amend = commit --amend
@@ -31,6 +47,7 @@
   b = branch
   ds = diff --stat=160,120
   dh1 = diff HEAD~1
+  up = pull --rebase
 
   # Divergence (commits we added and commits remote added)
   div = divergence
@@ -80,7 +97,7 @@
 [push]
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
-  default = tracking
+	default = current
   followTags = true
 [core]
   autocrlf = input

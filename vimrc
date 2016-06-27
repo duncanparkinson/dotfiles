@@ -20,7 +20,7 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rsi'
+" Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -34,7 +34,7 @@ Plug 'sjl/gundo.vim'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
 Plug 'altercation/vim-colors-solarized'
-Plug 'skwp/greplace.vim'
+" Plug 'skwp/greplace.vim'
 " Plug 'vim-scripts/taglist.vim'
 Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -69,13 +69,26 @@ Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug 'Chiel92/vim-autoformat'
 Plug 'joshdick/onedark.vim'
 Plug 'joshdick/airline-onedark.vim'
-Plug 'AndrewRadev/switch.vim'
+" Plug 'AndrewRadev/switch.vim'
 Plug 'lloeki/vim-one-colorschemes'
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
+Plug 'vim-scripts/Align'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/sqlcomplete.vim'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'christoomey/vim-tmux-runner'
+Plug 'tommcdo/vim-exchange'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+Plug 'Olical/vim-enmasse'
+" Plug 'nacitar/terminalkeys.vim'
 
 call plug#end()
 
@@ -85,7 +98,7 @@ filetype plugin indent on
 set exrc                        "Enable project-specific vimrcs
 let mapleader=","
 set number                      "Line numbers are good
-set relativenumber
+" set relativenumber
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
@@ -189,6 +202,9 @@ nmap j gj
 "make Y consistent with C and D
 call yankstack#setup()
 nnoremap Y y$
+vnoremap y myy`y
+vnoremap Y myY`y
+vnoremap <expr>y "my\"" . v:register . "y`y"
 
 "clear the search buffer when hitting return
 function! MapCR()
@@ -199,7 +215,9 @@ call MapCR()
 imap <c-h> <space>=><space>
 
 " insert timestamp in command line mode
-cnoremap <C-T> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
+cnoremap <C-t> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
+nnoremap <F3> i<C-R>=strftime("%Y%m%d%H%M%S")<CR><Esc>
+inoremap <F3> <C-R>=strftime("%Y%m%d%H%M%S")<CR>
 function! InsertTimeStamp()
   :normal i<C-r>=echo strftime("%Y%m%d%H%M%S")<cr>
 endfunction
@@ -229,13 +247,12 @@ nmap yp :set paste<CR>"*]p:set nopaste<cr>
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :call OpenTestAlternate()<cr>
-map <Leader>= mqgg=G`q
 map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
-map <Leader>a :Dispatch rspec<cr>
+map <Leader>a :!rspec<cr>
 map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
-map <Leader>au :!spring rspec spec/<cr>
-map <Leader>af :!spring rspec features/<cr>
+map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/features/*.rb"<cr>
+map <Leader>af :!spring rspec spec/features/<cr>
 map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
@@ -300,6 +317,12 @@ map <Leader>} ysiw}
 map <Leader>{ ysiw{
 vmap <Leader>} c{ <C-R>" }<ESC>
 vmap <Leader>{ c{<C-R>"}<ESC>
+map <Leader><Space> ysiw<Space>
+vmap <Leader><Space> c<Space><C-R>"<Space><ESC>
+map <Leader>- ysiw-
+vmap <Leader>- c<% <C-R>" %><ESC>
+map <Leader>= ysiw=
+vmap <Leader>= c<%= <C-R>" %><ESC>
 
 " Quick Fix last search
 map <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
@@ -336,12 +359,15 @@ nnoremap <S-Right> :vertical resize +10<cr>
 
 " ================ Appearance =======================
 "tell the term has 256 colors
-set t_Co=256
+" set t_Co=256
 
+" let &t_8f="\e[38;2;%ld;%ld;%ldm"
+" let &t_8b="\e[48;2;%ld;%ld;%ldm"
+
+" set termguicolors
 colorscheme solarized
-" LuciusWhite
-set background=dark
-highlight Comment cterm=italic
+set background=light
+" highlight Comment cterm=italic
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -351,66 +377,6 @@ highlight Comment cterm=italic
 " set cmdheight=2
 
 set laststatus=2 "always show the status line
-
-"" Noah Frederick
-" let &statusline  = '%6*%{exists("*ObsessionStatus")?ObsessionStatus(StatuslineProject(), StatuslineProject() . " (paused)"):""}'
-" let &statusline .= '%#StatusLineNC#%{exists("*ObsessionStatus")?ObsessionStatus("", "", StatuslineProject()):StatuslineProject()}'
-" let &statusline .= "%* %f"
-" let &statusline .= "%#StatusLineNC#%{StatuslineGit()}%* "
-" let &statusline .= '%1*%{&modified && !&readonly?"\u25cf":""}%*'
-" let &statusline .= '%1*%{&modified && &readonly?"\u25cb":""}%*'
-" let &statusline .= '%2*%{&modifiable?"":"\u25cb"}%*'
-" let &statusline .= '%3*%{&readonly && &modifiable && !&modified?"\u25cb":""}%*'
-" let &statusline .= "%="
-" let &statusline .= "%#StatusLineNC#%{StatuslineIndent()}%* "
-" let &statusline .= '%#StatuslineNC#%{(strlen(&fileencoding) && &fileencoding !=# &encoding)?&fileencoding." ":""}'
-" let &statusline .= '%{&fileformat!="unix"?" ".&fileformat." ":""}%*'
-" let &statusline .= '%{strlen(&filetype)?&filetype." ":""}'
-" let &statusline .= '%#Error#%{exists("*accio#statusline")?accio#statusline("  %d ", ""):""}'
-" let &statusline .= "%{StatuslineTrailingWhitespace()}%*"
-
-" " Git branch/commit in status line
-" function! StatuslineGit()
-"   if !exists('*fugitive#head')
-"     return ''
-"   endif
-"   let l:out = fugitive#head(8)
-"   if l:out !=# ''
-"     let l:out = ' @ ' . l:out
-"   endif
-"   return l:out
-" endfunction
-
-" " Buffer indentation settings in status line
-" function! StatuslineIndent()
-"   if !&modifiable
-"     return ''
-"   endif
-"   let l:symbol = &expandtab ? "\u2022" : "\u21e5 "
-"   let l:amount = exists('*shiftwidth') ? shiftwidth() : &shiftwidth
-"   return &expandtab ? repeat(l:symbol, l:amount) : l:symbol
-" endfunction
-
-" function! StatuslineProject()
-"   return getcwd() == $HOME ? "~" : fnamemodify(getcwd(), ':t')
-" endfunction
-
-" function! StatuslineTrailingWhitespace()
-"   if !exists("b:statusline_trailing_whitespace")
-"     if !&modifiable || search('\s\+$', 'nw') == 0
-"       let b:statusline_trailing_whitespace = ""
-"     else
-"       let b:statusline_trailing_whitespace = "  \u2334 "
-"     endif
-"   endif
-
-"   return b:statusline_trailing_whitespace
-" endfunction
-
-" augroup init_statusline
-"   autocmd!
-"   autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_whitespace
-" augroup END
 
 " ================ Completion =======================
 set wildmode=list:longest
@@ -472,6 +438,8 @@ augroup vimrcEx
   autocmd!
   autocmd FileType text setlocal textwidth=78
 
+  autocmd FileType gitcommit,help,taskpaper setlocal nolist
+
   "for ruby, autoindent with two spaces, always expand tabs
   autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,note set ai sw=2 sts=2 et
   autocmd FileType python set sw=4 sts=4 et
@@ -492,9 +460,6 @@ augroup vimrcEx
 
   " Treat JSPs as Java
   autocmd FileType jsp set ft=jsp.html.java
-
-  autocmd FileType * set list
-  autocmd FileType gitcommit,jsp set nolist | :normal gg
 
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 
@@ -563,9 +528,25 @@ function! InlineVariable()
     :let @b = l:tmp_b
 endfunction
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FIX INDENTATION IN FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! <SID>Reindent()
+    " Preparation: save cursor position.
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    normal gg=G
+    call cursor(l, c)
+endfunction
+command! Reindent call <SID>Reindent()
+
 "====================== tmux ==============================
 
 if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
 
@@ -661,6 +642,8 @@ function! PromoteToLet()
 endfunction
 :command! PromoteToLet :call PromoteToLet()
 
+let @s = 'I"A " +'
+
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
@@ -733,7 +716,7 @@ highlight! default link GitGutterDelete DiffDelete
 highlight! default link GitGutterChange DiffChange
 highlight! default link GitGutterChangeDelete DiffChange
 
-let g:spec_runner_dispatcher = 'Dispatch {command}'
+let g:spec_runner_dispatcher = '!{command}'
 
 let g:dispatch_compilers = {
       \ 'bundle exec': '',
@@ -778,13 +761,50 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Sneak
-" 2-character Sneak (default)
-nmap s <Plug>Sneak_s
-nmap S <Plug>Sneak_S
-" visual-mode
-xmap s <Plug>Sneak_s
-xmap S <Plug>Sneak_S
-" operator-pending-mode
-omap s <Plug>Sneak_s
-omap S <Plug>Sneak_S
+" " Sneak
+" " 2-character Sneak (default)
+" nmap s <Plug>Sneak_s
+" nmap S <Plug>Sneak_S
+" " visual-mode
+" xmap s <Plug>Sneak_s
+" xmap S <Plug>Sneak_S
+" " operator-pending-mode
+" omap s <Plug>Sneak_s
+" omap S <Plug>Sneak_S
+
+let g:dbext_default_profile_insite_polarcus_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_development -w10000'
+let g:dbext_default_profile_insite_polarcus_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_production -w10000'
+let g:dbext_default_profile_insite_magseis_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_development -w10000'
+let g:dbext_default_profile_insite_magseis_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_production -w10000'
+let g:dbext_default_profile_insite_svs_demo='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_demo -w10000'
+
+function! Polarcus()
+  :DBSetOption profile='insite_polarcus_development'
+  :!bin/configure-for-polarcus
+endfunction
+:command! Polarcus :call Polarcus()
+
+function! PolarcusProduction()
+  :DBSetOption profile='insite_polarcus_production'
+  :!bin/configure-for-polarcus-production
+endfunction
+:command! PolarcusProduction :call PolarcusProduction()
+
+function! Magseis()
+  :DBSetOption profile='insite_magseis_development'
+  :!bin/configure-for-magseis
+endfunction
+:command! Magseis :call Magseis()
+
+function! MagseisProduction()
+  :DBSetOption profile='insite_magseis_production'
+  :!bin/configure-for-magseis-production
+endfunction
+:command! MagseisProduction :call MagseisProduction()
+
+function! ReloadChrome()
+  wall
+  execute ":silent !chrome-cli reload"
+endfunction
+
+nmap <C-c> :call ReloadChrome()<CR>

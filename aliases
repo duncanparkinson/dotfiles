@@ -97,7 +97,7 @@ alias gs='git show'
 alias gs.='git show --color-words="."'
 alias gst='git stash'
 alias gstp='git stash pop'
-alias gup='git smart-pull'
+alias gup='git up'
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
 
