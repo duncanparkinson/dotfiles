@@ -688,28 +688,28 @@ xmap <F6> <Plug>(seeing-is-believing-run)
 imap <F6> <Plug>(seeing-is-believing-run)
 
 " airline
- let g:airline_powerline_fonts = 1
- " let g:airline_theme = 'raven'
- " let g:airline_theme = 'solarized'
- let g:airline_theme = 'papercolor'
- let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
+let g:airline_powerline_fonts = 1
+" let g:airline_theme = 'raven'
+" let g:airline_theme = 'solarized'
+let g:airline_theme = 'papercolor'
+let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
- " tmuxline
- let g:tmuxline_separators = {
-     \ 'left' : '',
-     \ 'left_alt': '|',
-     \ 'right' : '',
-     \ 'right_alt' : '|',
-     \ 'space' : ' '}
+" tmuxline
+let g:tmuxline_separators = {
+   \ 'left' : '',
+   \ 'left_alt': '|',
+   \ 'right' : '',
+   \ 'right_alt' : '|',
+   \ 'space' : ' '}
 
- let g:tmuxline_preset = {
-       \'a'       : '#S',
-       \'win'     : '#I:#W#F',
-       \'cwin'    : '#I:#W#F',
-       \'x'       : '#(battery-life)#(battery-time)',
-       \'y'       : '#(cat ~/.weather.cache)',
-       \'z'       : ['%R', '%b-%d-%Y'],
-       \'options' : {'status-justify' : 'left'}}
+let g:tmuxline_preset = {
+     \'a'       : '#S',
+     \'win'     : '#I:#W#F',
+     \'cwin'    : '#I:#W#F',
+     \'x'       : '#(battery-life)#(battery-time)',
+     \'y'       : '#(cat ~/.weather.cache)',
+     \'z'       : ['%R', '%b-%d-%Y'],
+     \'options' : {'status-justify' : 'left'}}
 
 highlight! default link GitGutterAdd DiffAdd
 highlight! default link GitGutterDelete DiffDelete
