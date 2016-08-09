@@ -89,6 +89,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
+Plug 'git-time-metric/gtm-vim-plugin'
 
 call plug#end()
 
@@ -693,6 +694,15 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'solarized'
 let g:airline_theme = 'papercolor'
 let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
+
+let g:gtm_plugin_status_enabled = 1
+function! AirlineInit()
+  if exists('*GTMStatusline')
+    call airline#parts#define_function('gtmstatus', 'GTMStatusline')
+    let g:airline_section_b = airline#section#create([g:airline_section_b, ' ', '[', 'gtmstatus', ']'])
+  endif
+endfunction
+autocmd User AirlineAfterInit call AirlineInit()
 
 " tmuxline
 let g:tmuxline_separators = {
