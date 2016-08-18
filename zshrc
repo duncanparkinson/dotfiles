@@ -19,7 +19,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Load the theme.
 # antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 POWERLEVEL9K_MODE='awesome-patched'
-POWERLEVEL9K_COLOR_SCHEME='light'
+# POWERLEVEL9K_COLOR_SCHEME='light'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_HOME_ICON=''
@@ -53,6 +53,9 @@ chpwd() {
 # Disable flow control commands (keeps C-s from freezing everything)
 stty start undef
 stty stop undef
+# By default, ^S freezes terminal output and ^Q resumes it. Disable that so
+# that those keys can be used for other things.
+unsetopt flowcontrol
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).

@@ -46,7 +46,8 @@ Plug 'vim-scripts/lastpos.vim'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
 Plug 'reedes/vim-colors-pencil'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
@@ -90,6 +91,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
 Plug 'git-time-metric/gtm-vim-plugin'
+Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
 
@@ -228,6 +230,9 @@ vmap < <gv
 
 imap ;; <esc>A;<esc>
 
+imap <C-s> <Esc>:w<cr>
+nmap <C-s> <Esc>:w<cr>
+
 " Ruby refactoring
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
 nnoremap <Leader>B :%s/{\([^ ]\)/{ \1/gc\|%s/\([^ ]\)}/\1 }/gc<CR>
@@ -364,11 +369,14 @@ nnoremap <S-Right> :vertical resize +10<cr>
 
 " let &t_8f="\e[38;2;%ld;%ld;%ldm"
 " let &t_8b="\e[48;2;%ld;%ld;%ldm"
+set t_8f=[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
 
-" set termguicolors
-colorscheme solarized
-set background=light
+colorscheme solarized8_dark
+" set background=dark
 " highlight Comment cterm=italic
+
+set termguicolors
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -428,9 +436,6 @@ set formatoptions-=or
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd =
-
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>_ :wincmd _<cr>:wincmd \|<cr>
 
@@ -438,6 +443,9 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
   autocmd FileType text setlocal textwidth=78
+
+  " automatically rebalance windows on vim resize
+  autocmd VimResized * :wincmd =
 
   autocmd FileType gitcommit,help,taskpaper setlocal nolist
 
@@ -693,6 +701,7 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'raven'
 " let g:airline_theme = 'solarized'
 let g:airline_theme = 'papercolor'
+" let g:airline_theme = 'onedark'
 let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
 let g:gtm_plugin_status_enabled = 1
