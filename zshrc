@@ -13,9 +13,6 @@ antigen bundle tmuxinator
 antigen bundle rbenv
 antigen bundle git-extras
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
 # Load the theme.
 # antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 POWERLEVEL9K_MODE='awesome-patched'
@@ -32,6 +29,9 @@ POWERLEVEL9K_SHOW_CHANGESET=true
 POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
 
 antigen bundle bhilburn/powerlevel9k --branch=next --loc=powerlevel9k.zsh-theme
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Tell antigen that you're done.
 antigen apply
