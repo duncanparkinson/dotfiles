@@ -66,7 +66,7 @@ Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-" Plug 'gosukiwi/vim-atom-dark'
+Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
 Plug 'joshdick/onedark.vim'
 Plug 'joshdick/airline-onedark.vim'
@@ -92,6 +92,10 @@ Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
 Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
+Plug 'reedes/vim-thematic'
+Plug 'tomasr/molokai'
+Plug 'elmcast/elm-vim'
+Plug 'reedes/vim-pencil'
 
 call plug#end()
 
@@ -271,6 +275,7 @@ map <Leader>gw :Gwrite<CR>
 map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
 map <Leader>jk :!stop-tomcat<cr>
+map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :!start-tomcat<cr>
 map <Leader>n :call RenameFile()<cr>
 map <Leader>ocf :OpenChangedFiles<CR>
@@ -372,11 +377,11 @@ nnoremap <S-Right> :vertical resize +10<cr>
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
-colorscheme solarized8_dark
+" colorscheme solarized
 " set background=dark
 " highlight Comment cterm=italic
 
-set termguicolors
+" set termguicolors
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -401,8 +406,10 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
-set wildignore+=*.class,WEB-INF/*,*jxl/*,*.log
-set wildignore+=node_modules/*,FusionCharts*
+set wildignore+=*.class,*WEB-INF/classes/*,*WEB-INF/lib/*,*jxl/*,*.log
+set wildignore+=*node_modules/*,FusionCharts*
+set wildignore+=*bower_components/*
+set wildignore+=*dist/*
 
 " ================ Scrolling ========================
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
@@ -654,17 +661,15 @@ endfunction
 let @s = 'I"A " +'
 
 " The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --vimgrep\ $*
-  set grepformat=%f:%l:%c:%m
+" Use ag over grep
+set grepprg=ag\ --vimgrep\ $*
+set grepformat=%f:%l:%c:%m
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+" let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
 
-  " " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
-endif
+" ag is fast enough that CtrlP doesn't need to cache
+" let g:ctrlp_use_caching = 0
 
 " bind K to grep word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -729,7 +734,7 @@ let g:tmuxline_preset = {
      \'cwin'    : '#I:#W#F',
      \'x'       : '#(battery-life)#(battery-time)',
      \'y'       : '#(cat ~/.weather.cache)',
-     \'z'       : ['%R', '%b-%d-%Y'],
+     \'z'       : ['%R', '%d-%b-%Y'],
      \'options' : {'status-justify' : 'left'}}
 
 highlight! default link GitGutterAdd DiffAdd
@@ -770,8 +775,6 @@ let g:ycm_filetype_blacklist = {
       \ 'mail' : 1,
       \ 'gitcommit': 1,
       \ }
-
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
@@ -829,3 +832,56 @@ function! ReloadChrome()
 endfunction
 
 nmap <C-c> :call ReloadChrome()<CR>
+
+let g:thematic#defaults = {
+\ 'airline-theme': 'solarized',
+\ 'laststatus': 2,
+\ }
+
+let g:thematic#themes = {
+\  'solarized_light': {
+\    'colorscheme': 'solarized',
+\    'background': 'light',
+\  },
+\  'solarized_dark': {
+\    'colorscheme': 'solarized',
+\    'background': 'dark',
+\  },
+\  'molokai': {
+\    'airline-theme': 'molokai',
+\    'colorscheme': 'molokai',
+\    'background': 'dark',
+\  },
+\  'base16-flat': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'base16-flat',
+\    'background': 'dark',
+\  },
+\  'onedark': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'onedark',
+\    'background': 'dark',
+\  },
+\  'pencil_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'light',
+\  },
+\  'pencil_dark': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'dark',
+\  },
+\  'papercolor_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'PaperColor',
+\    'background': 'light',
+\  },
+\  'grb256': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'grb256',
+\    'background': 'dark',
+\  },
+\}
+
+let g:thematic#theme_name = 'solarized_dark'
