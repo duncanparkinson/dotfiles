@@ -17,7 +17,7 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-ragtag'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-rsi'
@@ -51,13 +51,13 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'honza/vim-snippets'
 Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
 Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 Plug 'edkolev/tmuxline.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidoc/taskpaper.vim'
@@ -98,6 +98,12 @@ Plug 'elmcast/elm-vim'
 Plug 'reedes/vim-pencil'
 
 call plug#end()
+
+augroup load_us_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+        \| autocmd! load_us_ycm
+augroup END
 
 filetype plugin indent on
 
