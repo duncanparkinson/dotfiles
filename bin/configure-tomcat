@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+if [ $# -eq 0 ]; then
+  echo "No path provided"
+  exit 1
+fi
+
+path=$1
+
+ln -s ~/projects/j-insite $path/webapps/insite
+cp /Library/Tomcat/bin/setenv.sh $path/bin/setenv.sh
+
+sudo rm /Library/Tomcat
+sudo ln -s $path /Library/Tomcat
+chmod +x /Library/Tomcat/bin/*
+
+echo "Remember to configure conf/web.xml and conf/server.xml!"
