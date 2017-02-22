@@ -254,6 +254,7 @@ nnoremap <Leader>gVS :CtrlP NotForDeployment/coffeescript/vessel_schedule<cr>
 nnoremap <Leader>gN :CtrlP NotForDeployment/src<cr>
 nnoremap <Leader>gA :CtrlP Admin/<cr>
 nnoremap <Leader>gB :CtrlP Bids/<cr>
+nnoremap <Leader>gC :CtrlP NotForDeployment/sass<cr>
 nnoremap <Leader>gE :CtrlP EHSQ/<cr>
 nnoremap <Leader>gO :CtrlP Operations/<cr>
 nnoremap <Leader>gS :CtrlP Secondary/<cr>
@@ -693,7 +694,7 @@ function! OpenCompiledJsp()
   let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
   let new_file = current_file
   let new_file = substitute(current_file, '\.jsp', '_jsp.java', '')
-  let new_file = '/Library/Tomcat/work/Catalina/localhost/_/org/apache/jsp/' . new_file
+  let new_file = '/Library/Tomcat/work/Catalina/localhost/ROOT/org/apache/jsp/' . new_file
   exec ':e ' . new_file
 endfunction
 :command! C :call OpenCompiledJsp()
