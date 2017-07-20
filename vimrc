@@ -137,7 +137,7 @@ set nojoinspaces
 " set winminheight=5
 " set winheight=999
 
-set colorcolumn=80
+" set colorcolumn=80
 
 " This makes RVM work inside Vim. I have no idea why.
 set shell=bash
@@ -256,6 +256,7 @@ nnoremap <Leader>gA :CtrlP Admin/<cr>
 nnoremap <Leader>gB :CtrlP Bids/<cr>
 nnoremap <Leader>gC :CtrlP NotForDeployment/sass<cr>
 nnoremap <Leader>gE :CtrlP EHSQ/<cr>
+nnoremap <Leader>gJ :CtrlP script/<cr>
 nnoremap <Leader>gO :CtrlP Operations/<cr>
 nnoremap <Leader>gS :CtrlP Secondary/<cr>
 
@@ -892,3 +893,16 @@ let g:thematic#themes = {
 \}
 
 let g:thematic#theme_name = 'solarized_dark'
+
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
+
+command! Gwnext Gwrite|next
+command! Gwdelete Gwrite|bdelete
