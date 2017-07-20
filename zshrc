@@ -1,6 +1,6 @@
-_ANTIGEN_CACHE_ENABLED=true
+# _ANTIGEN_CACHE_ENABLED=true
 POWERLEVEL9K_MODE='awesome-patched'
-# POWERLEVEL9K_COLOR_SCHEME='light'
+POWERLEVEL9K_COLOR_SCHEME='light'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_HOME_ICON=''
@@ -11,23 +11,29 @@ POWERLEVEL9K_RBENV_FOREGROUND="249"
 POWERLEVEL9K_RBENV_VISUAL_IDENTIFIER_COLOR="red"
 POWERLEVEL9K_SHOW_CHANGESET=true
 POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
-# If there is cache available
-if [[ -f ${ADOT:-$HOME/.antigen}/.cache/.zcache-payload ]]; then
-  # Load bundles statically
-  source ${ADOT:-$HOME/.antigen}/.cache/.zcache-payload
+source ~/.dotfiles/antigen.zsh
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
 
-  # You will need to call compinit
-  autoload -Uz compinit
-  compinit -d ${HOME}/.zcompdump
-else
-  # If there is no cache available do load and execute antigen
-  source ~/.dotfiles/antigen.zsh
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+# antigen bundle git
+# antigen bundle heroku
+# antigen bundle pip
+# antigen bundle lein
+# antigen bundle command-not-found
+antigen bundle tmuxinator
+antigen bundle rbenv
+antigen bundle git-extras
 
-  # I'm using antigen-init here but your usual antigen-bundle,
-  # antigen-theme, antigen-apply will work as well
-  antigen init $ZSH_CUSTOM/.antigenrc
-  antigen init ~/.antigenrc
-fi
+# Load the theme.
+# antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+antigen bundle bhilburn/powerlevel9k --branch=next --loc=powerlevel9k.zsh-theme
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Tell antigen that you're done.
+antigen apply
 
 export PATH="/usr/local/heroku/bin:/Users/duncan/.rbenv/shims:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/Users/duncan/.rbenv/shims:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
 
