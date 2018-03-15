@@ -1,6 +1,6 @@
 # _ANTIGEN_CACHE_ENABLED=true
 POWERLEVEL9K_MODE='awesome-patched'
-POWERLEVEL9K_COLOR_SCHEME='light'
+# POWERLEVEL9K_COLOR_SCHEME='light'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_HOME_ICON=''
@@ -22,7 +22,7 @@ antigen use oh-my-zsh
 # antigen bundle lein
 # antigen bundle command-not-found
 antigen bundle tmuxinator
-antigen bundle rbenv
+# antigen bundle rbenv
 antigen bundle git-extras
 
 # Load the theme.
@@ -35,7 +35,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen apply
 
-export PATH="/usr/local/heroku/bin:/Users/duncan/.rbenv/shims:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/Users/duncan/.rbenv/shims:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
+export PATH="/usr/local/heroku/bin:/Users/duncan/.rbenv/shims:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
 eval "$(rbenv init -)"
@@ -81,3 +81,8 @@ ensure_tmux_is_running() {
 ensure_tmux_is_running
 
 [[ -f ~/.aliases ]] && source ~/.aliases
+
+export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # to fix problems with capybara-webkit
+
+# bindkey '^R' history-incremental-search-backward
+# bindkey '^S' history-incremental-search-forward
