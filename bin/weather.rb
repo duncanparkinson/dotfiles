@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-system("ruby -v")
-system("gem list --local")
-
 require 'lost'
 require 'forecast_io'
 
