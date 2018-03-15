@@ -183,10 +183,10 @@ TERM_TOKEN_COLORS = {
 #     end
 # end
 
-begin
-  require 'pbcopy'
-rescue LoadError
-  $LOAD_PATH << '~/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/pbcopy-1.0.1/lib/pbcopy.rb'
-  $LOAD_PATH << '~/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/pasteboard-1.0/lib/pasteboard.rb'
-  require 'pbcopy'
-end
+# begin
+#   require 'pbcopy'
+# rescue LoadError
+#   $LOAD_PATH << '~/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/pbcopy-1.0.1/lib/pbcopy.rb'
+#   $LOAD_PATH << '~/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/pasteboard-1.0/lib/pasteboard.rb'
+#   require 'pbcopy'
+# end
