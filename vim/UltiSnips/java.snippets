@@ -38,3 +38,11 @@ endsnippet
 snippet rsg
 this.${1:instance variable} = rs${4}.get${3:String}("${2:$1}");
 endsnippet
+
+snippet startbench
+long benchmarkStart = System.currentTimeMillis();
+endsnippet
+
+snippet endbench
+System.out.println("Benchmark time: " + ((System.currentTimeMillis() - benchmarkStart) / 1000.0) + " seconds");
+endsnippet

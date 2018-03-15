@@ -69,3 +69,17 @@ endsnippet
 snippet out
 out.write(${1:${VISUAL}});
 endsnippet
+
+snippet include
+<%@ include file="$0" %>
+endsnippet
+
+snippet jinclude
+<jsp:include page="$0"></jsp:include>
+endsnippet
+
+snippet jincludeparam
+<jsp:include page="$1">
+  <jsp:param name="$1" value="$3"/>
+</jsp:include>
+endsnippet
