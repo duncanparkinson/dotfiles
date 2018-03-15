@@ -16,7 +16,7 @@ Plug 'tpope/vim-git'
 " Plug 'tpope/vim-haml'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-ragtag'
+Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
@@ -25,21 +25,21 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'godlygeek/tabular'
-Plug 'gregsexton/gitv'
+Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'kchmck/vim-coffee-script'
 Plug 'rstacruz/sparkup', { 'rtp': 'vim/' }
 " Plug 'majutsushi/tagbar'
 Plug 'sjl/gundo.vim'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
 " Plug 'skwp/greplace.vim'
 " Plug 'vim-scripts/taglist.vim'
 Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-ruby/vim-ruby'
-Plug 'vim-scripts/AutoTag'
+Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'rking/ag.vim'
 Plug 'vim-scripts/lastpos.vim'
@@ -53,31 +53,31 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'honza/vim-snippets'
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
 Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
-Plug 'edkolev/tmuxline.vim'
-Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh' }
+" Plug 'edkolev/tmuxline.vim'
+" Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer --tern-completer' }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'davidoc/taskpaper.vim'
-Plug 'NLKNguyen/papercolor-theme'
+" Plug 'davidoc/taskpaper.vim'
+" Plug 'NLKNguyen/papercolor-theme'
 Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
-Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plug 'gosukiwi/vim-atom-dark'
+" Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+" Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
-Plug 'joshdick/onedark.vim'
-Plug 'joshdick/airline-onedark.vim'
+" Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/airline-onedark.vim'
 " Plug 'AndrewRadev/switch.vim'
-Plug 'lloeki/vim-one-colorschemes'
+" Plug 'lloeki/vim-one-colorschemes'
 " Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 " Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
-Plug 'vim-scripts/Align'
+" Plug 'vim-scripts/Align'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/dbext.vim'
 Plug 'vim-scripts/sqlcomplete.vim'
@@ -93,15 +93,20 @@ Plug 'Olical/vim-enmasse'
 Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
 Plug 'reedes/vim-thematic'
-Plug 'tomasr/molokai'
+" Plug 'tomasr/molokai'
 Plug 'elmcast/elm-vim'
-Plug 'reedes/vim-pencil'
+" Plug 'reedes/vim-pencil'
+Plug 'duncanparkinson/nova-vim'
+Plug 'twerth/ir_black'
+Plug 'jacoborus/tender.vim'
+" Plug 'jelera/vim-javascript-syntax'
 
 call plug#end()
 
 augroup load_us_ycm
   autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+  " autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+  autocmd InsertEnter * call plug#load('ultisnips')
         \| autocmd! load_us_ycm
 augroup END
 
@@ -213,7 +218,6 @@ nmap k gk
 nmap j gj
 
 "make Y consistent with C and D
-call yankstack#setup()
 nnoremap Y y$
 vnoremap y myy`y
 vnoremap Y myY`y
@@ -280,16 +284,17 @@ map <Leader>gc :Gcommit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
+map <Leader>jg :JavaGet<cr>
+map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
 map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
-map <Leader>jk :!stop-tomcat<cr>
 map <Leader>jo :JavaImportOrganize<cr>
-map <Leader>js :!start-tomcat<cr>
+map <Leader>js :JavaSet<cr>
 map <Leader>n :call RenameFile()<cr>
 map <Leader>ocf :OpenChangedFiles<CR>
 map <Leader>l :PromoteToLet<cr>
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
+" nmap <leader>p <Plug>yankstack_substitute_older_paste
+" nmap <leader>P <Plug>yankstack_substitute_newer_paste
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
 map <Leader>qf :JavaCorrect<CR>
@@ -389,7 +394,7 @@ set t_8b=[48;2;%lu;%lu;%lum
 " set background=dark
 " highlight Comment cterm=italic
 
-" set termguicolors
+set termguicolors
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -482,8 +487,8 @@ augroup vimrcEx
   " add pwd to path (particularly to allow rails.vim to work with namespaces)
   autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
 
-  " Treat JSPs as Java
-  autocmd FileType jsp set ft=jsp.html.java
+  " " Treat JSPs as Java
+  " autocmd FileType jsp set ft=jsp.html.java
 
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 
@@ -492,6 +497,21 @@ augroup vimrcEx
   autocmd! CmdwinEnter * :unmap <cr>
   autocmd! CmdwinLeave * :call MapCR()
 augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
@@ -674,13 +694,15 @@ set grepprg=ag\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-" let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
+let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
 
 " ag is fast enough that CtrlP doesn't need to cache
-" let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 0
 
 " bind K to grep word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+let g:ctrlp_match_window = 'max:50'
 
 let g:ctrlp_arg_map = 1
 
@@ -712,7 +734,7 @@ imap <F6> <Plug>(seeing-is-believing-run)
 " airline
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'raven'
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'nova'
 " let g:airline_theme = 'papercolor'
 " let g:airline_theme = 'onedark'
 " let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
@@ -741,7 +763,7 @@ let g:tmuxline_preset = {
      \'win'     : '#I:#W#F',
      \'cwin'    : '#I:#W#F',
      \'x'       : '#(battery-life)#(battery-time)',
-     \'y'       : '#(cat ~/.weather.cache)',
+     \'y'       : '#(~/.bin/weather.sh)',
      \'z'       : ['%R', '%d-%b-%Y'],
      \'options' : {'status-justify' : 'left'}}
 
@@ -761,7 +783,7 @@ let g:dispatch_compilers = {
 nmap <silent> <leader>d <Plug>DashSearch
 
 " Eclim
-let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
+" let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
 
 " " YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1
@@ -804,11 +826,11 @@ endfunc
 " omap s <Plug>Sneak_s
 " omap S <Plug>Sneak_S
 
-let g:dbext_default_profile_insite_polarcus_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_development -w10000'
-let g:dbext_default_profile_insite_polarcus_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_production -w10000'
-let g:dbext_default_profile_insite_magseis_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_development -w10000'
-let g:dbext_default_profile_insite_magseis_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_production -w10000'
-let g:dbext_default_profile_insite_svs_demo='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_demo -w10000'
+let g:dbext_default_profile_insite_polarcus_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_development'
+let g:dbext_default_profile_insite_polarcus_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_production'
+let g:dbext_default_profile_insite_magseis_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_development'
+let g:dbext_default_profile_insite_magseis_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_production'
+let g:dbext_default_profile_insite_svs_demo='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_demo'
 
 function! Polarcus()
   :DBSetOption profile='insite_polarcus_development'
@@ -848,11 +870,11 @@ let g:thematic#defaults = {
 
 let g:thematic#themes = {
 \  'solarized_light': {
-\    'colorscheme': 'solarized',
+\    'colorscheme': 'solarized8_light',
 \    'background': 'light',
 \  },
 \  'solarized_dark': {
-\    'colorscheme': 'solarized',
+\    'colorscheme': 'solarized8_dark',
 \    'background': 'dark',
 \  },
 \  'molokai': {
@@ -890,9 +912,19 @@ let g:thematic#themes = {
 \    'colorscheme': 'grb256',
 \    'background': 'dark',
 \  },
+\  'nova': {
+\    'airline-theme': 'nova',
+\    'colorscheme': 'nova',
+\    'background': 'dark',
+\  },
+\  'tender': {
+\    'airline-theme': 'tender',
+\    'colorscheme': 'tender',
+\    'background': 'dark',
+\  },
 \}
 
-let g:thematic#theme_name = 'solarized_dark'
+let g:thematic#theme_name = 'nova'
 
 command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 function! QuickfixFilenames()
@@ -906,3 +938,6 @@ endfunction
 
 command! Gwnext Gwrite|next
 command! Gwdelete Gwrite|bdelete
+
+" replace word under cursor
+nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
