@@ -30,18 +30,19 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'kchmck/vim-coffee-script'
 Plug 'rstacruz/sparkup', { 'rtp': 'vim/' }
 " Plug 'majutsushi/tagbar'
-Plug 'sjl/gundo.vim'
+" Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree/'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'skwp/greplace.vim'
 " Plug 'vim-scripts/taglist.vim'
-Plug 'edsono/vim-matchit'
+" Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'rking/ag.vim'
+" Plug 'rking/ag.vim'
 Plug 'vim-scripts/lastpos.vim'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
@@ -85,7 +86,7 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'tommcdo/vim-exchange'
 Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'kana/vim-textobj-entire'
+" Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors with vim-autotag
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
@@ -100,8 +101,15 @@ Plug 'duncanparkinson/nova-vim'
 Plug 'twerth/ir_black'
 Plug 'jacoborus/tender.vim'
 " Plug 'jelera/vim-javascript-syntax'
+Plug 'rakr/vim-one'
+Plug 'rakr/vim-two-firewatch'
+Plug 'sonph/onehalf', { 'rtp': 'vim/' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
+
+runtime! macros/matchit.vim
 
 augroup load_us_ycm
   autocmd!
@@ -246,23 +254,27 @@ imap ;; <esc>A;<esc>
 
 imap <C-s> <Esc>:w<cr>
 nmap <C-s> <Esc>:w<cr>
+nmap <C-q> <Esc>:q<cr>
 
 " Ruby refactoring
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
 nnoremap <Leader>B :%s/{\([^ ]\)/{ \1/gc\|%s/\([^ ]\)}/\1 }/gc<CR>
 
-nnoremap <Leader>b :CtrlPBuffer<cr>
-nnoremap <Leader>F :CtrlP %:p:h<cr>
-nnoremap <Leader>f :CtrlP<cr>
-nnoremap <Leader>gVS :CtrlP NotForDeployment/coffeescript/vessel_schedule<cr>
-nnoremap <Leader>gN :CtrlP NotForDeployment/src<cr>
-nnoremap <Leader>gA :CtrlP Admin/<cr>
-nnoremap <Leader>gB :CtrlP Bids/<cr>
-nnoremap <Leader>gC :CtrlP NotForDeployment/sass<cr>
-nnoremap <Leader>gE :CtrlP EHSQ/<cr>
-nnoremap <Leader>gJ :CtrlP script/<cr>
-nnoremap <Leader>gO :CtrlP Operations/<cr>
-nnoremap <Leader>gS :CtrlP Secondary/<cr>
+nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>F :Files %:p:h<cr>
+nnoremap <Leader>f :Files<cr>
+nnoremap <Leader>gVS :Files NotForDeployment/coffeescript/vessel_schedule<cr>
+nnoremap <Leader>gN :Files NotForDeployment/src<cr>
+nnoremap <Leader>gA :Files Admin/<cr>
+nnoremap <Leader>gB :Files Bids/<cr>
+nnoremap <Leader>gC :Files NotForDeployment/sass<cr>
+nnoremap <Leader>gE :Files EHSQ/<cr>
+nnoremap <Leader>gI :Files includes/<cr>
+nnoremap <Leader>gJ :Files script/<cr>
+nnoremap <Leader>gO :Files Operations/<cr>
+nnoremap <Leader>gS :Files Secondary/<cr>
+nnoremap <Leader>gT :Files WEB-INF/jsp/task_manager/<cr>
+nnoremap <Leader>gW :Files WEB-INF/jsp/<cr>
 
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
@@ -290,7 +302,7 @@ map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
 map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :JavaSet<cr>
-map <Leader>n :call RenameFile()<cr>
+map <Leader>n :Rename 
 map <Leader>ocf :OpenChangedFiles<CR>
 map <Leader>l :PromoteToLet<cr>
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
@@ -313,7 +325,7 @@ map <Leader>sj :SplitjoinSplit<cr>
 map <Leader>sk :SplitjoinJoin<cr>
 map <Leader>sws :StripTrailingWhitespaces<CR>
 map <Leader>t <Plug>RunCurrentSpecFile
-map <Leader>u :GundoToggle<CR>
+map <Leader>u :UndotreeToggle<CR>
 map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
 map <Leader>vc yy:<C-f>p<CR>
 map <Leader>ve :tabe ~/.vimrc<CR>
@@ -490,6 +502,8 @@ augroup vimrcEx
   " " Treat JSPs as Java
   " autocmd FileType jsp set ft=jsp.html.java
 
+  autocmd BufRead *.tag  set ft=jsp.html
+
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 
   " Leave the return key alone when in command line windows, since it's used
@@ -512,19 +526,6 @@ function! InsertTabWrapper()
 endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " EXTRACT VARIABLE (SKETCHY)
@@ -694,13 +695,13 @@ set grepprg=ag\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
+" let g:ctrlp_user_command = 'ag -l --nocolor -g "" %s'
 
 " ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 0
+" let g:ctrlp_use_caching = 0
 
 " bind K to grep word under cursor
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ag \b<C-R><C-W>\b<CR>
 
 let g:ctrlp_match_window = 'max:50'
 
@@ -861,7 +862,7 @@ function! ReloadChrome()
   execute ":silent !chrome-cli reload"
 endfunction
 
-nmap <C-c> :call ReloadChrome()<CR>
+" nmap <C-c> :call ReloadChrome()<CR>
 
 let g:thematic#defaults = {
 \ 'airline-theme': 'solarized',
@@ -885,11 +886,6 @@ let g:thematic#themes = {
 \  'base16-flat': {
 \    'airline-theme': 'papercolor',
 \    'colorscheme': 'base16-flat',
-\    'background': 'dark',
-\  },
-\  'onedark': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'onedark',
 \    'background': 'dark',
 \  },
 \  'pencil_light': {
@@ -922,9 +918,29 @@ let g:thematic#themes = {
 \    'colorscheme': 'tender',
 \    'background': 'dark',
 \  },
+\  'one_dark': {
+\    'airline-theme': 'one',
+\    'colorscheme': 'one',
+\    'background': 'dark',
+\  },
+\  'one_light': {
+\    'airline-theme': 'one',
+\    'colorscheme': 'one',
+\    'background': 'light',
+\  },
+\  'one_half_light': {
+\    'airline-theme': 'onehalflight',
+\    'colorscheme': 'onehalflight',
+\    'background': 'light',
+\  },
+\  'one_half_dark': {
+\    'airline-theme': 'onehalfdark',
+\    'colorscheme': 'onehalfdark',
+\    'background': 'dark',
+\  },
 \}
 
-let g:thematic#theme_name = 'nova'
+let g:thematic#theme_name = 'solarized_dark'
 
 command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 function! QuickfixFilenames()

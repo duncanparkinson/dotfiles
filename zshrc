@@ -1,6 +1,6 @@
 # _ANTIGEN_CACHE_ENABLED=true
 POWERLEVEL9K_MODE='awesome-patched'
-# POWERLEVEL9K_COLOR_SCHEME='light'
+POWERLEVEL9K_COLOR_SCHEME='light'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
 POWERLEVEL9K_HOME_ICON=''
@@ -62,9 +62,9 @@ unsetopt flowcontrol
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 
-function unix_ts { LBUFFER="${LBUFFER}$(date '+%Y%m%d%H%M%S')" }
-zle -N unix_ts
-bindkey "^t" unix_ts
+function unix_ts { echo "$(date '+%Y%m%d%H%M%S')" }
+# zle -N unix_ts
+# bindkey "^T" unix_ts
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 
@@ -86,3 +86,13 @@ export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # to fix problems with capybara-we
 
 # bindkey '^R' history-incremental-search-backward
 # bindkey '^S' history-incremental-search-forward
+
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+export FZF_DEFAULT_OPTS='
+  --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75
+  --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07
+  --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07
+'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
