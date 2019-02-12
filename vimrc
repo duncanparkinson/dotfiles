@@ -4,7 +4,7 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
@@ -18,7 +18,7 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-projectionist'
 Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-rake'
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-speeddating'
@@ -46,11 +46,11 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-scripts/lastpos.vim'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
-Plug 'reedes/vim-colors-pencil'
+" Plug 'reedes/vim-colors-pencil'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'honza/vim-snippets'
@@ -79,9 +79,9 @@ Plug 'christoomey/vim-sort-motion'
 " Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
 " Plug 'vim-scripts/Align'
-Plug 'vim-scripts/SQLUtilities'
-Plug 'vim-scripts/dbext.vim'
-Plug 'vim-scripts/sqlcomplete.vim'
+" Plug 'vim-scripts/SQLUtilities'
+" Plug 'vim-scripts/dbext.vim'
+" Plug 'vim-scripts/sqlcomplete.vim'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'tommcdo/vim-exchange'
@@ -93,7 +93,7 @@ Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
 Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
-Plug 'reedes/vim-thematic'
+" Plug 'reedes/vim-thematic'
 " Plug 'tomasr/molokai'
 Plug 'elmcast/elm-vim'
 " Plug 'reedes/vim-pencil'
@@ -101,9 +101,9 @@ Plug 'duncanparkinson/nova-vim'
 Plug 'twerth/ir_black'
 Plug 'jacoborus/tender.vim'
 " Plug 'jelera/vim-javascript-syntax'
-Plug 'rakr/vim-one'
-Plug 'rakr/vim-two-firewatch'
-Plug 'sonph/onehalf', { 'rtp': 'vim/' }
+" Plug 'rakr/vim-one'
+" Plug 'rakr/vim-two-firewatch'
+" Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -402,8 +402,8 @@ nnoremap <S-Right> :vertical resize +10<cr>
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
-" colorscheme solarized
-" set background=dark
+colorscheme solarized8_dark
+set background=dark
 " highlight Comment cterm=italic
 
 set termguicolors
@@ -734,8 +734,9 @@ imap <F6> <Plug>(seeing-is-believing-run)
 
 " airline
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'solarized'
 " let g:airline_theme = 'raven'
-let g:airline_theme = 'nova'
+" let g:airline_theme = 'nova'
 " let g:airline_theme = 'papercolor'
 " let g:airline_theme = 'onedark'
 " let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
@@ -864,83 +865,83 @@ endfunction
 
 " nmap <C-c> :call ReloadChrome()<CR>
 
-let g:thematic#defaults = {
-\ 'airline-theme': 'solarized',
-\ 'laststatus': 2,
-\ }
+" let g:thematic#defaults = {
+" \ 'airline-theme': 'solarized',
+" \ 'laststatus': 2,
+" \ }
 
-let g:thematic#themes = {
-\  'solarized_light': {
-\    'colorscheme': 'solarized8_light',
-\    'background': 'light',
-\  },
-\  'solarized_dark': {
-\    'colorscheme': 'solarized8_dark',
-\    'background': 'dark',
-\  },
-\  'molokai': {
-\    'airline-theme': 'molokai',
-\    'colorscheme': 'molokai',
-\    'background': 'dark',
-\  },
-\  'base16-flat': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'base16-flat',
-\    'background': 'dark',
-\  },
-\  'pencil_light': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'light',
-\  },
-\  'pencil_dark': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'dark',
-\  },
-\  'papercolor_light': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'PaperColor',
-\    'background': 'light',
-\  },
-\  'grb256': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'grb256',
-\    'background': 'dark',
-\  },
-\  'nova': {
-\    'airline-theme': 'nova',
-\    'colorscheme': 'nova',
-\    'background': 'dark',
-\  },
-\  'tender': {
-\    'airline-theme': 'tender',
-\    'colorscheme': 'tender',
-\    'background': 'dark',
-\  },
-\  'one_dark': {
-\    'airline-theme': 'one',
-\    'colorscheme': 'one',
-\    'background': 'dark',
-\  },
-\  'one_light': {
-\    'airline-theme': 'one',
-\    'colorscheme': 'one',
-\    'background': 'light',
-\  },
-\  'one_half_light': {
-\    'airline-theme': 'onehalflight',
-\    'colorscheme': 'onehalflight',
-\    'background': 'light',
-\  },
-\  'one_half_dark': {
-\    'airline-theme': 'onehalfdark',
-\    'colorscheme': 'onehalfdark',
-\    'background': 'dark',
-\  },
-\}
+" let g:thematic#themes = {
+" \  'solarized_light': {
+" \    'colorscheme': 'solarized8_light',
+" \    'background': 'light',
+" \  },
+" \  'solarized_dark': {
+" \    'colorscheme': 'solarized8_dark',
+" \    'background': 'dark',
+" \  },
+" \  'molokai': {
+" \    'airline-theme': 'molokai',
+" \    'colorscheme': 'molokai',
+" \    'background': 'dark',
+" \  },
+" \  'base16-flat': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'base16-flat',
+" \    'background': 'dark',
+" \  },
+" \  'pencil_light': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'pencil',
+" \    'background': 'light',
+" \  },
+" \  'pencil_dark': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'pencil',
+" \    'background': 'dark',
+" \  },
+" \  'papercolor_light': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'PaperColor',
+" \    'background': 'light',
+" \  },
+" \  'grb256': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'grb256',
+" \    'background': 'dark',
+" \  },
+" \  'nova': {
+" \    'airline-theme': 'nova',
+" \    'colorscheme': 'nova',
+" \    'background': 'dark',
+" \  },
+" \  'tender': {
+" \    'airline-theme': 'tender',
+" \    'colorscheme': 'tender',
+" \    'background': 'dark',
+" \  },
+" \  'one_dark': {
+" \    'airline-theme': 'one',
+" \    'colorscheme': 'one',
+" \    'background': 'dark',
+" \  },
+" \  'one_light': {
+" \    'airline-theme': 'one',
+" \    'colorscheme': 'one',
+" \    'background': 'light',
+" \  },
+" \  'one_half_light': {
+" \    'airline-theme': 'onehalflight',
+" \    'colorscheme': 'onehalflight',
+" \    'background': 'light',
+" \  },
+" \  'one_half_dark': {
+" \    'airline-theme': 'onehalfdark',
+" \    'colorscheme': 'onehalfdark',
+" \    'background': 'dark',
+" \  },
+" \}
 
-let g:thematic#theme_name = 'solarized_dark'
+" let g:thematic#theme_name = 'solarized_dark'
 
 command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 function! QuickfixFilenames()
