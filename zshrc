@@ -1,7 +1,7 @@
 # _ANTIGEN_CACHE_ENABLED=true
 P9K_MODE='awesome-patched'
 P9K_COLOR_SCHEME='dark'
-P9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
+P9K_LEFT_PROMPT_ELEMENTS=(context dir)
 P9K_RIGHT_PROMPT_ELEMENTS=(status time)
 P9K_DIR_HOME_ICON=''
 P9K_DIR_HOME_SUBFOLDER_ICON=''
@@ -12,7 +12,7 @@ P9K_RBENV_FOREGROUND="249"
 P9K_RBENV_VISUAL_IDENTIFIER_COLOR="red"
 P9K_VCS_SHOW_CHANGESET=true
 P9K_VCS_CHANGESET_HASH_LENGTH=6
-P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-aheadbehind git-remotebranch git-tagname)
+P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
 source ~/.dotfiles/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh

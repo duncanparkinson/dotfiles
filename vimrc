@@ -15,7 +15,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 " Plug 'tpope/vim-haml'
 Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-projectionist'
+" Plug 'tpope/vim-projectionist'
 Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
@@ -40,7 +40,7 @@ Plug 'kana/vim-textobj-user'
 " Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-ruby/vim-ruby'
-Plug 'craigemery/vim-autotag'
+" Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'rking/ag.vim'
 Plug 'vim-scripts/lastpos.vim'
@@ -49,14 +49,14 @@ Plug 'hwartig/vim-seeing-is-believing'
 " Plug 'reedes/vim-colors-pencil'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
 Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'honza/vim-snippets'
 " Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
-Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
+" Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 " Plug 'edkolev/tmuxline.vim'
 " Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer --tern-completer' }
 Plug 'pangloss/vim-javascript'
@@ -79,9 +79,9 @@ Plug 'christoomey/vim-sort-motion'
 " Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
 " Plug 'vim-scripts/Align'
-" Plug 'vim-scripts/SQLUtilities'
-" Plug 'vim-scripts/dbext.vim'
-" Plug 'vim-scripts/sqlcomplete.vim'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/sqlcomplete.vim'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'tommcdo/vim-exchange'
@@ -106,6 +106,7 @@ Plug 'jacoborus/tender.vim'
 " Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 
@@ -402,7 +403,7 @@ nnoremap <S-Right> :vertical resize +10<cr>
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
-colorscheme solarized8_dark
+colorscheme solarized8
 set background=dark
 " highlight Comment cterm=italic
 
