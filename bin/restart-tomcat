@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+stop-tomcat && ( tail -f -n0 /Library/Tomcat/logs/catalina.out & ) | grep -q "Destroying ProtocolHandler \[\"ajp-nio-8009\"\]" && start-tomcat
