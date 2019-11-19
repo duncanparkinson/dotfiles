@@ -100,3 +100,8 @@ export FZF_DEFAULT_OPTS='
 '
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# jEnv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+# /jEnv
