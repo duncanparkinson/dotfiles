@@ -83,3 +83,11 @@ snippet jincludeparam
   <jsp:param name="$1" value="$3"/>
 </jsp:include>
 endsnippet
+
+snippet currentjdbcuser
+JdbcUser currentUser = JdbcUser.findById(session.getAttribute("user.username"));
+endsnippet
+
+snippet log
+System.${1:out}.println(${2});
+endsnippet

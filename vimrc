@@ -4,7 +4,7 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
 " Plugins
-" Plug 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
@@ -93,7 +93,7 @@ Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
 Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
-" Plug 'reedes/vim-thematic'
+Plug 'reedes/vim-thematic'
 " Plug 'tomasr/molokai'
 Plug 'elmcast/elm-vim'
 " Plug 'reedes/vim-pencil'
@@ -502,6 +502,9 @@ augroup vimrcEx
 
   " " Treat JSPs as Java
   " autocmd FileType jsp set ft=jsp.html.java
+  autocmd FileType jsp imap <buffer> <C-X>= <%=h(  )%><Esc>3hi
+  autocmd FileType jsp nmap <buffer> <C-X>= "zyiwca"<%=h(  )%><Esc>4h"zp
+  autocmd FileType jsp nmap <buffer> <C-X>- I<% <Esc>A %><Esc>
 
   autocmd BufRead *.tag  set ft=jsp.html
 
@@ -866,83 +869,83 @@ endfunction
 
 " nmap <C-c> :call ReloadChrome()<CR>
 
-" let g:thematic#defaults = {
-" \ 'airline-theme': 'solarized',
-" \ 'laststatus': 2,
-" \ }
+let g:thematic#defaults = {
+\ 'airline-theme': 'solarized',
+\ 'laststatus': 2,
+\ }
 
-" let g:thematic#themes = {
-" \  'solarized_light': {
-" \    'colorscheme': 'solarized8_light',
-" \    'background': 'light',
-" \  },
-" \  'solarized_dark': {
-" \    'colorscheme': 'solarized8_dark',
-" \    'background': 'dark',
-" \  },
-" \  'molokai': {
-" \    'airline-theme': 'molokai',
-" \    'colorscheme': 'molokai',
-" \    'background': 'dark',
-" \  },
-" \  'base16-flat': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'base16-flat',
-" \    'background': 'dark',
-" \  },
-" \  'pencil_light': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'pencil',
-" \    'background': 'light',
-" \  },
-" \  'pencil_dark': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'pencil',
-" \    'background': 'dark',
-" \  },
-" \  'papercolor_light': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'PaperColor',
-" \    'background': 'light',
-" \  },
-" \  'grb256': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'grb256',
-" \    'background': 'dark',
-" \  },
-" \  'nova': {
-" \    'airline-theme': 'nova',
-" \    'colorscheme': 'nova',
-" \    'background': 'dark',
-" \  },
-" \  'tender': {
-" \    'airline-theme': 'tender',
-" \    'colorscheme': 'tender',
-" \    'background': 'dark',
-" \  },
-" \  'one_dark': {
-" \    'airline-theme': 'one',
-" \    'colorscheme': 'one',
-" \    'background': 'dark',
-" \  },
-" \  'one_light': {
-" \    'airline-theme': 'one',
-" \    'colorscheme': 'one',
-" \    'background': 'light',
-" \  },
-" \  'one_half_light': {
-" \    'airline-theme': 'onehalflight',
-" \    'colorscheme': 'onehalflight',
-" \    'background': 'light',
-" \  },
-" \  'one_half_dark': {
-" \    'airline-theme': 'onehalfdark',
-" \    'colorscheme': 'onehalfdark',
-" \    'background': 'dark',
-" \  },
-" \}
+let g:thematic#themes = {
+\  'solarized_light': {
+\    'colorscheme': 'solarized8_light',
+\    'background': 'light',
+\  },
+\  'solarized_dark': {
+\    'colorscheme': 'solarized8_dark',
+\    'background': 'dark',
+\  },
+\  'molokai': {
+\    'airline-theme': 'molokai',
+\    'colorscheme': 'molokai',
+\    'background': 'dark',
+\  },
+\  'base16-flat': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'base16-flat',
+\    'background': 'dark',
+\  },
+\  'pencil_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'light',
+\  },
+\  'pencil_dark': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'dark',
+\  },
+\  'papercolor_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'PaperColor',
+\    'background': 'light',
+\  },
+\  'grb256': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'grb256',
+\    'background': 'dark',
+\  },
+\  'nova': {
+\    'airline-theme': 'nova',
+\    'colorscheme': 'nova',
+\    'background': 'dark',
+\  },
+\  'tender': {
+\    'airline-theme': 'tender',
+\    'colorscheme': 'tender',
+\    'background': 'dark',
+\  },
+\  'one_dark': {
+\    'airline-theme': 'one',
+\    'colorscheme': 'one',
+\    'background': 'dark',
+\  },
+\  'one_light': {
+\    'airline-theme': 'one',
+\    'colorscheme': 'one',
+\    'background': 'light',
+\  },
+\  'one_half_light': {
+\    'airline-theme': 'onehalflight',
+\    'colorscheme': 'onehalflight',
+\    'background': 'light',
+\  },
+\  'one_half_dark': {
+\    'airline-theme': 'onehalfdark',
+\    'colorscheme': 'onehalfdark',
+\    'background': 'dark',
+\  },
+\}
 
-" let g:thematic#theme_name = 'solarized_dark'
+let g:thematic#theme_name = 'solarized_dark'
 
 command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 function! QuickfixFilenames()
@@ -959,3 +962,7 @@ command! Gwdelete Gwrite|bdelete
 
 " replace word under cursor
 nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
