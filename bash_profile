@@ -18,3 +18,5 @@ FDK_EXE="/Users/duncan/bin/FDK/Tools/osx"
 PATH=${PATH}:"/Users/duncan/bin/FDK/Tools/osx"
 export PATH
 export FDK_EXE
+# Added by install_latest_perl_osx.pl
+[ -r /Users/duncan/.bashrc ] && source /Users/duncan/.bashrc
