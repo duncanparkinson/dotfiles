@@ -23,7 +23,7 @@ antigen use oh-my-zsh
 # antigen bundle pip
 # antigen bundle lein
 # antigen bundle command-not-found
-antigen bundle tmuxinator
+# antigen bundle tmuxinator
 # antigen bundle rbenv
 antigen bundle git-extras
 
@@ -83,6 +83,8 @@ ensure_tmux_is_running() {
 ensure_tmux_is_running
 
 [[ -f ~/.aliases ]] && source ~/.aliases
+
+source ~/.bin/tmuxinator.zsh
 
 export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # to fix problems with capybara-webkit
 
