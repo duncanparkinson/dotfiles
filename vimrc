@@ -14,13 +14,14 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
 " Plug 'tpope/vim-haml'
 Plug 'tpope/vim-obsession'
 " Plug 'tpope/vim-projectionist'
 Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
+" Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-speeddating'
@@ -45,7 +46,7 @@ Plug 'vim-ruby/vim-ruby'
 " Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'rking/ag.vim'
-Plug 'vim-scripts/lastpos.vim'
+Plug 'farmergreg/vim-lastplace'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
 " Plug 'reedes/vim-colors-pencil'
@@ -78,7 +79,7 @@ Plug 'Chiel92/vim-autoformat'
 " Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
-" Plug 'dansomething/vim-eclim'
+Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
 " Plug 'vim-scripts/Align'
 Plug 'vim-scripts/SQLUtilities'
@@ -109,6 +110,10 @@ Plug 'jacoborus/tender.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'leafgarland/typescript-vim'
+" Plug 'dense-analysis/ale'
+Plug 'jremmen/vim-ripgrep'
+" Plug 'natebosch/vim-lsc'
 
 call plug#end()
 
@@ -234,12 +239,6 @@ vnoremap y myy`y
 vnoremap Y myY`y
 vnoremap <expr>y "my\"" . v:register . "y`y"
 
-"clear the search buffer when hitting return
-function! MapCR()
-  nnoremap <cr> :nohlsearch<cr>
-endfunction
-call MapCR()
-
 imap <c-h> <space>=><space>
 
 " insert timestamp in command line mode
@@ -278,6 +277,7 @@ nnoremap <Leader>gO :Files Operations/<cr>
 nnoremap <Leader>gS :Files Secondary/<cr>
 nnoremap <Leader>gT :Files WEB-INF/jsp/task_manager/<cr>
 nnoremap <Leader>gW :Files WEB-INF/jsp/<cr>
+nnoremap <Leader>grt :!echo "restart-tomcat" > async-commands<cr>
 
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
@@ -286,6 +286,7 @@ map <Leader>- <C-w>J
 map <Leader>. :call OpenTestAlternate()<cr>
 map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
+nnoremap <Leader>/ :nohlsearch<cr>
 map <Leader>a :!rspec<cr>
 map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
 map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/features/*.rb"<cr>
@@ -303,6 +304,7 @@ map <Leader>jg :JavaGet<cr>
 map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
 map <Leader>jr :ProjectRefresh<cr>
 map <Leader>jb :ProjectBuild<cr>
+" map <Leader>jb :!java -jar /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -noSplash -data "/Users/duncan/eclipse-workspace" -application org.eclipse.jdt.apt.core.aptBuild<cr>
 map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :JavaSet<cr>
 map <Leader>n :Rename 
@@ -467,10 +469,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 
-" ===================== Gundo ===========================
-let g:gundo_right = 1
-let g:gundo_width = 60
-
 " ===================== Comments =========================
 " Don't add the comment prefix when I hit enter or o/O on a comment line.
 set formatoptions-=or
@@ -512,17 +510,14 @@ augroup vimrcEx
   " " Treat JSPs as Java
   " autocmd FileType jsp set ft=jsp.html.java
   autocmd FileType jsp imap <buffer> <C-X>= <%=h(  )%><Esc>3hi
+  imap <C-X>h <%=h(  )%><Esc>3hi
   autocmd FileType jsp nmap <buffer> <C-X>= "zyiwca"<%=h(  )%><Esc>4h"zp
   autocmd FileType jsp nmap <buffer> <C-X>- I<% <Esc>A %><Esc>
+  autocmd FileType jsp imap <buffer> <C-X>j ${i:h(  )}<Esc>3hi
 
   autocmd BufRead *.tag  set ft=jsp.html
 
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
-
-  " Leave the return key alone when in command line windows, since it's used
-  " to run commands there.
-  autocmd! CmdwinEnter * :unmap <cr>
-  autocmd! CmdwinLeave * :call MapCR()
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -598,6 +593,15 @@ function! <SID>Reindent()
     call cursor(l, c)
 endfunction
 command! Reindent call <SID>Reindent()
+
+function! JavaConstructorListToInstanceVariables()
+    normal f(
+    normal yi(
+    normal O
+    normal p
+    normal ==
+    :s/, /;\r
+endfunction
 
 "====================== tmux ==============================
 
@@ -714,7 +718,7 @@ set grepformat=%f:%l:%c:%m
 " let g:ctrlp_use_caching = 0
 
 " bind K to grep word under cursor
-nnoremap K :Ag \b<C-R><C-W>\b<CR>
+nnoremap K :execute 'Rg "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
 
 let g:ctrlp_match_window = 'max:50'
 
