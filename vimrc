@@ -3,6 +3,8 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
+packadd! dracula_pro
+
 " Plugins
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
@@ -66,7 +68,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
 " Plug 'maxbrunsfeld/vim-yankstack'
-" Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+" Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
 " Plug 'joshdick/onedark.vim'
@@ -136,7 +138,7 @@ set autoread                    "Reload files changed outside vim
 set splitbelow
 set splitright
 set hidden
-syntax on
+syntax enable
 set wrap
 set linebreak
 
@@ -403,11 +405,18 @@ nnoremap <S-Right> :vertical resize +10<cr>
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
-colorscheme solarized8
-set background=dark
-" highlight Comment cterm=italic
-
 set termguicolors
+
+" let g:dracula_italic = 0
+" let g:dracula_colorterm = 0
+colorscheme dracula_pro
+set background=dark
+
+" set the italic escape characters so they work!
+set t_ZH=[3m
+set t_ZR=[23m
+
+" highlight Comment cterm=italic
 
 " set cursorline
 " set cursorcolumn " seems to cause slowness...
@@ -738,7 +747,7 @@ imap <F6> <Plug>(seeing-is-believing-run)
 
 " airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'dracula'
 " let g:airline_theme = 'raven'
 " let g:airline_theme = 'nova'
 " let g:airline_theme = 'papercolor'
@@ -876,76 +885,23 @@ let g:thematic#defaults = {
 
 let g:thematic#themes = {
 \  'solarized_light': {
-\    'colorscheme': 'solarized8_light',
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
 \    'background': 'light',
 \  },
 \  'solarized_dark': {
-\    'colorscheme': 'solarized8_dark',
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
 \    'background': 'dark',
 \  },
-\  'molokai': {
-\    'airline-theme': 'molokai',
-\    'colorscheme': 'molokai',
-\    'background': 'dark',
-\  },
-\  'base16-flat': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'base16-flat',
-\    'background': 'dark',
-\  },
-\  'pencil_light': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'light',
-\  },
-\  'pencil_dark': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'dark',
-\  },
-\  'papercolor_light': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'PaperColor',
-\    'background': 'light',
-\  },
-\  'grb256': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'grb256',
-\    'background': 'dark',
-\  },
-\  'nova': {
-\    'airline-theme': 'nova',
-\    'colorscheme': 'nova',
-\    'background': 'dark',
-\  },
-\  'tender': {
-\    'airline-theme': 'tender',
-\    'colorscheme': 'tender',
-\    'background': 'dark',
-\  },
-\  'one_dark': {
-\    'airline-theme': 'one',
-\    'colorscheme': 'one',
-\    'background': 'dark',
-\  },
-\  'one_light': {
-\    'airline-theme': 'one',
-\    'colorscheme': 'one',
-\    'background': 'light',
-\  },
-\  'one_half_light': {
-\    'airline-theme': 'onehalflight',
-\    'colorscheme': 'onehalflight',
-\    'background': 'light',
-\  },
-\  'one_half_dark': {
-\    'airline-theme': 'onehalfdark',
-\    'colorscheme': 'onehalfdark',
+\  'dracula': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula',
 \    'background': 'dark',
 \  },
 \}
 
-let g:thematic#theme_name = 'solarized_dark'
+let g:thematic#theme_name = 'dracula'
 
 command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 function! QuickfixFilenames()
@@ -966,3 +922,77 @@ nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+let g:EclimJavaValidate = 1
+" let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
+" let g:ale_java_javac_classpath = '/Library/Tomcat/lib:WEB-INF/lib'
+" let g:ale_java_javac_sourcepath = 'NotForDeployment/src:/Library/Tomcat/lib:WEB-INF/lib'
+" let g:ale_java_eclipselsp_path = '/Users/duncan/Downloads/eclipse.jdt.ls'
+" let g:ale_java_eclipselsp_workspace_path = '/Users/duncan/eclipse-workspace'
+" let g:ale_linters = {
+" \  'java': ['javac', 'eclipselsp']
+" \ }
+" let g:ale_linters = {
+" \  'java': ['eclipselsp']
+" \ }
+
+" \  'molokai': {
+" \    'airline-theme': 'molokai',
+" \    'colorscheme': 'molokai',
+" \    'background': 'dark',
+" \  },
+" \  'base16-flat': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'base16-flat',
+" \    'background': 'dark',
+" \  },
+" \  'pencil_light': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'pencil',
+" \    'background': 'light',
+" \  },
+" \  'pencil_dark': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'pencil',
+" \    'background': 'dark',
+" \  },
+" \  'papercolor_light': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'PaperColor',
+" \    'background': 'light',
+" \  },
+" \  'grb256': {
+" \    'airline-theme': 'papercolor',
+" \    'colorscheme': 'grb256',
+" \    'background': 'dark',
+" \  },
+" \  'nova': {
+" \    'airline-theme': 'nova',
+" \    'colorscheme': 'nova',
+" \    'background': 'dark',
+" \  },
+" \  'tender': {
+" \    'airline-theme': 'tender',
+" \    'colorscheme': 'tender',
+" \    'background': 'dark',
+" \  },
+" \  'one_dark': {
+" \    'airline-theme': 'one',
+" \    'colorscheme': 'one',
+" \    'background': 'dark',
+" \  },
+" \  'one_light': {
+" \    'airline-theme': 'one',
+" \    'colorscheme': 'one',
+" \    'background': 'light',
+" \  },
+" \  'one_half_light': {
+" \    'airline-theme': 'onehalflight',
+" \    'colorscheme': 'onehalflight',
+" \    'background': 'light',
+" \  },
+" \  'one_half_dark': {
+" \    'airline-theme': 'onehalfdark',
+" \    'colorscheme': 'onehalfdark',
+" \    'background': 'dark',
+" \  },

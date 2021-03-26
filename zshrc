@@ -91,13 +91,26 @@ export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # to fix problems with capybara-we
 # bindkey '^R' history-incremental-search-backward
 # bindkey '^S' history-incremental-search-forward
 
-export FZF_DEFAULT_COMMAND='ag -g ""'
+# export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND='rg --files'
 
-export FZF_DEFAULT_OPTS='
-  --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75
-  --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07
-  --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07
-'
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+
+# # Solarized
+# export FZF_DEFAULT_OPTS='
+#   --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75
+#   --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07
+#   --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07
+# '
+
+# Dracula
+# export FZF_DEFAULT_OPTS='
+#   --color fg:255,bg:235,hl:84,fg+:255,bg+:236,hl+:215
+#   --color info:141,prompt:84,spinner:212,pointer:212,marker:212
+# '
+
+# My Dracula Pro
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#8d8f92,bg:#22212b,hl:#9580ff --color=fg+:#f2f2f2,bg+:#2a2c37,hl+:#9580ff --color=info:#92ffff,prompt:#ff9580,pointer:#50fa7b --color=marker:#50fa7b,spinner:#ffff80,header:#72a99f'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
