@@ -49,6 +49,9 @@
   dh1 = diff HEAD~1
   up = pull --rebase
 
+  # Stash staged files only
+  ss = "!f() { default=$(date '+Staged Stash: %Y-%m-%d %I:%M %p'); msg=${1-$default}; git stash push -m \"$msg\" -- $(git diff --staged --name-only); }; f"
+
   # Divergence (commits we added and commits remote added)
   div = divergence
 
@@ -77,7 +80,7 @@
   ctags = !.git/hooks/ctags
   rad = !git ra --date-order
   lad = !git la --date-order
-	conflicted = !vim +Conflicted
+  conflicted = !vim +Conflicted
 
 [diff]
   tool = Kaleidoscope
@@ -125,4 +128,4 @@
 [pull]
   rebase = true
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+  insteadOf = https://github.com/
