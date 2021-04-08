@@ -936,8 +936,9 @@ let g:EclimJavaValidate = 1
 " let g:ale_linters = {
 " \  'java': ['javac', 'eclipselsp']
 " \ }
+" let g:ale_java_javalsp_executable = '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'
 " let g:ale_linters = {
-" \  'java': ['eclipselsp']
+" \  'java': ['javalsp']
 " \ }
 
 " \  'molokai': {
