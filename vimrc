@@ -734,7 +734,9 @@ function! OpenCompiledJsp()
   let current_file = expand("%")
   let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
   let new_file = current_file
-  let new_file = substitute(current_file, '\.jsp', '_jsp.java', '')
+  let new_file = substitute(new_file, '_', '_005f', '')
+  let new_file = substitute(new_file, '-', '_002d', '')
+  let new_file = substitute(new_file, '\.jsp', '_jsp.java', '')
   let new_file = '/Library/Tomcat/work/Catalina/localhost/ROOT/org/apache/jsp/' . new_file
   exec ':e ' . new_file
 endfunction
