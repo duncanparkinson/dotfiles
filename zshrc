@@ -118,7 +118,8 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 # '
 
 # My Dracula Pro
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#8d8f92,bg:#22212b,hl:#9580ff --color=fg+:#f2f2f2,bg+:#2a2c37,hl+:#9580ff --color=info:#92ffff,prompt:#ff9580,pointer:#50fa7b --color=marker:#50fa7b,spinner:#ffff80,header:#72a99f'
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#8d8f92,bg:#22212b,hl:#9580ff --color=fg+:#f2f2f2,bg+:#2a2c37,hl+:#9580ff --color=info:#92ffff,prompt:#ff9580,pointer:#50fa7b --color=marker:#50fa7b,spinner:#ffff80,header:#72a99f'
+export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
