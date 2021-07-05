@@ -16,6 +16,10 @@ snippet log
 InsiteLogger.logger(this).${1:debug}(${2});
 endsnippet
 
+snippet this=
+this.${1:var} = $1;
+endsnippet
+
 snippet try
 try {
 	${1:${VISUAL}}
@@ -45,4 +49,8 @@ endsnippet
 
 snippet endbench
 System.out.println("Benchmark time: " + ((System.currentTimeMillis() - benchmarkStart) / 1000.0) + " seconds");
+endsnippet
+
+snippet importcollectors
+import static java.util.stream.Collectors.*;
 endsnippet
