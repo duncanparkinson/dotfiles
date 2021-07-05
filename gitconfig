@@ -25,6 +25,7 @@
   ch = cherry-pick
   cm = commit -v --amend
   co = checkout
+  cob = !git branch -a | fzf | xargs git checkout
   cop = checkout -p
   d = diff -M
   dw = diff -M --color-words="."
