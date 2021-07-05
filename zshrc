@@ -1,18 +1,25 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # _ANTIGEN_CACHE_ENABLED=true
-P9K_MODE='awesome-patched'
-P9K_COLOR_SCHEME='dark'
-P9K_LEFT_PROMPT_ELEMENTS=(context dir)
-P9K_RIGHT_PROMPT_ELEMENTS=(status time)
-P9K_DIR_HOME_ICON=''
-P9K_DIR_HOME_SUBFOLDER_ICON=''
-P9K_DIR_DEFAULT_ICON=''
-P9K_TIME_ICON=''
-P9K_RBENV_BACKGROUND="black"
-P9K_RBENV_FOREGROUND="249"
-P9K_RBENV_VISUAL_IDENTIFIER_COLOR="red"
-P9K_VCS_SHOW_CHANGESET=true
-P9K_VCS_CHANGESET_HASH_LENGTH=6
-P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
+# P9K_MODE='awesome-patched'
+# P9K_COLOR_SCHEME='dark'
+# P9K_LEFT_PROMPT_ELEMENTS=(context dir)
+# P9K_RIGHT_PROMPT_ELEMENTS=(status time)
+# P9K_DIR_HOME_ICON=''
+# P9K_DIR_HOME_SUBFOLDER_ICON=''
+# P9K_DIR_DEFAULT_ICON=''
+# P9K_TIME_ICON=''
+# P9K_RBENV_BACKGROUND="black"
+# P9K_RBENV_FOREGROUND="249"
+# P9K_RBENV_VISUAL_IDENTIFIER_COLOR="red"
+# P9K_VCS_SHOW_CHANGESET=true
+# P9K_VCS_CHANGESET_HASH_LENGTH=6
+# P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
 source ~/.dotfiles/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -28,8 +35,9 @@ antigen use oh-my-zsh
 antigen bundle git-extras
 
 # Load the theme.
-# antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-antigen bundle bhilburn/powerlevel9k --branch=next --loc=powerlevel9k.zsh-theme
+# # antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+# antigen bundle bhilburn/powerlevel9k --branch=next --loc=powerlevel9k.zsh-theme
+antigen theme romkatv/powerlevel10k
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -52,8 +60,8 @@ chpwd() {
 }
 
 # Disable flow control commands (keeps C-s from freezing everything)
-stty start undef
-stty stop undef
+# stty start undef
+# stty stop undef
 # By default, ^S freezes terminal output and ^Q resumes it. Disable that so
 # that those keys can be used for other things.
 unsetopt flowcontrol
@@ -74,13 +82,13 @@ setopt auto_cd
 cdpath=($HOME/projects $HOME)
 
 # Always use Tmux!
-_not_inside_tmux() { [[ -z "$TMUX" ]] }
-ensure_tmux_is_running() {
-  if _not_inside_tmux; then
-    tat
-  fi
-}
-ensure_tmux_is_running
+# _not_inside_tmux() { [[ -z "$TMUX" ]] }
+# ensure_tmux_is_running() {
+#   if _not_inside_tmux; then
+#     tat
+#   fi
+# }
+# ensure_tmux_is_running
 
 [[ -f ~/.aliases ]] && source ~/.aliases
 
@@ -118,3 +126,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#8d8f92,bg:#22212b,hl:#958
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 # /jEnv
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
