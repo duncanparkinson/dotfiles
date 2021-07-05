@@ -61,7 +61,7 @@ Plug 'honza/vim-snippets'
 " Plug 'vim-scripts/YankRing.vim'
 " Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 " Plug 'edkolev/tmuxline.vim'
-" Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.py --clang-completer --tern-completer' }
+Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
 " Plug 'davidoc/taskpaper.vim'
@@ -94,7 +94,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
 " Plug 'nacitar/terminalkeys.vim'
-Plug 'git-time-metric/gtm-vim-plugin'
+" Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
 Plug 'reedes/vim-thematic'
 " Plug 'tomasr/molokai'
@@ -121,8 +121,8 @@ runtime! macros/matchit.vim
 
 augroup load_us_ycm
   autocmd!
-  " autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
-  autocmd InsertEnter * call plug#load('ultisnips')
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+  " autocmd InsertEnter * call plug#load('ultisnips')
         \| autocmd! load_us_ycm
 augroup END
 
@@ -720,9 +720,9 @@ set grepformat=%f:%l:%c:%m
 " bind K to grep word under cursor
 nnoremap K :execute 'Rg "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
 
-let g:ctrlp_match_window = 'max:50'
+" let g:ctrlp_match_window = 'max:50'
 
-let g:ctrlp_arg_map = 1
+" let g:ctrlp_arg_map = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPARKUP
@@ -734,8 +734,8 @@ function! OpenCompiledJsp()
   let current_file = expand("%")
   let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
   let new_file = current_file
-  let new_file = substitute(new_file, '_', '_005f', '')
-  let new_file = substitute(new_file, '-', '_002d', '')
+  let new_file = substitute(new_file, '_', '_005f', 'g')
+  let new_file = substitute(new_file, '-', '_002d', 'g')
   let new_file = substitute(new_file, '\.jsp', '_jsp.java', '')
   let new_file = '/Library/Tomcat/work/Catalina/localhost/ROOT/org/apache/jsp/' . new_file
   exec ':e ' . new_file
@@ -760,7 +760,7 @@ let g:airline_theme = 'dracula'
 " let g:airline_theme = 'onedark'
 " let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
 
-let g:airline#extensions#eclim#enabled = 1
+let g:airline#extensions#eclim#enabled = 0
 
 let g:gtm_plugin_status_enabled = 1
 function! AirlineInit()
@@ -929,7 +929,8 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-let g:EclimJavaValidate = 1
+let g:EclimJavaValidate = 0
+let g:EclimFileTypeValidate = 0
 " let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
 " let g:ale_java_javac_classpath = '/Library/Tomcat/lib:WEB-INF/lib'
 " let g:ale_java_javac_sourcepath = 'NotForDeployment/src:/Library/Tomcat/lib:WEB-INF/lib'
