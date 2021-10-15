@@ -314,11 +314,6 @@ if !exists(":RefactorUndo")
   command RefactorRedoPeek :call eclim#lang#UndoRedo('redo', 1)
 endif
 
-if !exists(":Buffers")
-  command -bang Buffers :call eclim#common#buffers#Buffers('<bang>')
-  command -bang BuffersToggle :call eclim#common#buffers#BuffersToggle('<bang>')
-endif
-
 if !exists(":Only")
   command Only :call eclim#common#buffers#Only()
 endif
