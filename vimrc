@@ -69,7 +69,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
 " Plug 'maxbrunsfeld/vim-yankstack'
-" Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
 " Plug 'joshdick/onedark.vim'
@@ -79,7 +79,6 @@ Plug 'Chiel92/vim-autoformat'
 " Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
-Plug 'dansomething/vim-eclim'
 Plug 'elzr/vim-json'
 " Plug 'vim-scripts/Align'
 Plug 'vim-scripts/SQLUtilities'
@@ -114,6 +113,11 @@ Plug 'leafgarland/typescript-vim'
 " Plug 'dense-analysis/ale'
 Plug 'jremmen/vim-ripgrep'
 " Plug 'natebosch/vim-lsc'
+Plug 'rhysd/git-messenger.vim'
+Plug 'rhysd/vim-healthcheck'
+Plug 'unblevable/quick-scope'
+
+" Plug 'dansomething/vim-eclim'
 
 call plug#end()
 
@@ -295,7 +299,7 @@ map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.tas
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
-map <Leader>gb :Gblame<CR>
+map <Leader>gb :Git blame<CR>
 map <Leader>gc :Gcommit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
@@ -511,6 +515,8 @@ augroup vimrcEx
   " autocmd FileType jsp set ft=jsp.html.java
   autocmd FileType jsp imap <buffer> <C-X>= <%=h(  )%><Esc>3hi
   imap <C-X>h <%=h(  )%><Esc>3hi
+  imap <C-X>l <%=l(  )%><Esc>3hi
+  imap <C-X>n <%=name(  )%><Esc>3hi
   autocmd FileType jsp nmap <buffer> <C-X>= "zyiwca"<%=h(  )%><Esc>4h"zp
   autocmd FileType jsp nmap <buffer> <C-X>- I<% <Esc>A %><Esc>
   autocmd FileType jsp imap <buffer> <C-X>j ${i:h(  )}<Esc>3hi
@@ -762,14 +768,14 @@ let g:airline_theme = 'dracula'
 
 let g:airline#extensions#eclim#enabled = 0
 
-let g:gtm_plugin_status_enabled = 1
-function! AirlineInit()
-  if exists('*GTMStatusline')
-    call airline#parts#define_function('gtmstatus', 'GTMStatusline')
-    let g:airline_section_b = airline#section#create([g:airline_section_b, ' ', '[', 'gtmstatus', ']'])
-  endif
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
+" let g:gtm_plugin_status_enabled = 1
+" function! AirlineInit()
+"   if exists('*GTMStatusline')
+"     call airline#parts#define_function('gtmstatus', 'GTMStatusline')
+"     let g:airline_section_b = airline#section#create([g:airline_section_b, ' ', '[', 'gtmstatus', ']'])
+"   endif
+" endfunction
+" autocmd User AirlineAfterInit call AirlineInit()
 
 " tmuxline
 let g:tmuxline_separators = {
@@ -929,8 +935,10 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-let g:EclimJavaValidate = 0
-let g:EclimFileTypeValidate = 0
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" let g:EclimJavaValidate = 0
+" let g:EclimFileTypeValidate = 0
 " let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
 " let g:ale_java_javac_classpath = '/Library/Tomcat/lib:WEB-INF/lib'
 " let g:ale_java_javac_sourcepath = 'NotForDeployment/src:/Library/Tomcat/lib:WEB-INF/lib'
