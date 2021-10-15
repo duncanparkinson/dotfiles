@@ -123,10 +123,5 @@ export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# jEnv
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-# /jEnv
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
