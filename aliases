@@ -54,6 +54,7 @@ alias gau='git add -u'
 alias gbr='git branch -v'
 alias gc='git commit -v'
 alias gca='git commit -av'
+alias gccl='ga && gc -m "Update change log"'
 alias gch='git cherry-pick'
 alias gcm='git commit -v --amend'
 alias gcmh='git commit --amend --reuse-message=HEAD'
@@ -113,8 +114,9 @@ alias soaliases='source ~/.dotfiles/aliases'
 #rails
 alias devlog='tail log/development.log'
 alias remigrate='rake db:migrate && rake db:migrate:redo && rake db:schema:dump && rake db:test:prepare'
-alias rdm="be rake db:migrate"
-alias rdtp="be rake db:test:prepare"
+alias rdm="rake db:migrate"
+alias rdrb="rake db:rollback"
+alias rdtp="rake db:test:prepare"
 alias ra="rspec spec features"
 alias rf="rspec features"
 alias ru="rspec"
@@ -126,3 +128,5 @@ alias zr='z rspec spec/'
 alias zs='zeus start'
 
 alias tclogs='tail -n 30 /Library/Tomcat/logs/catalina.out'
+
+alias rst='restart-tomcat'
