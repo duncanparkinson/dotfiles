@@ -415,8 +415,8 @@ set termguicolors
 
 " let g:dracula_italic = 0
 " let g:dracula_colorterm = 0
-colorscheme dracula_pro
-set background=dark
+" colorscheme dracula_pro
+" set background=dark
 
 " set the italic escape characters so they work!
 set t_ZH=[3m
@@ -903,8 +903,8 @@ let g:thematic#themes = {
 \    'background': 'dark',
 \  },
 \  'dracula': {
-\    'colorscheme': 'dracula_pro',
-\    'airline-theme': 'dracula',
+\    'colorscheme': 'dracula_pro_van_helsing',
+\    'airline-theme': 'dracula_pro',
 \    'background': 'dark',
 \  },
 \}
