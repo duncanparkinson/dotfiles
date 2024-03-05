@@ -13,7 +13,7 @@ JdbcUser currentUser = JdbcUser.findById(session.getAttribute("user.username"));
 endsnippet
 
 snippet log
-InsiteLogger.logger(this).${1:debug}(${2});
+com.wilceco.utils.InsiteLogger.logger(this).${1:debug}(${2});
 endsnippet
 
 snippet this=
@@ -48,9 +48,21 @@ long benchmarkStart = System.currentTimeMillis();
 endsnippet
 
 snippet endbench
-System.out.println("Benchmark time: " + ((System.currentTimeMillis() - benchmarkStart) / 1000.0) + " seconds");
+com.wilceco.utils.InsiteLogger.logger(this).${1:debug}("${2:Benchmark Time}: {} seconds", ((System.currentTimeMillis() - benchmarkStart) / 1000.0));
 endsnippet
 
 snippet importcollectors
 import static java.util.stream.Collectors.*;
+endsnippet
+
+snippet reqset
+request.setAttribute("$1", ${2:${VISUAL}});
+endsnippet
+
+snippet reqget
+request.getAttribute("$1");
+endsnippet
+
+snippet render
+render(request, response, "${1:template}.jsp");
 endsnippet

@@ -1,11 +1,11 @@
 snippet _skel
-<%@ page errorPage="/error.jsp" %><%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*${1}" %>
-<%@ include file="/includes/master_config.inc.jsp" %>
-<%@ include file="/includes/Connection.jsp" %>
+<%@ page import="com.wilceco.utils.*,com.wilceco.common.*,java.sql.*,com.wilceco.utils.form_builder${1}" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/insite.tld" prefix="i" %>
+<%@ taglib uri="/WEB-INF/i18n.tld" prefix="i18n" %>
 <%
   ${0}
 %>
-<%@ include file="/includes/TidyUp.jsp"%>
 endsnippet
 
 snippet _ehsq
@@ -84,18 +84,41 @@ snippet jincludeparam
 </jsp:include>
 endsnippet
 
-snippet currentjdbcuser
-JdbcUser currentUser = JdbcUser.findById(session.getAttribute("user.username"));
+snippet taglibs
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/insite.tld" prefix="i" %>
+<%@ taglib uri="/WEB-INF/i18n.tld" prefix="i18n" %>
 endsnippet
 
-snippet log
-InsiteLogger.logger(this).${1:debug}(${2});
+snippet ceach
+<c:forEach items="${$1}" var="$2">
+	${3:${VISUAL}}
+</c:forEach>
 endsnippet
 
-snippet startbench
-long benchmarkStart = System.currentTimeMillis();
+snippet cif
+<c:if test="${$1}">
+  ${2:${VISUAL}}
+</c:if>
 endsnippet
 
-snippet endbench
-System.out.println("Benchmark time: " + ((System.currentTimeMillis() - benchmarkStart) / 1000.0) + " seconds");
+snippet cchoose
+<c:choose>
+	<c:when test="${$1}">
+		${2:${VISUAL}}
+	</c:when>
+	<c:otherwise>
+		$3
+	</c:otherwise>
+</c:choose>
+endsnippet
+
+snippet cwhen
+<c:when test="${$1}">
+	${2:${VISUAL}}
+</c:when>
+endsnippet
+
+snippet ia
+<i:a model="${$1}" action="$2" classes="$3">${4:${VISUAL}}</i:a>
 endsnippet
