@@ -287,7 +287,7 @@ nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
-map <Leader>. :call OpenTestAlternate()<cr>
+map <Leader>. :A<cr>
 map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
 nnoremap <Leader>/ :nohlsearch<cr>
@@ -658,45 +658,6 @@ let g:surround_35  = "#{\r}"   " #
 " Or yss- to do entire line.
 let g:surround_45 = "<% \r %>"    " -
 let g:surround_61 = "<%= \r %>"   " =
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! OpenTestAlternate()
-  let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
-endfunction
-function! AlternateForCurrentFile()
-  let current_file = expand("%")
-  let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
-  let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
-  let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1 || match(current_file, '\<javascripts\>') != -1 || match(current_file, '\<enums\>') != -1
-  let in_assets = match(current_file, '\<javascripts\>') != -1
-  if going_to_spec
-    if in_app
-      let new_file = substitute(new_file, '^app/', '', '')
-    end
-    if in_assets
-      let new_file = substitute(new_file, '^assets/', '', '')
-    end
-    let new_file = substitute(new_file, '\.rb$', '_spec.rb', '')
-    let new_file = substitute(new_file, '\.js.coffee$', '_spec.js.coffee', '')
-    let new_file = 'spec/' . new_file
-  else
-    let new_file = substitute(new_file, '_spec\.js.coffee$', '.js.coffee', '')
-    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
-    let new_file = substitute(new_file, '^spec/', '', '')
-    if in_assets
-      let new_file = 'assets/' . new_file
-    end
-    if in_app
-      let new_file = 'app/' . new_file
-    end
-  endif
-  return new_file
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROMOTE VARIABLE TO RSPEC LET
