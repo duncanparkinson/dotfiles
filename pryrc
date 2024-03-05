@@ -48,6 +48,44 @@ rescue LoadError => err
   puts "gem install awesome_print  # <-- highly recommended"
 end
 
+# Copy and paste sourced from: https://coderwall.com/p/qp2aha/ruby-pbcopy-and-pbpaste
+# def pbcopy(input)
+#   str = input.to_s
+#   IO.popen('pbcopy', 'w') { |f| f << str }
+#   puts "copied to clipboard"
+#   true
+# rescue
+#   puts $!
+# end
+
+# def pbpaste
+#   `pbpaste`
+# end
+
+def pbcopy(str)
+  IO.popen('pbcopy', 'r+') {|io| io.puts str }
+  output.puts "-- Copy to clipboard --\n#{str}"
+end
+
+Pry.config.commands.command "hiscopy", "History copy to clipboard" do |n|
+  pbcopy _pry_.input_array[n ? n.to_i : -1]
+end
+
+Pry.config.commands.command "copy", "Copy to clipboard" do |str|
+  unless str
+    str = "#{_pry_.input_array[-1]}#=> #{_pry_.last_result}\n"
+  end
+  pbcopy str
+end
+
+Pry.config.commands.command "lastcopy", "Last result copy to clipboard" do
+  pbcopy _pry_.last_result.chomp
+end
+
+Pry::Commands.block_command 'paste_eval', "Pastes from the clipboard then evals it in the context of Pry" do
+  _pry_.input = StringIO.new(pbpaste)
+end
+
 # === CUSTOM COMMANDS ===
 # from: https://gist.github.com/1297510
 default_command_set = Pry::CommandSet.new do
