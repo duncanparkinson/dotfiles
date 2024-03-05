@@ -31,7 +31,6 @@ Plug 'tpope/vim-vinegar'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'kchmck/vim-coffee-script'
-Plug 'rstacruz/sparkup', { 'rtp': 'vim/' }
 " Plug 'majutsushi/tagbar'
 " Plug 'sjl/gundo.vim'
 Plug 'mbbill/undotree/'
@@ -116,6 +115,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'rhysd/git-messenger.vim'
 Plug 'rhysd/vim-healthcheck'
 Plug 'unblevable/quick-scope'
+Plug 'mattn/emmet-vim'
 
 " Plug 'dansomething/vim-eclim'
 
@@ -730,11 +730,7 @@ nnoremap K :execute 'Rg "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
 
 " let g:ctrlp_arg_map = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SPARKUP
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:sparkupExecuteMapping = '<C-e><C-e>'
-let g:sparkupNextMapping = '<C-e><C-n>'
+let g:user_emmet_leader_key='<C-E>'
 
 function! OpenCompiledJsp()
   let current_file = expand("%")
