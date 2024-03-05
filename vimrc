@@ -311,7 +311,7 @@ map <Leader>jb :!gradle classes<cr>
 " map <Leader>jb :!java -jar /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -noSplash -data "/Users/duncan/eclipse-workspace" -application org.eclipse.jdt.apt.core.aptBuild<cr>
 map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :JavaSet<cr>
-map <Leader>n :Rename 
+map <Leader>n :Rename <C-R>=expand("%:t")<CR>
 map <Leader>ocf :OpenChangedFiles<CR>
 map <Leader>l :PromoteToLet<cr>
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
