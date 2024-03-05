@@ -293,8 +293,8 @@ map <Leader>\| <C-w>H
 nnoremap <Leader>/ :nohlsearch<cr>
 map <Leader>a :!rspec<cr>
 map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
-map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/features/*.rb"<cr>
-map <Leader>af :!spring rspec spec/features/<cr>
+map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/system/**/*_spec.rb"<cr>
+map <Leader>as :!spring rspec spec/system<cr>
 map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
