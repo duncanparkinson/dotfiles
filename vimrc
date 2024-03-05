@@ -270,17 +270,17 @@ nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>F :Files %:p:h<cr>
 nnoremap <Leader>f :Files<cr>
 nnoremap <Leader>gVS :Files NotForDeployment/coffeescript/vessel_schedule<cr>
-nnoremap <Leader>gN :Files NotForDeployment/src<cr>
-nnoremap <Leader>gA :Files Admin/<cr>
-nnoremap <Leader>gB :Files Bids/<cr>
+nnoremap <Leader>gN :Files src/main/java/<cr>
+nnoremap <Leader>gA :Files src/main/webapp/Admin/<cr>
+nnoremap <Leader>gB :Files src/main/webapp/Bids/<cr>
 nnoremap <Leader>gC :Files NotForDeployment/sass<cr>
-nnoremap <Leader>gE :Files EHSQ/<cr>
-nnoremap <Leader>gI :Files includes/<cr>
+nnoremap <Leader>gE :Files src/main/webapp/EHSQ/<cr>
+nnoremap <Leader>gI :Files src/main/webapp/includes/<cr>
 nnoremap <Leader>gJ :Files script/<cr>
-nnoremap <Leader>gO :Files Operations/<cr>
-nnoremap <Leader>gS :Files Secondary/<cr>
-nnoremap <Leader>gT :Files WEB-INF/jsp/task_manager/<cr>
-nnoremap <Leader>gW :Files WEB-INF/jsp/<cr>
+nnoremap <Leader>gO :Files src/main/webapp/Operations/<cr>
+nnoremap <Leader>gS :Files src/main/webapp/Secondary/<cr>
+nnoremap <Leader>gT :Files src/main/webapp/WEB-INF/jsp/task_manager/<cr>
+nnoremap <Leader>gW :Files src/main/webapp/WEB-INF/jsp/<cr>
 nnoremap <Leader>grt :!echo "restart-tomcat" > async-commands<cr>
 
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
@@ -306,8 +306,8 @@ map <Leader>gs :Gstatus<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
 map <Leader>jg :JavaGet<cr>
 map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
-map <Leader>jr :ProjectRefresh<cr>
-map <Leader>jb :ProjectBuild<cr>
+map <Leader>jr :!gradle assemble<cr>
+map <Leader>jb :!gradle classes<cr>
 " map <Leader>jb :!java -jar /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -noSplash -data "/Users/duncan/eclipse-workspace" -application org.eclipse.jdt.apt.core.aptBuild<cr>
 map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :JavaSet<cr>
@@ -738,12 +738,12 @@ let g:sparkupNextMapping = '<C-e><C-n>'
 
 function! OpenCompiledJsp()
   let current_file = expand("%")
-  let current_file = substitute(current_file, '^/Users/duncan/projects/[^/]*/', '', '')
+  let current_file = substitute(current_file, 'src/main/webapp/', '', '')
   let new_file = current_file
   let new_file = substitute(new_file, '_', '_005f', 'g')
   let new_file = substitute(new_file, '-', '_002d', 'g')
   let new_file = substitute(new_file, '\.jsp', '_jsp.java', '')
-  let new_file = '/Library/Tomcat/work/Catalina/localhost/ROOT/org/apache/jsp/' . new_file
+  let new_file = '/Users/duncan/projects/j-insite/build/jasper/org/apache/jsp/' . new_file
   exec ':e ' . new_file
 endfunction
 :command! C :call OpenCompiledJsp()
