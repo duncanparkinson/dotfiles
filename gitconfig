@@ -103,6 +103,7 @@
   whitespace = nowarn
 [branch]
   autosetupmerge = true
+	sort = -committerdate
 [push]
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
@@ -130,3 +131,7 @@
   rebase = true
 [url "git@github.com:"]
   insteadOf = https://github.com/
+[maintenance]
+	repo = /Users/duncan/projects/j-insite
+[column]
+	ui = always
