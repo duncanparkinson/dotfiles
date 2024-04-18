@@ -18,10 +18,10 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
 " Plug 'tpope/vim-haml'
 Plug 'tpope/vim-obsession'
-" Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-projectionist'
 Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
-" Plug 'tpope/vim-rake'
+Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-speeddating'
@@ -48,13 +48,13 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'farmergreg/vim-lastplace'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
-" Plug 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-colors-pencil'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'airblade/vim-gitgutter'
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duncanparkinson/vim-spec-runner'
-Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 " Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/YankRing.vim'
@@ -300,7 +300,7 @@ vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
 map <Leader>gb :Git blame<CR>
-map <Leader>gc :Gcommit -v<CR>
+map <Leader>gc :Git commit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :Gstatus<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
@@ -864,8 +864,28 @@ let g:thematic#themes = {
 \    'background': 'dark',
 \  },
 \  'dracula': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'alucard': {
+\    'colorscheme': 'dracula_pro_alucard',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'light',
+\  },
+\  'dracula_van_helsing': {
 \    'colorscheme': 'dracula_pro_van_helsing',
 \    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'pencil_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'light',
+\  },
+\  'pencil_dark': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
 \    'background': 'dark',
 \  },
 \}
@@ -917,16 +937,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " \  'base16-flat': {
 " \    'airline-theme': 'papercolor',
 " \    'colorscheme': 'base16-flat',
-" \    'background': 'dark',
-" \  },
-" \  'pencil_light': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'pencil',
-" \    'background': 'light',
-" \  },
-" \  'pencil_dark': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'pencil',
 " \    'background': 'dark',
 " \  },
 " \  'papercolor_light': {
