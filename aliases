@@ -26,12 +26,6 @@ alias sp='spec_runner'
 alias v='vim'
 alias vi='vim'
 
-# List direcory contents
-alias lsa='ls -lah'
-alias l='ls -la'
-alias ll='ls -l'
-alias sl=ls # often screw this up
-
 alias afind='ack-grep -il'
 
 alias agi='ag -i'
@@ -120,13 +114,21 @@ alias rdtp="rake db:test:prepare"
 alias ra="rspec spec features"
 alias rf="rspec features"
 alias ru="rspec"
-alias z='zeus'
-alias zc='zeus console'
-alias zcuc='z cucumber'
-alias zmigrate='zeus rake db:migrate db:test:prepare'
-alias zr='z rspec spec/'
-alias zs='zeus start'
+# alias z='zeus'
+# alias zc='zeus console'
+# alias zcuc='z cucumber'
+# alias zmigrate='zeus rake db:migrate db:test:prepare'
+# alias zr='z rspec spec/'
+# alias zs='zeus start'
 
 alias tclogs='tail -n 30 /Library/Tomcat/logs/catalina.out'
 
 alias rst='restart-tomcat'
+
+#replacement tools
+alias cat="bat"
+alias ls="eza"
+alias ll="eza -alh"
+alias tree="eza --tree"
+alias cd="z"
+alias zz="z -"
