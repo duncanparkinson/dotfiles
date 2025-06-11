@@ -3,9 +3,8 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
-packadd! dracula_pro
-
 " Plugins
+Plug 'sheerun/vim-polyglot'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
@@ -41,8 +40,8 @@ Plug 'kana/vim-textobj-user'
 " Plug 'vim-scripts/taglist.vim'
 " Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'vim-ruby/vim-ruby'
-" Plug 'craigemery/vim-autotag'
+" Plug 'vim-ruby/vim-ruby'
+Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'rking/ag.vim'
 Plug 'farmergreg/vim-lastplace'
@@ -53,7 +52,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'airblade/vim-gitgutter'
 " Plug 'ctrlpvim/ctrlp.vim'
-Plug 'duncanparkinson/vim-spec-runner'
+" Plug 'duncanparkinson/vim-spec-runner'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 " Plug 'chriskempson/base16-vim'
@@ -63,12 +62,12 @@ Plug 'honza/vim-snippets'
 Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
-" Plug 'davidoc/taskpaper.vim'
+Plug 'davidoc/taskpaper.vim'
 " Plug 'NLKNguyen/papercolor-theme'
 Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
 " Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug '~/.vim/dracula_pro'
 " Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
 " Plug 'joshdick/onedark.vim'
@@ -116,6 +115,8 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'rhysd/vim-healthcheck'
 Plug 'unblevable/quick-scope'
 Plug 'mattn/emmet-vim'
+Plug 'vim-test/vim-test'
+Plug 'preservim/nerdtree'
 
 " Plug 'dansomething/vim-eclim'
 
@@ -245,6 +246,8 @@ vnoremap <expr>y "my\"" . v:register . "y`y"
 
 imap <c-h> <space>=><space>
 
+nnoremap <C-n> :NERDTreeToggle<cr>
+
 " insert timestamp in command line mode
 cnoremap <C-t> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
 nnoremap <F3> i<C-R>=strftime("%Y%m%d%H%M%S")<CR><Esc>
@@ -285,16 +288,20 @@ nnoremap <Leader>grt :!echo "restart-tomcat" > async-commands<cr>
 
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
+" test runner bindings
+autocmd FileType ruby map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
+autocmd FileType ruby map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/system/**/*_spec.rb"<cr>
+autocmd FileType ruby map <Leader>as :!spring rspec spec/system<cr>
+nmap <silent> <leader>T :TestNearest<CR>
+nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>lt :TestLast<CR>
+
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :A<cr>
-map <Leader>T <Plug>RunFocusedSpec
 map <Leader>\| <C-w>H
 nnoremap <Leader>/ :nohlsearch<cr>
-map <Leader>a :!rspec<cr>
-map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
-map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/system/**/*_spec.rb"<cr>
-map <Leader>as :!spring rspec spec/system<cr>
 map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.taskpaper<cr>
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
@@ -308,12 +315,14 @@ map <Leader>jg :JavaGet<cr>
 map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
 map <Leader>jr :!gradle assemble<cr>
 map <Leader>jb :!gradle classes<cr>
+map <Leader>lc :lclose<CR>
+map <Leader>lo :lopen<CR>
 " map <Leader>jb :!java -jar /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -noSplash -data "/Users/duncan/eclipse-workspace" -application org.eclipse.jdt.apt.core.aptBuild<cr>
 map <Leader>jo :JavaImportOrganize<cr>
 map <Leader>js :JavaSet<cr>
 map <Leader>n :Rename <C-R>=expand("%:t")<CR>
 map <Leader>ocf :OpenChangedFiles<CR>
-map <Leader>l :PromoteToLet<cr>
+" map <Leader>l :PromoteToLet<cr>
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
 map <Leader>qc :cclose<CR>
@@ -333,7 +342,6 @@ map <Leader>rv :Eview<Space>
 map <Leader>sj :SplitjoinSplit<cr>
 map <Leader>sk :SplitjoinJoin<cr>
 map <Leader>sws :StripTrailingWhitespaces<CR>
-map <Leader>t <Plug>RunCurrentSpecFile
 map <Leader>u :UndotreeToggle<CR>
 map <Leader>vb :w<cr>:source ~/.vimrc<cr>:PlugInstall<cr>
 map <Leader>vc yy:<C-f>p<CR>
@@ -573,6 +581,8 @@ function! InlineVariable()
     " Delete the expression into the 'b' register
     :let l:tmp_b = @b
     :normal "bd$
+    " Remove trailing semicolon if the language uses them
+    :let @b = substitute(@b, ';', '', '')
     " Delete the remnants of the line
     :normal dd
     " Go to the end of the previous line so we can start our search for the
@@ -716,7 +726,6 @@ imap <F6> <Plug>(seeing-is-believing-run)
 
 " airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'dracula'
 " let g:airline_theme = 'raven'
 " let g:airline_theme = 'nova'
 " let g:airline_theme = 'papercolor'
@@ -773,6 +782,7 @@ nmap <silent> <leader>d <Plug>DashSearch
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_always_populate_location_list = 1
 " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
@@ -847,6 +857,46 @@ endfunction
 
 " nmap <C-c> :call ReloadChrome()<CR>
 
+
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
+
+command! Gwnext Gwrite|next
+command! Gwdelete Gwrite|bdelete
+
+" replace word under cursor
+nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+let test#javascript#reactscripts#options = '--watchAll=false'
+
+" let g:EclimJavaValidate = 0
+" let g:EclimFileTypeValidate = 0
+" let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
+" let g:ale_java_javac_classpath = '/Library/Tomcat/lib:WEB-INF/lib'
+" let g:ale_java_javac_sourcepath = 'NotForDeployment/src:/Library/Tomcat/lib:WEB-INF/lib'
+" let g:ale_java_eclipselsp_path = '/Users/duncan/Downloads/eclipse.jdt.ls'
+" let g:ale_java_eclipselsp_workspace_path = '/Users/duncan/eclipse-workspace'
+" let g:ale_linters = {
+" \  'java': ['javac', 'eclipselsp']
+" \ }
+" let g:ale_java_javalsp_executable = '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'
+" let g:ale_linters = {
+" \  'java': ['javalsp']
+" \ }
+
 let g:thematic#defaults = {
 \ 'airline-theme': 'solarized',
 \ 'laststatus': 2,
@@ -892,90 +942,5 @@ let g:thematic#themes = {
 
 let g:thematic#theme_name = 'dracula'
 
-command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
-function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
-endfunction
-
-command! Gwnext Gwrite|next
-command! Gwdelete Gwrite|bdelete
-
-" replace word under cursor
-nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-" let g:EclimJavaValidate = 0
-" let g:EclimFileTypeValidate = 0
-" let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
-" let g:ale_java_javac_classpath = '/Library/Tomcat/lib:WEB-INF/lib'
-" let g:ale_java_javac_sourcepath = 'NotForDeployment/src:/Library/Tomcat/lib:WEB-INF/lib'
-" let g:ale_java_eclipselsp_path = '/Users/duncan/Downloads/eclipse.jdt.ls'
-" let g:ale_java_eclipselsp_workspace_path = '/Users/duncan/eclipse-workspace'
-" let g:ale_linters = {
-" \  'java': ['javac', 'eclipselsp']
-" \ }
-" let g:ale_java_javalsp_executable = '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'
-" let g:ale_linters = {
-" \  'java': ['javalsp']
-" \ }
-
-" \  'molokai': {
-" \    'airline-theme': 'molokai',
-" \    'colorscheme': 'molokai',
-" \    'background': 'dark',
-" \  },
-" \  'base16-flat': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'base16-flat',
-" \    'background': 'dark',
-" \  },
-" \  'papercolor_light': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'PaperColor',
-" \    'background': 'light',
-" \  },
-" \  'grb256': {
-" \    'airline-theme': 'papercolor',
-" \    'colorscheme': 'grb256',
-" \    'background': 'dark',
-" \  },
-" \  'nova': {
-" \    'airline-theme': 'nova',
-" \    'colorscheme': 'nova',
-" \    'background': 'dark',
-" \  },
-" \  'tender': {
-" \    'airline-theme': 'tender',
-" \    'colorscheme': 'tender',
-" \    'background': 'dark',
-" \  },
-" \  'one_dark': {
-" \    'airline-theme': 'one',
-" \    'colorscheme': 'one',
-" \    'background': 'dark',
-" \  },
-" \  'one_light': {
-" \    'airline-theme': 'one',
-" \    'colorscheme': 'one',
-" \    'background': 'light',
-" \  },
-" \  'one_half_light': {
-" \    'airline-theme': 'onehalflight',
-" \    'colorscheme': 'onehalflight',
-" \    'background': 'light',
-" \  },
-" \  'one_half_dark': {
-" \    'airline-theme': 'onehalfdark',
-" \    'colorscheme': 'onehalfdark',
-" \    'background': 'dark',
-" \  },
+command! Dark Thematic dracula
+command! Light Thematic alucard
