@@ -127,6 +127,7 @@
   file = ~/.mailmap
 [init]
   templatedir = ~/.git_template
+	defaultBranch = main
 [pull]
   rebase = true
 [url "git@github.com:"]
@@ -135,3 +136,6 @@
 	repo = /Users/duncan/projects/j-insite
 [column]
 	ui = always
+; [diff "latex"]
+;   ; wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
+;   command = ~/.bin/git-word-diff
