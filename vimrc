@@ -15,14 +15,12 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
-" Plug 'tpope/vim-haml'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-projectionist'
 Plug 'duncanparkinson/vim-ragtag'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -30,55 +28,29 @@ Plug 'tpope/vim-vinegar'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'kchmck/vim-coffee-script'
-" Plug 'majutsushi/tagbar'
-" Plug 'sjl/gundo.vim'
 Plug 'mbbill/undotree/'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
-" Plug 'altercation/vim-colors-solarized'
-" Plug 'skwp/greplace.vim'
-" Plug 'vim-scripts/taglist.vim'
-" Plug 'edsono/vim-matchit'
 Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'vim-ruby/vim-ruby'
-Plug 'craigemery/vim-autotag'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'rking/ag.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'christoomey/vim-conflicted'
 Plug 'hwartig/vim-seeing-is-believing'
 Plug 'reedes/vim-colors-pencil'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'airblade/vim-gitgutter'
-" Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'duncanparkinson/vim-spec-runner'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'chriskempson/base16-vim'
-" Plug 'vim-scripts/YankRing.vim'
-" Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
-" Plug 'edkolev/tmuxline.vim'
-Plug 'ycm-core/YouCompleteMe', { 'on': [] }
+Plug 'ycm-core/YouCompleteMe'
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidoc/taskpaper.vim'
-" Plug 'NLKNguyen/papercolor-theme'
 Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
-" Plug 'maxbrunsfeld/vim-yankstack'
-" Plug '~/.vim/dracula_pro'
-" Plug 'gosukiwi/vim-atom-dark'
 Plug 'Chiel92/vim-autoformat'
-" Plug 'joshdick/onedark.vim'
-" Plug 'joshdick/airline-onedark.vim'
-" Plug 'AndrewRadev/switch.vim'
-" Plug 'lloeki/vim-one-colorschemes'
-" Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 Plug 'elzr/vim-json'
-" Plug 'vim-scripts/Align'
 Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/dbext.vim'
 Plug 'vim-scripts/sqlcomplete.vim'
@@ -86,50 +58,74 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'tommcdo/vim-exchange'
 Plug 'vim-scripts/ReplaceWithRegister'
-" Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors with vim-autotag
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
-" Plug 'nacitar/terminalkeys.vim'
-" Plug 'git-time-metric/gtm-vim-plugin'
 Plug 'lifepillar/vim-solarized8'
 Plug 'reedes/vim-thematic'
-" Plug 'tomasr/molokai'
 Plug 'elmcast/elm-vim'
-" Plug 'reedes/vim-pencil'
 Plug 'duncanparkinson/nova-vim'
 Plug 'twerth/ir_black'
 Plug 'jacoborus/tender.vim'
-" Plug 'jelera/vim-javascript-syntax'
-" Plug 'rakr/vim-one'
-" Plug 'rakr/vim-two-firewatch'
-" Plug 'sonph/onehalf', { 'rtp': 'vim/' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'leafgarland/typescript-vim'
-" Plug 'dense-analysis/ale'
 Plug 'jremmen/vim-ripgrep'
-" Plug 'natebosch/vim-lsc'
 Plug 'rhysd/git-messenger.vim'
 Plug 'rhysd/vim-healthcheck'
 Plug 'unblevable/quick-scope'
 Plug 'mattn/emmet-vim'
 Plug 'vim-test/vim-test'
 Plug 'preservim/nerdtree'
+Plug 'wikitopian/hardmode'
+Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
+Plug 'AndrewRadev/deleft.vim'
+Plug 'dense-analysis/ale'
+Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors with vim-autotag
 
+" Plug 'tpope/vim-haml'
+" Plug 'tpope/vim-rsi'
+" Plug 'majutsushi/tagbar'
+" Plug 'sjl/gundo.vim'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'skwp/greplace.vim'
+" Plug 'vim-scripts/taglist.vim'
+" Plug 'edsono/vim-matchit'
+" Plug 'vim-ruby/vim-ruby'
+" Plug 'rking/ag.vim'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'duncanparkinson/vim-spec-runner'
+" Plug 'chriskempson/base16-vim'
+" Plug 'vim-scripts/YankRing.vim'
+" Plug 'edkolev/tmuxline.vim'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'maxbrunsfeld/vim-yankstack'
+" Plug '~/.vim/dracula_pro'
+" Plug 'gosukiwi/vim-atom-dark'
+" Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/airline-onedark.vim'
+" Plug 'AndrewRadev/switch.vim'
+" Plug 'lloeki/vim-one-colorschemes'
+" Plug 'justinmk/vim-sneak'
+" Plug 'vim-scripts/Align'
+" Plug 'nacitar/terminalkeys.vim'
+" Plug 'git-time-metric/gtm-vim-plugin'
+" Plug 'tomasr/molokai'
+" Plug 'reedes/vim-pencil'
+" Plug 'jelera/vim-javascript-syntax'
+" Plug 'rakr/vim-one'
+" Plug 'rakr/vim-two-firewatch'
+" Plug 'sonph/onehalf', { 'rtp': 'vim/' }
+" Plug 'natebosch/vim-lsc'
+" Plug 'github/copilot.vim'
 " Plug 'dansomething/vim-eclim'
+" Plug 'craigemery/vim-autotag'
 
 call plug#end()
 
 runtime! macros/matchit.vim
-
-augroup load_us_ycm
-  autocmd!
-  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
-  " autocmd InsertEnter * call plug#load('ultisnips')
-        \| autocmd! load_us_ycm
-augroup END
 
 filetype plugin indent on
 
@@ -306,10 +302,10 @@ map <Leader>dt :topleft 30 :split<cr>:e ~/Dropbox/Public/Notes/Daily\ Todos\.tas
 vnoremap <leader>gev :call ExtractVariable()<cr>
 map <Leader>giv :call InlineVariable()<cr>
 map <Leader>gR :call ShowRoutes()<cr>
-map <Leader>gb :Git blame<CR>
+map <Leader>gb :Git blame -w -C -C -C<CR>
 map <Leader>gc :Git commit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
-map <Leader>gs :Gstatus<CR><C-w>20+
+map <Leader>gs :G<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
 map <Leader>jg :JavaGet<cr>
 map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
@@ -534,20 +530,20 @@ augroup vimrcEx
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MULTIPURPOSE TAB KEY
-" Indent if we're at the beginning of a line. Else, do completion.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" " MULTIPURPOSE TAB KEY
+" " Indent if we're at the beginning of a line. Else, do completion.
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-n>"
+"   endif
+" endfunction
+" inoremap <expr> <tab> InsertTabWrapper()
+" inoremap <s-tab> <c-p>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " EXTRACT VARIABLE (SKETCHY)
@@ -653,6 +649,7 @@ command! OpenChangedFiles :call OpenChangedFiles()
 " AutoTag
 " Seems to have problems with some vim files
 let g:autotagExcludeSuffixes="tml.xml.text.txt.vim"
+let g:autotagStartMethod='fork'
 
 vnoremap p "_dP
 
@@ -773,19 +770,22 @@ let g:dispatch_compilers = {
       \ 'zeus': ''}
 
 " Dash
-nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>D <Plug>DashSearch
 
 " Eclim
 " let g:EclimCompletionMethod = 'omnifunc' " for use with YouCompleteMe
 
 " " YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_auto_hover = ''
+nmap <leader>H <plug>(YCMHover)
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:ycm_always_populate_location_list = 1
 " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
+" let g:ycm_key_list_select_completion = ['<Down>']
+" let g:ycm_key_list_previous_completion = ['<Up>']
+imap <silent> <C-l> <Plug>(YCMToggleSignatureHelp)
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
@@ -882,6 +882,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let test#javascript#reactscripts#options = '--watchAll=false'
 
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 " let g:EclimJavaValidate = 0
 " let g:EclimFileTypeValidate = 0
 " let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
@@ -938,9 +939,16 @@ let g:thematic#themes = {
 \    'colorscheme': 'pencil',
 \    'background': 'dark',
 \  },
+\  'grb': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'grb256',
+\    'background': 'dark',
+\  },
 \}
 
 let g:thematic#theme_name = 'dracula'
 
 command! Dark Thematic dracula
 command! Light Thematic alucard
+
+" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
