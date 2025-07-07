@@ -966,9 +966,24 @@ let g:thematic#themes = {
 \    'colorscheme': 'grb256',
 \    'background': 'dark',
 \  },
+\  'dark': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'light': {
+\    'colorscheme': 'dracula_pro_alucard',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'light',
+\  },
+\  'default': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
 \}
 
-let g:thematic#theme_name = 'dracula'
+let g:thematic#theme_name = exists('$THEME') ? $THEME : 'default'
 
 command! Dark Thematic dracula
 command! Light Thematic alucard
