@@ -41,7 +41,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'pangloss/vim-javascript'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidoc/taskpaper.vim'
@@ -146,6 +146,71 @@ set hidden
 syntax enable
 set wrap
 set linebreak
+
+let g:thematic#defaults = {
+\ 'airline-theme': 'solarized',
+\ 'laststatus': 2,
+\ }
+let g:thematic#themes = {
+\  'solarized_light': {
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
+\    'background': 'light',
+\  },
+\  'solarized_dark': {
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
+\    'background': 'dark',
+\  },
+\  'dracula': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'alucard': {
+\    'colorscheme': 'dracula_pro_alucard',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'light',
+\  },
+\  'dracula_van_helsing': {
+\    'colorscheme': 'dracula_pro_van_helsing',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'pencil_light': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'light',
+\  },
+\  'pencil_dark': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'pencil',
+\    'background': 'dark',
+\  },
+\  'grb': {
+\    'airline-theme': 'papercolor',
+\    'colorscheme': 'grb256',
+\    'background': 'dark',
+\  },
+\  'dark': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\  'light': {
+\    'colorscheme': 'dracula_pro_alucard',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'light',
+\  },
+\  'default': {
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'dark',
+\  },
+\}
+let g:thematic#theme_name = exists('$THEME') ? $THEME : 'default'
+command! Dark Thematic dracula
+command! Light Thematic alucard
 
 set gdefault " substitute all matches by default. Use /g to disable
 
@@ -691,7 +756,7 @@ set grepformat=%f:%l:%c:%m
 " let g:ctrlp_use_caching = 0
 
 " bind K to grep word under cursor
-nnoremap K :execute 'Rg "\b"'.expand("<cword>").'"\b"'<CR>:cw<CR>
+nnoremap K :execute 'Rg \b'.expand("<cword>").'\b'<CR>
 
 " let g:ctrlp_match_window = 'max:50'
 
@@ -727,8 +792,6 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'papercolor'
 " let g:airline_theme = 'onedark'
 " let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
-
-let g:airline#extensions#eclim#enabled = 0
 
 " let g:gtm_plugin_status_enabled = 1
 " function! AirlineInit()
@@ -780,6 +843,7 @@ let g:ycm_auto_hover = ''
 nmap <leader>H <plug>(YCMHover)
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_always_populate_location_list = 1
 " Remove <Tab> from maps lest YCM hijack our mapping for UltiSnips
 " let g:ycm_key_list_select_completion = ['<Down>']
@@ -881,7 +945,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let test#javascript#reactscripts#options = '--watchAll=false'
 
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 " let g:EclimJavaValidate = 0
 " let g:EclimFileTypeValidate = 0
 " let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
@@ -897,13 +960,17 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 0
 
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_linters = {
 \ 'java': ['javalsp'],
 \ 'javascript': ['eslint'],
 \ 'ruby': ['rubocop']
 \ }
 
-let g:gutentags_enabled = 1
+let g:gutentags_enabled = 0
+let g:gutentags_generate_on_write = 0
+let g:gutentags_generate_on_new = 0
+let g:gutentags_define_advanced_commands = 1
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_project_root = ['.git', '.hg', '.svn', 'Makefile', 'package.json']
 let g:gutentags_ctags_extra_args = [
@@ -920,73 +987,12 @@ let g:gutentags_ctags_extra_args = [
       \ '--languages=Ruby,JavaScript,Java,HTML,SQL'
       \ ]
 
-let g:thematic#defaults = {
-\ 'airline-theme': 'solarized',
-\ 'laststatus': 2,
-\ }
-
-let g:thematic#themes = {
-\  'solarized_light': {
-\    'colorscheme': 'solarized8',
-\    'airline-theme': 'solarized',
-\    'background': 'light',
-\  },
-\  'solarized_dark': {
-\    'colorscheme': 'solarized8',
-\    'airline-theme': 'solarized',
-\    'background': 'dark',
-\  },
-\  'dracula': {
-\    'colorscheme': 'dracula_pro',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'dark',
-\  },
-\  'alucard': {
-\    'colorscheme': 'dracula_pro_alucard',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'light',
-\  },
-\  'dracula_van_helsing': {
-\    'colorscheme': 'dracula_pro_van_helsing',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'dark',
-\  },
-\  'pencil_light': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'light',
-\  },
-\  'pencil_dark': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'pencil',
-\    'background': 'dark',
-\  },
-\  'grb': {
-\    'airline-theme': 'papercolor',
-\    'colorscheme': 'grb256',
-\    'background': 'dark',
-\  },
-\  'dark': {
-\    'colorscheme': 'dracula_pro',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'dark',
-\  },
-\  'light': {
-\    'colorscheme': 'dracula_pro_alucard',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'light',
-\  },
-\  'default': {
-\    'colorscheme': 'dracula_pro',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'dark',
-\  },
-\}
-
-let g:thematic#theme_name = exists('$THEME') ? $THEME : 'default'
-
-command! Dark Thematic dracula
-command! Light Thematic alucard
-
 command! -complete=file -bang -nargs=* RgRaw
       \ call fzf#vim#grep("rg --with-filename --column --line-number --no-heading --color=always --smart-case ".<q-args>, fzf#vim#with_preview(), <bang>0)
+
+augroup load_us_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+  " autocmd InsertEnter * call plug#load('ultisnips')
+        \| autocmd! load_us_ycm
+augroup END
