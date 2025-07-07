@@ -893,9 +893,32 @@ let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 " \  'java': ['javac', 'eclipselsp']
 " \ }
 " let g:ale_java_javalsp_executable = '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'
-" let g:ale_linters = {
-" \  'java': ['javalsp']
-" \ }
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 0
+
+let g:ale_linters = {
+\ 'java': ['javalsp'],
+\ 'javascript': ['eslint'],
+\ 'ruby': ['rubocop']
+\ }
+
+let g:gutentags_enabled = 1
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_project_root = ['.git', '.hg', '.svn', 'Makefile', 'package.json']
+let g:gutentags_ctags_extra_args = [
+      \ '--fields=+l',
+      \ '--extras=+q',
+      \ '--exclude=.git',
+      \ '--exclude=node_modules',
+      \ '--exclude=log',
+      \ '--exclude=tmp',
+      \ '--exclude=vendor',
+      \ '--exclude=public',
+      \ '--exclude=build',
+      \ '--exclude=dist',
+      \ '--languages=Ruby,JavaScript,Java,HTML,SQL'
+      \ ]
 
 let g:thematic#defaults = {
 \ 'airline-theme': 'solarized',

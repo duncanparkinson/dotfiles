@@ -1,5 +1,20 @@
+--recurse=yes
+--exclude=.git
+--exclude=node_modules
+--exclude=log
+--exclude=tmp
+--exclude=public
+--languages=Ruby,JavaScript,Java,HTML,SQL
+--langmap=Ruby:.rb.rake
+--langmap=JavaScript:.js.jsx
+--langmap=HTML:.html.erb
+--fields=+l
+--extras=+q
 --langdef=js
 --langmap=js:.js
+--ignore-case=no
+--sort=yes
+
 --regex-JavaScript=/([A-Za-z0-9._$\(\)]+)[ \t]*[:=][ \t]*function[ \t]*\(/\1/m,method/
 --regex-JavaScript=/([A-Za-z0-9._$\#\(\)]+)[ \t]*[:][ \t]*([A-Za-z0-9._\-\#\'\"]+)[ \t]*/\1/p,property/
 --regex-JavaScript=/([A-Za-z0-9._$\#\(\)]+)[ \t]*[:][ \t]*([A-Za-z0-9\'\"._\-\#\(]+)[ \t]*\{/\1/p,property/
@@ -13,6 +28,15 @@
 --regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2/f,function,aasm_event/
 --regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2!/f,function,aasm_event/
 --regex-ruby=/(^|;)[ \t]*event\(? *:([[:alnum:]_]+)/\2?/f,function,aasm_event/
+--exclude=coverage
+--exclude=spec/fixtures
+--exclude=vendor
+--exclude='*/.bundle/*'
+--exclude='*/log/*'
+--exclude='*/tmp/*'
+--exclude='*/coverage/*'
+--exclude='*/vendor/*'
+--exclude='*/public/packs/*'
 
 --langdef=markdown
 --langmap=markdown:.md.markdown.mdown.mkd.mkdn
