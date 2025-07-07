@@ -5,6 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
+
+if [[ -z "$THEME" && -f ~/.cache/current-theme ]]; then
+  export THEME=$(<~/.cache/current-theme)
+fi
+
 # _ANTIGEN_CACHE_ENABLED=true
 # P9K_MODE='awesome-patched'
 # P9K_COLOR_SCHEME='dark'
@@ -44,8 +50,6 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Tell antigen that you're done.
 antigen apply
-
-export PATH="/usr/local/heroku/bin:/Users/duncan/.rbenv/shims:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
 eval "$(rbenv init -)"
@@ -135,3 +139,6 @@ export PATH=/usr/local/texlive/2025/bin/universal-darwin:$PATH
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Created by `pipx` on 2025-07-02 20:39:07
+export PATH="$PATH:/Users/duncan/.local/bin"
