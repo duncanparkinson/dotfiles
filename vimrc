@@ -71,14 +71,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'leafgarland/typescript-vim'
-Plug 'jremmen/vim-ripgrep'
 Plug 'rhysd/git-messenger.vim'
 Plug 'rhysd/vim-healthcheck'
 Plug 'unblevable/quick-scope'
 Plug 'mattn/emmet-vim'
 Plug 'vim-test/vim-test'
 Plug 'preservim/nerdtree'
-Plug 'wikitopian/hardmode'
 Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 Plug 'AndrewRadev/deleft.vim'
 Plug 'dense-analysis/ale'
@@ -122,6 +120,7 @@ Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors wit
 " Plug 'github/copilot.vim'
 " Plug 'dansomething/vim-eclim'
 " Plug 'craigemery/vim-autotag'
+" Plug 'jremmen/vim-ripgrep'
 
 call plug#end()
 
@@ -951,4 +950,5 @@ let g:thematic#theme_name = 'dracula'
 command! Dark Thematic dracula
 command! Light Thematic alucard
 
-" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+command! -complete=file -bang -nargs=* RgRaw
+      \ call fzf#vim#grep("rg --with-filename --column --line-number --no-heading --color=always --smart-case ".<q-args>, fzf#vim#with_preview(), <bang>0)
