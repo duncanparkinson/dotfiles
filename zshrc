@@ -7,8 +7,11 @@ fi
 
 export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
 
-if [[ -z "$THEME" && -f ~/.cache/current-theme ]]; then
-  export THEME=$(<~/.cache/current-theme)
+if [ -n "$TMUX" ]; then
+  tmux_env=$(tmux show-environment COLORFGBG 2>/dev/null)
+  if echo "$tmux_env" | grep -q "^COLORFGBG="; then
+    export "${tmux_env}"
+  fi
 fi
 
 # _ANTIGEN_CACHE_ENABLED=true
@@ -53,6 +56,9 @@ antigen apply
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
 eval "$(rbenv init -)"
+
+autoload -Uz run-help
+alias help='run-help'
 
 ######################### custom
 # Never know when you're gonna need to popd!
@@ -142,3 +148,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Created by `pipx` on 2025-07-02 20:39:07
 export PATH="$PATH:/Users/duncan/.local/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
