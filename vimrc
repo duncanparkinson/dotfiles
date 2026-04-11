@@ -76,7 +76,6 @@ Plug 'rhysd/vim-healthcheck'
 Plug 'unblevable/quick-scope'
 Plug 'mattn/emmet-vim'
 Plug 'vim-test/vim-test'
-Plug 'preservim/nerdtree'
 Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 Plug 'AndrewRadev/deleft.vim'
 Plug 'dense-analysis/ale'
@@ -121,6 +120,7 @@ Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors wit
 " Plug 'dansomething/vim-eclim'
 " Plug 'craigemery/vim-autotag'
 " Plug 'jremmen/vim-ripgrep'
+" Plug 'preservim/nerdtree'
 
 call plug#end()
 
@@ -306,7 +306,7 @@ vnoremap <expr>y "my\"" . v:register . "y`y"
 
 imap <c-h> <space>=><space>
 
-nnoremap <C-n> :NERDTreeToggle<cr>
+" nnoremap <C-n> :NERDTreeToggle<cr>
 
 " insert timestamp in command line mode
 cnoremap <C-t> <C-r>=strftime("%Y%m%d%H%M%S")<cr>
@@ -964,7 +964,7 @@ let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_linters = {
 \ 'java': ['javalsp'],
 \ 'javascript': ['eslint'],
-\ 'ruby': ['rubocop']
+\ 'ruby': []
 \ }
 
 let g:gutentags_enabled = 0
