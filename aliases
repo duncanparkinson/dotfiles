@@ -39,9 +39,6 @@ g() {
     git status
   fi
 }
-# Complete g like git
-compdef g=git
-
 alias ga='git add -A'
 alias gap='ga -p'
 alias gau='git add -u'
@@ -96,6 +93,13 @@ alias gstp='git stash pop'
 alias gup='git up'
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
+# Git completion for aliases that accept completable arguments
+for _a in g ga gap gau gbr gch gco gcop gd 'gd.' gdc 'gdc.' gdt gf \
+           gm gmf gmt gp gr grb grba grbc grbi grh grp grs gs 'gs.' \
+           gst gstp gup s d; do
+  compdef $_a=git
+done
+unset _a
 
 alias aliases='vim ~/.dotfiles/aliases; soaliases'
 alias dotfiles='cd ~/.dotfiles/'
@@ -126,9 +130,11 @@ alias tclogs='tail -n 30 /Library/Tomcat/logs/catalina.out'
 alias rst='restart-tomcat'
 
 #replacement tools
-alias cat="bat"
+# alias cat="bat"
 alias ls="eza"
 alias ll="eza -alh"
 alias tree="eza --tree"
 alias cd="z"
 alias zz="z -"
+
+tac() { tail -r -- "$@"; }
