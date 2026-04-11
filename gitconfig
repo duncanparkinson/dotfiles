@@ -3,7 +3,7 @@
 [user]
   name = Duncan Parkinson
   email = duncan.parkinson@mac.com
-  signingkey = E8E22C42
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOpJjqh7afrheEfVY9O1g0lZsJnqQGIjO9wgSIfOfWR
 [color]
   ui = true
 [color "branch"]
@@ -133,9 +133,15 @@
 [url "git@github.com:"]
   insteadOf = https://github.com/
 [maintenance]
-	repo = /Users/duncan/projects/j-insite
+  repo = /Users/duncan/projects/j-insite
 [column]
-	ui = always
+  ui = always
 ; [diff "latex"]
 ;   ; wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
 ;   command = ~/.bin/git-word-diff
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+  gpgsign = true
