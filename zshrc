@@ -67,6 +67,7 @@ export PATH="/Users/duncan/.rbenv/shims:$PATH"
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
 command -v rbenv >/dev/null && eval "$(rbenv init -)"
+command -v mise >/dev/null && eval "$(mise activate zsh)"
 
 autoload -Uz run-help
 alias help='run-help'
