@@ -66,3 +66,4 @@ if [[ -d "$TMPDIR" ]]; then
   fi
 fi
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
