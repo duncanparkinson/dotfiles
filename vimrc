@@ -124,6 +124,12 @@ Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors wit
 
 call plug#end()
 
+" Enable focus events in terminal (required for FocusGained/FocusLost)
+let &t_fe = "\<Esc>[?1004h"
+let &t_fd = "\<Esc>[?1004l"
+execute "set <FocusGained>=\<Esc>[I"
+execute "set <FocusLost>=\<Esc>[O"
+
 runtime! macros/matchit.vim
 
 filetype plugin indent on
@@ -192,15 +198,15 @@ let g:thematic#themes = {
 \    'colorscheme': 'grb256',
 \    'background': 'dark',
 \  },
-\  'dark': {
-\    'colorscheme': 'dracula_pro',
-\    'airline-theme': 'dracula_pro',
-\    'background': 'dark',
-\  },
 \  'light': {
-\    'colorscheme': 'dracula_pro_alucard',
-\    'airline-theme': 'dracula_pro',
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
 \    'background': 'light',
+\  },
+\  'dark': {
+\    'colorscheme': 'solarized8',
+\    'airline-theme': 'solarized',
+\    'background': 'dark',
 \  },
 \  'default': {
 \    'colorscheme': 'dracula_pro',
@@ -208,9 +214,19 @@ let g:thematic#themes = {
 \    'background': 'dark',
 \  },
 \}
-let g:thematic#theme_name = exists('$THEME') ? $THEME : 'default'
-command! Dark Thematic dracula
-command! Light Thematic alucard
+let s:cache = expand('~/.cache/current-theme')
+let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'solarized_dark'
+command! Dark Thematic solarized_dark
+command! Light Thematic solarized_light
+function! s:SyncThemeFromCache()
+  let cache = expand('~/.cache/current-theme')
+  if !filereadable(cache) | return | endif
+  let theme = trim(readfile(cache)[0])
+  if theme !=# g:thematic#theme_name
+    execute 'Thematic ' . theme
+  endif
+endfunction
+autocmd FocusGained * call s:SyncThemeFromCache()
 
 set gdefault " substitute all matches by default. Use /g to disable
 
@@ -568,6 +584,8 @@ augroup vimrcEx
   autocmd FileType ruby,eruby,javascript,coffeescript,haml,yaml compiler rspec
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
+  autocmd BufEnter *.cy.js  setlocal filetype=javascript.cypress
+  autocmd BufEnter *.cy.jsx setlocal filetype=javascriptreact.cypress
 
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
   autocmd BufRead *.md  set ai formatoptions=tcroqn2 comments=n:&gt;
@@ -944,6 +962,13 @@ endif
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let test#javascript#reactscripts#options = '--watchAll=false'
+let g:test#javascript#cypress#file_pattern = '\v(__tests__/.*|(spec|test|cy))\.(js|jsx|coffee|ts|tsx)$|\.cy\.(js|jsx|ts|tsx)$'
+autocmd BufEnter */cypress/**/* let g:test#javascript#runner = 'cypress'
+autocmd BufEnter */cypress/tests/*
+  \ let g:test#javascript#cypress#executable = fnamemodify(finddir('node_modules', expand('%:p:h').';'), ':h') . '/bin/cypress-component'
+autocmd BufEnter */cypress/e2e/*
+  \ let g:test#javascript#cypress#executable = finddir('node_modules', expand('%:p:h').';') . '/.bin/cypress'
+autocmd BufLeave */cypress/**/* unlet! g:test#javascript#runner | unlet! g:test#javascript#cypress#executable
 
 " let g:EclimJavaValidate = 0
 " let g:EclimFileTypeValidate = 0

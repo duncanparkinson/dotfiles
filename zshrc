@@ -14,6 +14,10 @@ if [ -n "$TMUX" ]; then
   fi
 fi
 
+if [[ -z "$THEME" && -f ~/.cache/current-theme ]]; then
+  export THEME=$(<~/.cache/current-theme)
+fi
+
 # _ANTIGEN_CACHE_ENABLED=true
 # P9K_MODE='awesome-patched'
 # P9K_COLOR_SCHEME='dark'
@@ -127,8 +131,21 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 #   --color info:141,prompt:84,spinner:212,pointer:212,marker:212
 # '
 
-# My Dracula Pro
-export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+# Dracula Pro fzf themes (dark=Pro, light=Alucard)
+_fzf_opts_dark='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+_fzf_opts_light='--color=fg:#1f1f1f,bg:#f5f5f5,hl:#644ac9 --color=fg+:#1f1f1f,bg+:#cfcfde,hl+:#644ac9 --color=info:#036a96,prompt:#14710a,pointer:#a3144d --color=marker:#a3144d,spinner:#036a96,header:#036a96 --color=border:#cfcfde,gutter:#f5f5f5,query:#1f1f1f,preview-fg:#1f1f1f,preview-bg:#f5f5f5'
+
+_fzf_update_theme() {
+  if [[ -f ~/.cache/current-theme && "$(<~/.cache/current-theme)" == "light" ]]; then
+    export FZF_DEFAULT_OPTS="$_fzf_opts_light"
+    export BAT_THEME="GitHub"
+  else
+    export FZF_DEFAULT_OPTS="$_fzf_opts_dark"
+    export BAT_THEME="Dracula"
+  fi
+}
+_fzf_update_theme
+add-zsh-hook precmd _fzf_update_theme
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -150,5 +167,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:/Users/duncan/.local/bin"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Put default node's bin on PATH without sourcing nvm.sh (fast, and inherited by child processes).
+# Resolves $NVM_DIR/alias/default → highest matching versions/node/<ver> dir.
+if [ -r "$NVM_DIR/alias/default" ]; then
+  __nvm_default=$(<"$NVM_DIR/alias/default")
+  case "$__nvm_default" in
+    v*) __nvm_node_dir="$NVM_DIR/versions/node/$__nvm_default" ;;
+    *)  __nvm_node_dir=$(print -r -- "$NVM_DIR"/versions/node/v${__nvm_default}*(/N) | tr ' ' '\n' | sort -V | tail -1) ;;
+  esac
+  [ -n "$__nvm_node_dir" ] && [ -d "$__nvm_node_dir/bin" ] && export PATH="$__nvm_node_dir/bin:$PATH"
+  unset __nvm_default __nvm_node_dir
+fi
+# Only `nvm` itself stays lazy — sourcing nvm.sh is only needed to switch versions.
+nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"; nvm "$@"; }

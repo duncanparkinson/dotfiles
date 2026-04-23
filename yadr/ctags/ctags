@@ -1,6 +1,10 @@
 --recurse=yes
 --exclude=.git
 --exclude=node_modules
+--exclude=venv
+--exclude=.venv
+--exclude=__pycache__
+--exclude=dist
 --exclude=log
 --exclude=tmp
 --exclude=public

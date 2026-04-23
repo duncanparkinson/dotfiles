@@ -6,7 +6,8 @@ echo "dark-notify triggered: $1" >> /tmp/dark-notify.log
 # Write theme to file
 echo "$1" > /Users/duncan/.cache/current-theme
 
-# Set tmux env if tmux is running
+# Set tmux env and refresh status bar if tmux is running
 if command -v tmux >/dev/null && tmux info >/dev/null 2>&1; then
   tmux set-environment -g THEME "$1"
+  tmux refresh-client -S
 fi

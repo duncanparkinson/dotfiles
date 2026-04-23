@@ -112,7 +112,7 @@
 [core]
   autocrlf = input
   editor = vim
-  excludesfile = /Users/duncan/.gitignore_global
+	excludesFile = /Users/duncan/.gitignore_global
 [advice]
   statusHints = false
 [diff]
