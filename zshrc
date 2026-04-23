@@ -153,7 +153,7 @@ eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source /Users/duncan/.config/op/plugins.sh
+[ -f /Users/duncan/.config/op/plugins.sh ] && source /Users/duncan/.config/op/plugins.sh
 export PATH=/usr/local/texlive/2025/bin/universal-darwin:$PATH
 
 # bun completions
