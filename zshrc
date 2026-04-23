@@ -5,7 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+export PATH="/usr/local/heroku/bin:/Users/duncan/.bin:$PATH:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
 
 if [ -n "$TMUX" ]; then
   tmux_env=$(tmux show-environment COLORFGBG 2>/dev/null)
@@ -58,10 +63,10 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen apply
 
-export PATH="$PATH:/usr/local/heroku/bin:/Users/duncan/.rbenv/shims:/usr/local/bin:/usr/local/sbin:/Users/duncan/.bin:bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/duncan/bin/FDK/Tools/osx:/Users/duncan/.yadr/bin:/Users/duncan/.yadr/bin/yadr"
+export PATH="/Users/duncan/.rbenv/shims:$PATH"
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
-eval "$(rbenv init -)"
+command -v rbenv >/dev/null && eval "$(rbenv init -)"
 
 autoload -Uz run-help
 alias help='run-help'

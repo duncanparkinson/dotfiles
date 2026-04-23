@@ -44,7 +44,6 @@ typeset -gU cdpath fpath mailpath path
 path=(
   /usr/local/{bin,sbin}
   /Users/duncan/.bin
-  bin
   $path
 )
 
@@ -66,4 +65,8 @@ if [[ -d "$TMPDIR" ]]; then
   fi
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
