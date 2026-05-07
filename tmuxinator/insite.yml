@@ -7,9 +7,8 @@ windows:
   - editor: vim
   - console: rails console
   - servers:
-      layout: main-vertical
+      layout: even-horizontal
       panes:
-        - rails server
-        - .bundle/bin/vite dev
-        - nginx -c $(pwd)/nginx-dev.conf -g 'daemon off;'
+        - docker compose up sqlserver
+        - bin/dev
   - logs: tail -f log/development.log
