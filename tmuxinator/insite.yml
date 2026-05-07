@@ -1,0 +1,15 @@
+# ~/.tmuxinator/insite.yml
+# you can make as many tabs as you wish...
+
+name: insite
+root: ~/projects/insite
+windows:
+  - editor: vim
+  - console: rails console
+  - servers:
+      layout: main-vertical
+      panes:
+        - rails server
+        - .bundle/bin/vite dev
+        - nginx -c $(pwd)/nginx-dev.conf -g 'daemon off;'
+  - logs: tail -f log/development.log

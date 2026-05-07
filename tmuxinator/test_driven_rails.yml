@@ -1,0 +1,12 @@
+# ~/.tmuxinator/test_driven_rails.yml
+
+name: test_driven_rails
+root: ~/code/todos
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - vim
+  - server: bundle exec rails s
+  - logs: tail -f logs/development.log

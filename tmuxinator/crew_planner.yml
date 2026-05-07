@@ -1,0 +1,17 @@
+# ~/.tmuxinator/crew_planner.yml
+# you can make as many tabs as you wish...
+
+project_name: crew_planner
+project_root: ~/projects/crew_planner
+tabs:
+  - editor:
+      layout: main-vertical
+      panes:
+        - vim
+        - #empty, will just run plain bash
+        - omglog
+  - console: rails c
+  - server: rails s
+  - logs: tail -f log/development.log
+  - database: rails db
+  - zeus: zeus start

@@ -1,0 +1,10 @@
+# ~/.tmuxinator/bids_migration.yml
+# you can make as many tabs as you wish...
+
+name: bids_migration
+root: ~/projects/bids_migration
+windows:
+  - editor: vim
+  - console: rails console
+  - logs: tail -f log/development.log
+

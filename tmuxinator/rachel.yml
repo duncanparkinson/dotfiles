@@ -1,0 +1,16 @@
+# ~/.tmuxinator/rachel.yml
+# you can make as many tabs as you wish...
+
+name: rachel
+root: ~/projects/rachel
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - vim
+        - #empty, will just run plain bash
+        - omglog
+  - shell:
+  - server: rails s
+  - logs: tail -f logs/development.log
+  - console: rails c

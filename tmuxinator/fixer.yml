@@ -1,0 +1,9 @@
+# ~/.tmuxinator/fixer.yml
+
+name: fixer
+root: ~/projects/fixer
+
+windows:
+  - editor: vim
+  - console: rails console
+  - logs: tail -f log/development.log

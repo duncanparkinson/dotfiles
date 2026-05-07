@@ -1,0 +1,8 @@
+# /Users/duncan/.tmuxinator/risk-assessments.yml
+
+name: risk-assessments
+root: ~/projects/risk-assessments
+
+windows:
+  - editor: vim
+  - server: yarn dev
