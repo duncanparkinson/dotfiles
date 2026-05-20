@@ -188,3 +188,6 @@ if [ -r "$NVM_DIR/alias/default" ]; then
 fi
 # Only `nvm` itself stays lazy — sourcing nvm.sh is only needed to switch versions.
 nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"; nvm "$@"; }
+
+# Tailscale CLI (App Store install — binary inside app bundle)
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
