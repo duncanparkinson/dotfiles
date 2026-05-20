@@ -6,8 +6,8 @@ root: ~/projects/insite
 windows:
   - editor: vim
   - console: rails console
-  - servers:
-      layout: even-horizontal
+  - server:
+      layout: even-vertical
       panes:
         - docker compose up sqlserver
         - bin/dev
