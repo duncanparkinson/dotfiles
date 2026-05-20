@@ -2,3 +2,9 @@ vim/backups/*
 vim/bundle
 vim/.netrwhist
 vim/plugged/
+
+# Generated/transient
+tags
+time.log
+tmux-client-*.log
+tmux-server-*.log
