@@ -345,6 +345,9 @@ nmap <C-q> <Esc>:q<cr>
 nnoremap <Leader>: :%s/:\([^ ]*\)\(\s*\)=>/\1:/gc<CR>
 nnoremap <Leader>B :%s/{\([^ ]\)/{ \1/gc\|%s/\([^ ]\)}/\1 }/gc<CR>
 
+" Use ripgrep for :Files so .gitignore is respected and heavy dirs excluded.
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow -g "!.git" -g "!vendor" -g "!node_modules" -g "!tmp" -g "!log" -g "!coverage" -g "!public/assets" -g "!public/packs" -g "!public/vite*" -g "!.bundle"'
+
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>F :Files %:p:h<cr>
 nnoremap <Leader>f :Files<cr>
