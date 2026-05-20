@@ -882,6 +882,8 @@ let g:ycm_filetype_blacklist = {
       \ 'infolog' : 1,
       \ 'mail' : 1,
       \ 'gitcommit': 1,
+      \ 'typescript': 1,
+      \ 'typescriptreact': 1,
       \ }
 
 " Show syntax highlighting groups for word under cursor
@@ -988,12 +990,26 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 0
 
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {
+\ 'javascript': ['prettier', 'eslint'],
+\ 'typescript': ['prettier', 'eslint'],
+\ 'typescriptreact': ['prettier', 'eslint']
+\ }
 let g:ale_linters = {
 \ 'java': ['javalsp'],
 \ 'javascript': ['eslint'],
+\ 'typescript': ['tsserver', 'eslint'],
+\ 'typescriptreact': ['tsserver', 'eslint'],
 \ 'ruby': []
 \ }
+let g:ale_completion_enabled = 1
+let g:ale_typescript_tsserver_use_global = 0
+let g:ale_linters_explicit = 1
+
+augroup tsx_filetype
+  autocmd!
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
+augroup END
 
 let g:gutentags_enabled = 0
 let g:gutentags_generate_on_write = 0
