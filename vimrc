@@ -975,6 +975,12 @@ autocmd BufEnter */cypress/e2e/*
   \ let g:test#javascript#cypress#executable = finddir('node_modules', expand('%:p:h').';') . '/.bin/cypress'
 autocmd BufLeave */cypress/**/* unlet! g:test#javascript#runner | unlet! g:test#javascript#cypress#executable
 
+" monoco: deno-test runner for supabase/functions/tests/* (deno test), playwright auto-detected for app/tests/e2e/*, vitest auto-detected for app/src/**/*.test.{ts,tsx}
+autocmd BufEnter */monoco/supabase/functions/tests/*
+  \ let g:test#javascript#runner = 'denotest' |
+  \ let g:test#javascript#denotest#options = '--allow-all --config supabase/functions/deno.json'
+autocmd BufLeave */monoco/supabase/functions/tests/* unlet! g:test#javascript#runner | unlet! g:test#javascript#denotest#options
+
 " let g:EclimJavaValidate = 0
 " let g:EclimFileTypeValidate = 0
 " let g:lsc_server_commands = {'java': '/Users/duncan/code/java-language-server/dist/lang_server_mac.sh'}
@@ -1039,4 +1045,30 @@ augroup load_us_ycm
   autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
   " autocmd InsertEnter * call plug#load('ultisnips')
         \| autocmd! load_us_ycm
+augroup END
+
+" monoco: per-directory lint/format dispatch.
+" Repo convention is prettier everywhere; deno lint adds Deno-specific checks
+" for supabase/functions/ on top.
+function! s:MonocoSetup() abort
+  let l:path = expand('%:p')
+  if l:path !~# '/monoco/'
+    return
+  endif
+  let b:ale_fix_on_save = 1
+  if l:path =~# '/monoco/supabase/functions/.*\.ts$'
+    let b:ale_linters = ['deno']
+    let b:ale_fixers = ['prettier']
+  elseif l:path =~# '/monoco/shared/.*\.ts$'
+    let b:ale_linters = []
+    let b:ale_fixers = ['prettier']
+  elseif l:path =~# '/monoco/.*\.\(md\|json\|ya\?ml\|sql\)$'
+    let b:ale_fixers = ['prettier']
+  endif
+  " For app/ files, the global g:ale_fixers (prettier, eslint) applies.
+endfunction
+
+augroup MonocoFmtLint
+  autocmd!
+  autocmd BufRead,BufNewFile * call <SID>MonocoSetup()
 augroup END
