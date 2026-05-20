@@ -3,7 +3,7 @@
 [user]
   name = Duncan Parkinson
   email = duncan.parkinson@mac.com
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOOpJjqh7afrheEfVY9O1g0lZsJnqQGIjO9wgSIfOfWR
+	signingkey = ~/.ssh/git-signing.pub
 [color]
   ui = true
 [color "branch"]
@@ -140,8 +140,8 @@
 ;   ; wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
 ;   command = ~/.bin/git-word-diff
 [gpg]
-  format = ssh
-[gpg "ssh"]
-  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	format = ssh
 [commit]
   gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
