@@ -194,4 +194,22 @@ if [ -z "$INTEL_BREW" ]; then
   export PATH
 fi
 
+gh-pr-fill() {
+  local title=$(git log -1 --format=%s)
+  local template=$(git rev-parse --show-toplevel)/.github/pull_request_template.md
+  local desc_file=$(mktemp)
+  local body_file=$(mktemp)
+  { echo; git log -1 --format=%b; } > "$desc_file"
+  if [[ -f "$template" ]]; then
+    sed -e "/^### Description/r $desc_file" \
+        -e "/<!-- Describe what merging/d" \
+        -e "/<!-- This PR adds new Component/d" \
+        "$template" > "$body_file"
+  else
+    git log -1 --format=%b > "$body_file"
+  fi
+  gh pr create --title "$title" --body-file "$body_file"
+  rm -f "$desc_file" "$body_file"
+}
+
 eval "$(zoxide init zsh)"
