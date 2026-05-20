@@ -116,7 +116,7 @@ cdpath=($HOME/projects $HOME)
 
 source ~/.bin/tmuxinator.zsh
 
-export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # to fix problems with capybara-webkit
+# export PATH="/usr/local/opt/qt@5.5/bin:$PATH" # disabled 2026-05 — Intel-brew Cellar; capybara-webkit abandoned ~2020
 
 # bindkey '^R' history-incremental-search-backward
 # bindkey '^S' history-incremental-search-forward
@@ -186,5 +186,12 @@ if [ -r "$NVM_DIR/alias/default" ]; then
 fi
 # Only `nvm` itself stays lazy — sourcing nvm.sh is only needed to switch versions.
 nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"; nvm "$@"; }
+
+# === Apple Silicon migration: hide Intel brew prefix from PATH ===
+# Set INTEL_BREW=1 before opening a shell to restore the old /usr/local/{bin,sbin} entries.
+if [ -z "$INTEL_BREW" ]; then
+  PATH=$(print -r -- "$PATH" | tr ':' '\n' | awk '$0 != "/usr/local/bin" && $0 != "/usr/local/sbin"' | paste -sd ':' -)
+  export PATH
+fi
 
 eval "$(zoxide init zsh)"
