@@ -157,8 +157,6 @@ add-zsh-hook precmd _fzf_update_theme
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval "$(zoxide init zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f /Users/duncan/.config/op/plugins.sh ] && source /Users/duncan/.config/op/plugins.sh
@@ -189,5 +187,4 @@ fi
 # Only `nvm` itself stays lazy — sourcing nvm.sh is only needed to switch versions.
 nvm() { unset -f nvm; \. "$NVM_DIR/nvm.sh"; [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"; nvm "$@"; }
 
-# Tailscale CLI (App Store install — binary inside app bundle)
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+eval "$(zoxide init zsh)"

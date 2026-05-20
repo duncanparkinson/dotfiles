@@ -138,3 +138,5 @@ alias cd="z"
 alias zz="z -"
 
 tac() { tail -r -- "$@"; }
+
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
