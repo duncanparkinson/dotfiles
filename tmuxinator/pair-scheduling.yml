@@ -1,0 +1,21 @@
+# /Users/duncan/.tmuxinator/pair-scheduling.yml
+
+name: pair-scheduling
+root: ~/projects/Pair-Scheduling-APP
+
+on_project_stop: make down
+
+windows:
+  - vim: vim
+  - c: claude
+  - stack: make dev
+  - tests:
+      layout: even-horizontal
+      panes:
+        - docker compose exec backend pytest
+        - cd Frontend && npm run test:watch
+  - shells:
+      layout: even-horizontal
+      panes:
+        - cd Backend && source venv/bin/activate
+        - cd Frontend
