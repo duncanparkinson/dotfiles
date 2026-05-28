@@ -77,9 +77,12 @@ alias help='run-help'
 setopt AUTO_PUSHD
 
 # Show contents of directory after cd-ing into it
-chpwd() {
+autoload -Uz add-zsh-hook
+_ls_after_cd() {
+  [[ -o interactive ]] || return
   ls -rthG
 }
+add-zsh-hook chpwd _ls_after_cd
 
 # Disable flow control commands (keeps C-s from freezing everything)
 # stty start undef
