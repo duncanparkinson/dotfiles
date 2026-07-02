@@ -375,6 +375,8 @@ nmap <silent> <leader>T :TestNearest<CR>
 nmap <silent> <leader>t :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>lt :TestLast<CR>
+" Run tests asynchronously (tmux pane via dispatch); results land in quickfix
+let test#strategy = 'dispatch'
 
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
