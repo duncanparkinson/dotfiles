@@ -930,16 +930,21 @@ let g:ale_completion_enabled = 1
 let g:ale_typescript_tsserver_use_global = 0
 let g:ale_linters_explicit = 1
 
-" Code navigation via ALE's LSP clients (tsserver for app/, deno for edge fns)
-nmap <silent> gd :ALEGoToDefinition<CR>
-nmap <silent> gy :ALEGoToTypeDefinition<CR>
-nmap <silent> gr :ALEFindReferences<CR>
-nmap <silent> <Leader>rn :ALERename<CR>
-nmap <silent> <Leader>k :ALEHover<CR>
-nmap <silent> <Leader>ca :ALECodeAction<CR>
-nmap <silent> <Leader>ad :ALEDetail<CR>
-nmap <silent> [w :ALEPreviousWrap<CR>
-nmap <silent> ]w :ALENextWrap<CR>
+" Code navigation via ALE's LSP clients (tsserver for app/, deno for edge fns).
+" Buffer-local to TypeScript so gd/gr keep their built-in behaviour elsewhere.
+augroup AleNavMaps
+  autocmd!
+  autocmd FileType typescript,typescriptreact,javascript,javascriptreact
+        \ nmap <buffer> <silent> gd :ALEGoToDefinition<CR>|
+        \ nmap <buffer> <silent> gy :ALEGoToTypeDefinition<CR>|
+        \ nmap <buffer> <silent> gr :ALEFindReferences<CR>|
+        \ nmap <buffer> <silent> <Leader>rn :ALERename<CR>|
+        \ nmap <buffer> <silent> <Leader>k :ALEHover<CR>|
+        \ nmap <buffer> <silent> <Leader>ca :ALECodeAction<CR>|
+        \ nmap <buffer> <silent> <Leader>ad :ALEDetail<CR>|
+        \ nmap <buffer> <silent> [w :ALEPreviousWrap<CR>|
+        \ nmap <buffer> <silent> ]w :ALENextWrap<CR>
+augroup END
 
 augroup tsx_filetype
   autocmd!
