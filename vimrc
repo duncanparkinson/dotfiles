@@ -1083,3 +1083,40 @@ augroup MonocoFmtLint
   autocmd!
   autocmd BufRead,BufNewFile * call <SID>MonocoSetup()
 augroup END
+
+" monoco: alternate-file (:A / <Leader>.) + :Efunction/:Emigration navigation.
+" Heuristic keys on the repo having both app/src/ and supabase/functions/.
+" Edge-fn tests live flat under supabase/functions/tests/ with three naming
+" conventions (<fn>.test.ts, <fn>-fn.test.ts, <fn>-decide.test.ts); alternate
+" lists try each, first match wins.
+let g:projectionist_heuristics = {
+      \ 'app/src/&supabase/functions/': {
+      \   'app/src/*.test.ts': {'alternate': 'app/src/{}.ts', 'type': 'test'},
+      \   'app/src/*.test.tsx': {'alternate': 'app/src/{}.tsx', 'type': 'test'},
+      \   'app/src/*.ts': {'alternate': 'app/src/{}.test.ts', 'type': 'source'},
+      \   'app/src/*.tsx': {'alternate': 'app/src/{}.test.tsx', 'type': 'source'},
+      \   'supabase/functions/*/index.ts': {
+      \     'alternate': [
+      \       'supabase/functions/tests/{}.test.ts',
+      \       'supabase/functions/tests/{}-fn.test.ts',
+      \     ],
+      \     'type': 'function',
+      \   },
+      \   'supabase/functions/*/decide.ts': {
+      \     'alternate': 'supabase/functions/tests/{}-decide.test.ts',
+      \   },
+      \   'supabase/functions/tests/*-decide.test.ts': {
+      \     'alternate': 'supabase/functions/{}/decide.ts',
+      \     'type': 'test',
+      \   },
+      \   'supabase/functions/tests/*-fn.test.ts': {
+      \     'alternate': 'supabase/functions/{}/index.ts',
+      \     'type': 'test',
+      \   },
+      \   'supabase/functions/tests/*.test.ts': {
+      \     'alternate': 'supabase/functions/{}/index.ts',
+      \     'type': 'test',
+      \   },
+      \   'supabase/migrations/*.sql': {'type': 'migration'},
+      \   'app/tests/e2e/*.spec.ts': {'type': 'e2e'},
+      \ }}
