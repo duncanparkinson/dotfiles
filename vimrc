@@ -921,7 +921,10 @@ autocmd BufLeave */cypress/**/* unlet! g:test#javascript#runner | unlet! g:test#
 " monoco: deno-test runner for supabase/functions/tests/* (deno test), playwright auto-detected for app/tests/e2e/*, vitest auto-detected for app/src/**/*.test.{ts,tsx}
 autocmd BufEnter */monoco/supabase/functions/tests/*
   \ let g:test#javascript#runner = 'denotest' |
-  \ let g:test#javascript#denotest#options = '--allow-all --config supabase/functions/deno.json'
+  \ let g:test#javascript#denotest#options = {
+  \   'all': '--allow-all --config supabase/functions/deno.json',
+  \   'suite': 'supabase/functions/tests tools/coursework_import',
+  \ }
 autocmd BufLeave */monoco/supabase/functions/tests/* unlet! g:test#javascript#runner | unlet! g:test#javascript#denotest#options
 
 " let g:EclimJavaValidate = 0
