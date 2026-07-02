@@ -599,7 +599,9 @@ augroup vimrcEx
   " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   " add pwd to path (particularly to allow rails.vim to work with namespaces)
-  autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
+  " Disabled 2026-07-02: grows 'path' unboundedly over a session. Restore if
+  " rails.vim namespace navigation regresses.
+  " autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
 
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 augroup END
