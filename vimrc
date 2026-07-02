@@ -25,6 +25,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
+Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'mbbill/undotree/'
@@ -83,7 +84,6 @@ Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors wit
 " Plug 'edsono/vim-matchit'
 " Plug 'vim-ruby/vim-ruby'
 " Plug 'rking/ag.vim'
-" Plug 'airblade/vim-gitgutter'
 " Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'duncanparkinson/vim-spec-runner'
 " Plug 'chriskempson/base16-vim'
@@ -784,6 +784,9 @@ let g:tmuxline_preset = {
      \'y'       : '#(~/.bin/weather.sh)',
      \'z'       : ['%R', '%d-%b-%Y'],
      \'options' : {'status-justify' : 'left'}}
+
+" Faster sign updates for gitgutter (default 4s is too laggy for review work)
+set updatetime=100
 
 highlight! default link GitGutterAdd DiffAdd
 highlight! default link GitGutterDelete DiffDelete
