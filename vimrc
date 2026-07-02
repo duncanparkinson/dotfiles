@@ -937,7 +937,7 @@ augroup AleNavMaps
   autocmd FileType typescript,typescriptreact,javascript,javascriptreact
         \ nmap <buffer> <silent> gd :ALEGoToDefinition<CR>|
         \ nmap <buffer> <silent> gy :ALEGoToTypeDefinition<CR>|
-        \ nmap <buffer> <silent> gr :ALEFindReferences<CR>|
+        \ nmap <buffer> <silent> gR :ALEFindReferences<CR>|
         \ nmap <buffer> <silent> <Leader>rn :ALERename<CR>|
         \ nmap <buffer> <silent> <Leader>k :ALEHover<CR>|
         \ nmap <buffer> <silent> <Leader>ca :ALECodeAction<CR>|
