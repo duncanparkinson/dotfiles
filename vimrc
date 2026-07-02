@@ -1047,10 +1047,23 @@ augroup MonocoFmtLint
   autocmd BufRead,BufNewFile * call <SID>MonocoSetup()
 augroup END
 
-" monoco: run the repo's own CI scripts asynchronously
+" monoco: run the repo's own CI scripts asynchronously.
+" CI=1 on the unit step because run_unit_tests.sh ends in bare vitest, which
+" only exits (instead of watching) when it detects a CI environment.
 command! FormatLint Dispatch ./tools/format_and_lint.sh
 command! MigrationOrder Dispatch ./tools/check_migration_order.sh
 command! MigrationsUnmodified Dispatch ./tools/check_migrations_unmodified.sh
+command! UnitTests Dispatch bash -c 'CI=1 ./tools/run_unit_tests.sh'
+command! AppBuild Dispatch bash -c 'cd app && npm run build'
+command! DenoTests Dispatch deno test --allow-all --config supabase/functions/deno.json supabase/functions/tests tools/coursework_import
+command! CI Dispatch bash -c 'set -ex;
+      \ ./tools/check_migrations_unmodified.sh;
+      \ ./tools/check_migration_order.sh;
+      \ ./tools/format_and_lint.sh;
+      \ CI=1 ./tools/run_unit_tests.sh;
+      \ (cd app && npm run build);
+      \ deno test --allow-all --config supabase/functions/deno.json supabase/functions/tests tools/coursework_import;
+      \ ./tools/run_e2e_tests.sh'
 
 " monoco: alternate-file (:A / <Leader>.) + :Efunction/:Emigration navigation.
 " Heuristic keys on the repo having both app/src/ and supabase/functions/.
