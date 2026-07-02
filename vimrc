@@ -27,7 +27,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-Plug 'kchmck/vim-coffee-script'
 Plug 'mbbill/undotree/'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
@@ -43,18 +42,12 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'pangloss/vim-javascript'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidoc/taskpaper.vim'
-Plug 'groenewege/vim-less'
 Plug 'chrisbra/csv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 Plug 'elzr/vim-json'
-Plug 'vim-scripts/SQLUtilities'
-Plug 'vim-scripts/dbext.vim'
-Plug 'vim-scripts/sqlcomplete.vim'
-Plug 'maksimr/vim-jsbeautify'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'tommcdo/vim-exchange'
 Plug 'vim-scripts/ReplaceWithRegister'
@@ -63,7 +56,6 @@ Plug 'kana/vim-textobj-line'
 Plug 'Olical/vim-enmasse'
 Plug 'lifepillar/vim-solarized8'
 Plug 'reedes/vim-thematic'
-Plug 'elmcast/elm-vim'
 Plug 'duncanparkinson/nova-vim'
 Plug 'twerth/ir_black'
 Plug 'jacoborus/tender.vim'
@@ -351,24 +343,11 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow -g "!.git" -g "!vendor"
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>F :Files %:p:h<cr>
 nnoremap <Leader>f :Files<cr>
-nnoremap <Leader>gVS :Files NotForDeployment/coffeescript/vessel_schedule<cr>
-nnoremap <Leader>gN :Files src/main/java/<cr>
-nnoremap <Leader>gA :Files src/main/webapp/Admin/<cr>
-nnoremap <Leader>gB :Files src/main/webapp/Bids/<cr>
-nnoremap <Leader>gC :Files NotForDeployment/sass<cr>
-nnoremap <Leader>gE :Files src/main/webapp/EHSQ/<cr>
-nnoremap <Leader>gI :Files src/main/webapp/includes/<cr>
-nnoremap <Leader>gJ :Files script/<cr>
-nnoremap <Leader>gO :Files src/main/webapp/Operations/<cr>
-nnoremap <Leader>gS :Files src/main/webapp/Secondary/<cr>
-nnoremap <Leader>gT :Files src/main/webapp/WEB-INF/jsp/task_manager/<cr>
-nnoremap <Leader>gW :Files src/main/webapp/WEB-INF/jsp/<cr>
-nnoremap <Leader>grt :!echo "restart-tomcat" > async-commands<cr>
 
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
 " test runner bindings
-autocmd FileType ruby map <Leader>aa :!CODECLIMATE_REPO_TOKEN=c2bf84dc65524a32da572571976a10b4df0349a2a7a06d240e5299fdd7ec6685 spring rspec spec/ features/<cr>
+autocmd FileType ruby map <Leader>aa :!spring rspec spec/ features/<cr>
 autocmd FileType ruby map <Leader>au :!spring rspec spec/ --exclude-pattern "spec/system/**/*_spec.rb"<cr>
 autocmd FileType ruby map <Leader>as :!spring rspec spec/system<cr>
 nmap <silent> <leader>T :TestNearest<CR>
@@ -392,15 +371,8 @@ map <Leader>gc :Git commit -v<CR>
 map <Leader>gg :tabe Gemfile<cr>
 map <Leader>gs :G<CR><C-w>20+
 map <Leader>gw :Gwrite<CR>
-map <Leader>jg :JavaGet<cr>
-map <Leader>jl :!tail -n 100 /Library/Tomcat/logs/catalina.out<cr>
-map <Leader>jr :!gradle assemble<cr>
-map <Leader>jb :!gradle classes<cr>
 map <Leader>lc :lclose<CR>
 map <Leader>lo :lopen<CR>
-" map <Leader>jb :!java -jar /Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -noSplash -data "/Users/duncan/eclipse-workspace" -application org.eclipse.jdt.apt.core.aptBuild<cr>
-map <Leader>jo :JavaImportOrganize<cr>
-map <Leader>js :JavaSet<cr>
 map <Leader>n :Rename <C-R>=expand("%:t")<CR>
 map <Leader>ocf :OpenChangedFiles<CR>
 " map <Leader>l :PromoteToLet<cr>
@@ -408,9 +380,7 @@ map <Leader>ocf :OpenChangedFiles<CR>
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
 map <Leader>qc :cclose<CR>
 map <Leader>qo :copen<CR>
-map <Leader>qf :JavaCorrect<CR>
 map <Leader>rc :Econtroller<Space>
-nnoremap <Leader>rf :CtrlP features/<cr>
 map <Leader>rg :Egenerate<Space>
 map <Leader>rh :Ehelper<Space>
 map <Leader>ri :Eintegrationtest<Space>
@@ -602,18 +572,6 @@ augroup vimrcEx
   " add pwd to path (particularly to allow rails.vim to work with namespaces)
   autocmd! BufNewFile,BufRead * let &path .= "," . expand("<afile>:p:h")
 
-  " " Treat JSPs as Java
-  " autocmd FileType jsp set ft=jsp.html.java
-  autocmd FileType jsp imap <buffer> <C-X>= <%=h(  )%><Esc>3hi
-  imap <C-X>h <%=h(  )%><Esc>3hi
-  imap <C-X>l <%=l(  )%><Esc>3hi
-  imap <C-X>n <%=name(  )%><Esc>3hi
-  autocmd FileType jsp nmap <buffer> <C-X>= "zyiwca"<%=h(  )%><Esc>4h"zp
-  autocmd FileType jsp nmap <buffer> <C-X>- I<% <Esc>A %><Esc>
-  autocmd FileType jsp imap <buffer> <C-X>j ${i:h(  )}<Esc>3hi
-
-  autocmd BufRead *.tag  set ft=jsp.html
-
   autocmd Filetype gitcommit setlocal textwidth=72 nocursorline
 augroup END
 
@@ -692,15 +650,6 @@ function! <SID>Reindent()
     call cursor(l, c)
 endfunction
 command! Reindent call <SID>Reindent()
-
-function! JavaConstructorListToInstanceVariables()
-    normal f(
-    normal yi(
-    normal O
-    normal p
-    normal ==
-    :s/, /;\r
-endfunction
 
 "====================== tmux ==============================
 
@@ -786,18 +735,6 @@ nnoremap K :execute 'Rg \b'.expand("<cword>").'\b'<CR>
 " let g:ctrlp_arg_map = 1
 
 let g:user_emmet_leader_key='<C-E>'
-
-function! OpenCompiledJsp()
-  let current_file = expand("%")
-  let current_file = substitute(current_file, 'src/main/webapp/', '', '')
-  let new_file = current_file
-  let new_file = substitute(new_file, '_', '_005f', 'g')
-  let new_file = substitute(new_file, '-', '_002d', 'g')
-  let new_file = substitute(new_file, '\.jsp', '_jsp.java', '')
-  let new_file = '/Users/duncan/projects/j-insite/build/jasper/org/apache/jsp/' . new_file
-  exec ':e ' . new_file
-endfunction
-:command! C :call OpenCompiledJsp()
 
 " Seeing Is Believing
 nmap <F5> <Plug>(seeing-is-believing-mark)
@@ -907,36 +844,6 @@ endfunc
 " " operator-pending-mode
 " omap s <Plug>Sneak_s
 " omap S <Plug>Sneak_S
-
-let g:dbext_default_profile_insite_polarcus_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_development'
-let g:dbext_default_profile_insite_polarcus_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_polarcus_production'
-let g:dbext_default_profile_insite_magseis_development='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_development'
-let g:dbext_default_profile_insite_magseis_production='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_magseis_production'
-let g:dbext_default_profile_insite_svs_demo='type=SQLSRV:user=insite_user:passwd=fc9aa6c83e471ea68467ab6c8d582cb3:host=10.211.55.7:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sparallels -D insite_demo'
-
-function! Polarcus()
-  :DBSetOption profile='insite_polarcus_development'
-  :!bin/configure-for-polarcus
-endfunction
-:command! Polarcus :call Polarcus()
-
-function! PolarcusProduction()
-  :DBSetOption profile='insite_polarcus_production'
-  :!bin/configure-for-polarcus-production
-endfunction
-:command! PolarcusProduction :call PolarcusProduction()
-
-function! Magseis()
-  :DBSetOption profile='insite_magseis_development'
-  :!bin/configure-for-magseis
-endfunction
-:command! Magseis :call Magseis()
-
-function! MagseisProduction()
-  :DBSetOption profile='insite_magseis_production'
-  :!bin/configure-for-magseis-production
-endfunction
-:command! MagseisProduction :call MagseisProduction()
 
 function! ReloadChrome()
   wall
