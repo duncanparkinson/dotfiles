@@ -363,6 +363,29 @@ nmap <silent> <leader>lt :TestLast<CR>
 " Run tests asynchronously (tmux pane via dispatch); results land in quickfix
 let test#strategy = 'dispatch'
 
+" vim-test's nearest-test patterns are line-based, so a test name prettier has
+" wrapped onto its own line (it(\n "name",) never matches. Append a pattern for
+" bare quoted-string lines. Must run after the autoload file loads, because it
+" assigns the patterns dict unconditionally.
+function! s:PatchVimTestPatterns() abort
+  if exists('s:vim_test_patterns_patched') | return | endif
+  silent! call test#javascript#has_package('')
+  if !exists('g:test#javascript#patterns') | return | endif
+  " \zs\ze trims match[0] for whole_match runners (vitest); the capture group
+  " serves group-capture runners (denotest)
+  let l:split_name = '\v^\s*["''`]\zs(.{-})\ze["''`],?\s*$'
+  if index(g:test#javascript#patterns['test'], l:split_name) < 0
+    call add(g:test#javascript#patterns['test'], l:split_name)
+  endif
+  let s:vim_test_patterns_patched = 1
+endfunction
+
+augroup VimTestMultilinePatterns
+  autocmd!
+  autocmd FileType typescript,typescriptreact,javascript,javascriptreact
+        \ call <SID>PatchVimTestPatterns()
+augroup END
+
 map <Leader>, <c-^>
 map <Leader>- <C-w>J
 map <Leader>. :A<cr>
