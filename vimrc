@@ -984,12 +984,24 @@ augroup END
 " monoco: per-directory lint/format dispatch.
 " Repo convention is prettier everywhere; deno lint adds Deno-specific checks
 " for supabase/functions/ on top.
+function! MonocoIncludeExpr(fname) abort
+  let l:root = substitute(expand('%:p'), '\v/monoco/.*$', '/monoco', '')
+  let l:f = a:fname
+  let l:f = substitute(l:f, '^@shared/', l:root . '/shared/', '')
+  let l:f = substitute(l:f, '^@/', l:root . '/supabase/functions/_shared/', '')
+  return l:f
+endfunction
+
 function! s:MonocoSetup() abort
   let l:path = expand('%:p')
   if l:path !~# '/monoco/'
     return
   endif
   let b:ale_fix_on_save = 1
+  if l:path =~# '\.tsx\?$'
+    setlocal includeexpr=MonocoIncludeExpr(v:fname)
+    setlocal isfname+=@-@
+  endif
   if l:path =~# '/monoco/supabase/functions/.*\.ts$'
     let b:ale_linters = ['deno']
     let b:ale_fixers = ['prettier']
