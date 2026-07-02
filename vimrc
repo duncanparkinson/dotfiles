@@ -999,6 +999,11 @@ augroup MonocoFmtLint
   autocmd BufRead,BufNewFile * call <SID>MonocoSetup()
 augroup END
 
+" monoco: run the repo's own CI scripts asynchronously
+command! FormatLint Dispatch ./tools/format_and_lint.sh
+command! MigrationOrder Dispatch ./tools/check_migration_order.sh
+command! MigrationsUnmodified Dispatch ./tools/check_migrations_unmodified.sh
+
 " monoco: alternate-file (:A / <Leader>.) + :Efunction/:Emigration navigation.
 " Heuristic keys on the repo having both app/src/ and supabase/functions/.
 " Edge-fn tests live flat under supabase/functions/tests/ with three naming
