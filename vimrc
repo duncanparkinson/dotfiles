@@ -1012,6 +1012,17 @@ let g:ale_completion_enabled = 1
 let g:ale_typescript_tsserver_use_global = 0
 let g:ale_linters_explicit = 1
 
+" Code navigation via ALE's LSP clients (tsserver for app/, deno for edge fns)
+nmap <silent> gd :ALEGoToDefinition<CR>
+nmap <silent> gy :ALEGoToTypeDefinition<CR>
+nmap <silent> gr :ALEFindReferences<CR>
+nmap <silent> <Leader>rn :ALERename<CR>
+nmap <silent> <Leader>k :ALEHover<CR>
+nmap <silent> <Leader>ca :ALECodeAction<CR>
+nmap <silent> <Leader>ad :ALEDetail<CR>
+nmap <silent> [w :ALEPreviousWrap<CR>
+nmap <silent> ]w :ALENextWrap<CR>
+
 augroup tsx_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
