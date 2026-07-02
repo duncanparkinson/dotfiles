@@ -988,7 +988,7 @@ function! s:MonocoSetup() abort
   elseif l:path =~# '/monoco/shared/.*\.ts$'
     let b:ale_linters = []
     let b:ale_fixers = ['prettier']
-  elseif l:path =~# '/monoco/.*\.\(md\|json\|ya\?ml\|sql\)$'
+  elseif l:path =~# '/monoco/.*\.\(md\|json\|ya\?ml\)$'
     let b:ale_fixers = ['prettier']
   endif
   " For app/ files, the global g:ale_fixers (prettier, eslint) applies.
