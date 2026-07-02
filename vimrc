@@ -344,6 +344,12 @@ nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>F :Files %:p:h<cr>
 nnoremap <Leader>f :Files<cr>
 
+" monoco directory-scoped fuzzy-find
+nnoremap <Leader>gF :Files supabase/functions<cr>
+nnoremap <Leader>gM :Files supabase/migrations<cr>
+nnoremap <Leader>gU :Files app/src<cr>
+nnoremap <Leader>gE :Files app/tests/e2e<cr>
+
 nmap yp :set paste<CR>"*]p:set nopaste<cr>
 
 " test runner bindings
