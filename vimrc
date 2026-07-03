@@ -975,6 +975,8 @@ augroup AleNavMaps
         \ nmap <buffer> <silent> ]w :ALENextWrap<CR>
 augroup END
 
+nnoremap <silent> <Leader>af :ALEFix<CR>
+
 augroup tsx_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
