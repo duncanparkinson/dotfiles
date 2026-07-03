@@ -215,4 +215,7 @@ gh-pr-fill() {
   rm -f "$desc_file" "$body_file"
 }
 
+# Added by Antigravity CLI installer
+export PATH="/Users/duncan/.local/bin:$PATH"
+
 eval "$(zoxide init zsh)"

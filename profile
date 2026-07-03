@@ -5,3 +5,7 @@ FDK_EXE="/Users/duncan/bin/FDK/Tools/osx"
 PATH=${PATH}:"/Users/duncan/bin/FDK/Tools/osx"
 export PATH
 export FDK_EXE
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/duncan/.local/bin:$PATH"

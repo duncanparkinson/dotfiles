@@ -20,3 +20,7 @@ export PATH
 export FDK_EXE
 # Added by install_latest_perl_osx.pl
 [ -r /Users/duncan/.bashrc ] && source /Users/duncan/.bashrc
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/duncan/.local/bin:$PATH"
