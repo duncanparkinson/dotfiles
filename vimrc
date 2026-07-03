@@ -989,6 +989,10 @@ augroup MonocoAleFixers
         \ let b:ale_fixers = ['prettier']
   autocmd BufNewFile,BufRead */projects/monoco/*.{json,md,yml,yaml,css,html}
         \ let b:ale_fixers = ['prettier']
+  " Edge functions are Deno, not Node: tsserver can't resolve the @/ import
+  " map in supabase/functions/deno.json, so hand those buffers to the deno LSP.
+  autocmd BufNewFile,BufRead */projects/monoco/supabase/functions/*.ts
+        \ let b:ale_linters = ['deno']
 augroup END
 
 augroup tsx_filetype
