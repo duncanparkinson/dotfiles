@@ -1,0 +1,100 @@
+snippet tbl "CREATE TABLE with standard columns + RLS" b
+CREATE TABLE ${1:name} (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ${2:-- columns}
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE $1 ENABLE ROW LEVEL SECURITY;
+$0
+endsnippet
+
+snippet pol "RLS policy" b
+CREATE POLICY "${1:Enable users to ...}" ON ${2:table}
+    FOR ${3:SELECT} TO ${4:authenticated}
+    USING (${5:true});
+$0
+endsnippet
+
+snippet polw "RLS policy with WITH CHECK" b
+CREATE POLICY "${1:Enable users to ...}" ON ${2:table}
+    FOR ${3:INSERT} TO ${4:authenticated}
+    USING (${5:true})
+    WITH CHECK (${6:true});
+$0
+endsnippet
+
+snippet rls "Enable row level security" b
+ALTER TABLE ${1:table} ENABLE ROW LEVEL SECURITY;
+$0
+endsnippet
+
+snippet trg "Trigger function + trigger" b
+CREATE OR REPLACE FUNCTION ${1:fn_name}()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS \$\$
+BEGIN
+    ${2:NEW.updated_at := now();}
+    RETURN ${3:NEW};
+END;
+\$\$;
+
+CREATE TRIGGER ${4:trg_name}
+    ${5:BEFORE UPDATE} ON ${6:table}
+    FOR EACH ROW EXECUTE FUNCTION $1();
+$0
+endsnippet
+
+snippet secdef "SECURITY DEFINER function" b
+CREATE OR REPLACE FUNCTION ${1:name}(${2})
+RETURNS ${3:VOID}
+LANGUAGE ${4:sql}
+SECURITY DEFINER
+SET search_path = ''
+AS \$\$
+    ${5}
+\$\$;
+$0
+endsnippet
+
+snippet cron "pg_cron schedule" b
+SELECT cron.schedule(
+    '${1:job-name}',
+    '${2:0 */2 * * *}',
+    \$job\$
+    ${3:SELECT 1}
+    \$job\$
+);
+$0
+endsnippet
+
+snippet vault "Read secret from vault" w
+(SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name = '${1:SECRET_NAME}')$0
+endsnippet
+
+snippet view "View with security_invoker" b
+CREATE VIEW ${1:name} WITH (security_invoker = 'true') AS
+SELECT
+    ${2:*}
+FROM ${3:table};
+$0
+endsnippet
+
+snippet idx "CREATE INDEX" b
+CREATE INDEX ${1:idx_${2:table}_${3:col}} ON $2 ($3);
+$0
+endsnippet
+
+snippet fk "Add foreign key constraint" b
+ALTER TABLE ${1:table}
+    ADD CONSTRAINT ${2:$1_${3:col}_fkey}
+    FOREIGN KEY ($3) REFERENCES ${4:other_table} (${5:id});
+$0
+endsnippet
+
+snippet com "COMMENT ON" b
+COMMENT ON ${1:TABLE} ${2:name} IS '${3}';
+$0
+endsnippet
