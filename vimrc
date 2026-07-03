@@ -977,6 +977,20 @@ augroup END
 
 nnoremap <silent> <Leader>af :ALEFix<CR>
 
+" monoco: mirror tools/format_and_lint.sh — prettier formats everything from
+" the repo root (including supabase/functions and shared/), but eslint only
+" runs inside app/, which has the only eslint config. The global TS fixers
+" (prettier+eslint) are already right for app/; strip eslint elsewhere so
+" ALEFix doesn't invoke it with no config. Prettier also owns json/md/yaml/css
+" there, matching the root `npm run format`.
+augroup MonocoAleFixers
+  autocmd!
+  autocmd BufNewFile,BufRead */projects/monoco/supabase/*.ts,*/projects/monoco/shared/*.ts
+        \ let b:ale_fixers = ['prettier']
+  autocmd BufNewFile,BufRead */projects/monoco/*.{json,md,yml,yaml,css,html}
+        \ let b:ale_fixers = ['prettier']
+augroup END
+
 augroup tsx_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
