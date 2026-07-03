@@ -1,3 +1,159 @@
+extends javascript
+
 snippet this=
 this.${1:var} = $1;
+endsnippet
+
+# --- Types ---
+
+snippet iface "Interface" b
+interface ${1:Name} {
+  ${2:field}: ${3:string};
+}
+$0
+endsnippet
+
+snippet dtype "Discriminated union" b
+type ${1:Name} =
+  | { kind: "${2}"; $3 }
+  | { kind: "${4}"; $5 };
+$0
+endsnippet
+
+snippet swex "Exhaustive switch with assertNever" b
+switch (${1:value}.${2:kind}) {
+  case "${3}":
+    return $4;
+  default:
+    return assertNever($1);
+}
+$0
+endsnippet
+
+snippet tguard "Type guard" b
+function is${1:Thing}(value: unknown): value is $1 {
+  return ${2:typeof value === "object" && value !== null};
+}
+$0
+endsnippet
+
+snippet rec "Record keyed by union (exhaustive)" b
+const ${1:lookup}: Record<${2:KeyUnion}, ${3:string}> = {
+  $4
+};
+$0
+endsnippet
+
+# --- Functions ---
+
+snippet eaf "Export async function" b
+export async function ${1:name}(${2}): Promise<${3:void}> {
+  $0
+}
+endsnippet
+
+snippet ecf "Export const arrow function" b
+export const ${1:name} = (${2}): ${3:void} => {
+  $0
+};
+endsnippet
+
+snippet tryc "Try/catch" b
+try {
+  ${1:${VISUAL}}
+} catch (error) {
+  $0
+}
+endsnippet
+
+# --- Supabase ---
+
+snippet sbq "Supabase select with throwOnError" b
+const { data: ${1:rows} } = await supabase
+  .from("${2:table}")
+  .select(${3:"*"})
+  .throwOnError();
+$0
+endsnippet
+
+snippet fetchfn "Supabase fetch function" b
+export async function fetch${1:Things}(): Promise<${2:$1}[]> {
+  const supabase = getSupabaseClient();
+
+  const { data } = await supabase
+    .from("${3:things}")
+    .select(${4:"*"})
+    .throwOnError();
+
+  return data;
+}
+$0
+endsnippet
+
+snippet efn "Supabase edge function (serveWithCors)" b
+import "@supabase/functions-js/edge-runtime.d.ts";
+import { serveWithCors } from "@/cors.ts";
+
+serveWithCors(async (req: Request) => {
+  ${1:const body = await req.json();}
+  $0
+  return new Response(JSON.stringify(${2:result}), {
+    headers: { "Content-Type": "application/json" },
+  });
+});
+endsnippet
+
+# --- Vitest ---
+
+snippet desc "describe block" b
+describe("${1:unit}", () => {
+  it("${2:behaviour}", () => {
+    $0
+  });
+});
+endsnippet
+
+snippet it "it block" b
+it("${1:behaviour}", () => {
+  $0
+});
+endsnippet
+
+snippet ita "async it block" b
+it("${1:behaviour}", async () => {
+  $0
+});
+endsnippet
+
+snippet vmock "vi.fn mock" w
+vi.fn(${1})$0
+endsnippet
+
+snippet expthrow "expect toThrow" b
+expect(() => ${1:call}).toThrow(${2});
+$0
+endsnippet
+
+snippet exprej "await expect rejects" b
+await expect(${1:promise}).rejects.toThrow(${2});
+$0
+endsnippet
+
+# --- Playwright ---
+
+snippet pwtest "Playwright test" b
+test("${1:behaviour}", async ({ page }) => {
+  $0
+});
+endsnippet
+
+snippet pwroute "Playwright route mock" b
+await page.route("**/${1:path}", async (route) => {
+  await route.fulfill({
+    status: ${2:200},
+    contentType: "application/json",
+    body: JSON.stringify(${3:{}}),
+  });
+});
+$0
 endsnippet
