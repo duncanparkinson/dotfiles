@@ -219,3 +219,4 @@ gh-pr-fill() {
 export PATH="/Users/duncan/.local/bin:$PATH"
 
 eval "$(zoxide init zsh)"
+eval "$(direnv hook zsh)"
