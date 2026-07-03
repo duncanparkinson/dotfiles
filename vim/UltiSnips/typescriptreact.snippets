@@ -1,0 +1,45 @@
+extends typescript
+
+snippet comp "Component with props interface" b
+interface ${1:Name}Props {
+  ${2:field}: ${3:string};
+}
+
+export function $1({ ${4:$2} }: $1Props) {
+  return (
+    $0
+  );
+}
+endsnippet
+
+snippet us "useState with type" b
+const [${1:value}, set${2:${1/\w+/\u$0/}}] = useState<${3:string}>(${4});
+$0
+endsnippet
+
+snippet ue "useEffect" b
+useEffect(() => {
+  $1
+}, [${2}]);
+$0
+endsnippet
+
+snippet uem "useMemo" b
+const ${1:value} = useMemo(() => ${2}, [${3}]);
+$0
+endsnippet
+
+snippet ucb "useCallback" b
+const ${1:handler} = useCallback((${2}) => {
+  $3
+}, [${4}]);
+$0
+endsnippet
+
+snippet chev "Change event handler" w
+(event: React.ChangeEvent<HTML${1:Input}Element>) => ${2:set${3:Value}(event.target.value)}$0
+endsnippet
+
+snippet setdisp "Dispatch setState prop type" w
+React.Dispatch<React.SetStateAction<${1:string}>>$0
+endsnippet
