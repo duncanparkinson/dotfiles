@@ -70,3 +70,6 @@ if [ -x /opt/homebrew/bin/brew ]; then
 elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
+
+# Silence zoxide doctor false-positive in non-interactive/one-shot shells (e.g. Claude Bash)
+export _ZO_DOCTOR=0
