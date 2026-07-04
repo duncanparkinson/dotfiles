@@ -227,3 +227,5 @@ eval "$(zoxide init zsh)"
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 bwst() { BWS_ACCESS_TOKEN="$(security find-generic-password -s bws-monoco -w)" bws "$@"; }
+
+[ -f ~/projects/monoco/tools/completions/monoco.zsh ] && source ~/projects/monoco/tools/completions/monoco.zsh
