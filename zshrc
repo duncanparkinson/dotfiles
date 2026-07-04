@@ -43,6 +43,8 @@ fi
 # P9K_VCS_SHOW_CHANGESET=true
 # P9K_VCS_CHANGESET_HASH_LENGTH=6
 # P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
+[ -d ~/projects/monoco/tools/completions ] && fpath+=(~/projects/monoco/tools/completions)
+
 source ~/.dotfiles/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -228,4 +230,3 @@ eval "$(zoxide init zsh)"
 
 bwst() { BWS_ACCESS_TOKEN="$(security find-generic-password -s bws-monoco -w)" bws "$@"; }
 
-[ -f ~/projects/monoco/tools/completions/monoco.zsh ] && source ~/projects/monoco/tools/completions/monoco.zsh
