@@ -1,8 +1,3 @@
-# direnv export must run above the instant prompt block so its output doesn't
-# trip p10k's no-console-output check; the hook itself is registered at the
-# bottom of this file (see the p10k FAQ on direnv).
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -226,7 +221,6 @@ gh-pr-fill() {
 export PATH="/Users/duncan/.local/bin:$PATH"
 
 eval "$(zoxide init zsh)"
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 bwst() { BWS_ACCESS_TOKEN="$(security find-generic-password -s bws-monoco -w)" bws "$@"; }
 
