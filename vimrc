@@ -918,14 +918,13 @@ autocmd BufEnter */cypress/e2e/*
   \ let g:test#javascript#cypress#executable = finddir('node_modules', expand('%:p:h').';') . '/.bin/cypress'
 autocmd BufLeave */cypress/**/* unlet! g:test#javascript#runner | unlet! g:test#javascript#cypress#executable
 
-" monoco: deno-test runner for supabase/functions/tests/* (deno test), playwright auto-detected for app/tests/e2e/*, vitest auto-detected for app/src/**/*.test.{ts,tsx}
-autocmd BufEnter */monoco/supabase/functions/tests/*
-  \ let g:test#javascript#runner = 'denotest' |
-  \ let g:test#javascript#denotest#options = {
-  \   'all': '--allow-all --config supabase/functions/deno.json',
-  \   'suite': 'supabase/functions/tests tools/coursework_import',
-  \ }
-autocmd BufLeave */monoco/supabase/functions/tests/* unlet! g:test#javascript#runner | unlet! g:test#javascript#denotest#options
+" monoco: delegate in-repo test running to `monoco test`, which routes to
+" vitest / playwright / deno by path and cds itself; nearest arrives as --name and
+" monoco maps it to the runner's own filter. vim-test stays native elsewhere
+" (cross-project). Runner: vim/autoload/test/javascript/monoco.vim.
+let g:test#custom_runners = {'JavaScript': ['monoco']}
+autocmd BufEnter */monoco/* let g:test#javascript#runner = 'monoco'
+autocmd BufLeave */monoco/* unlet! g:test#javascript#runner
 
 " let g:EclimJavaValidate = 0
 " let g:EclimFileTypeValidate = 0
