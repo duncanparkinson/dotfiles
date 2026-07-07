@@ -16,11 +16,18 @@ endfunction
 
 function! test#javascript#monoco#build_position(type, position) abort
   if a:type ==# 'nearest'
+    " Pass both: monoco uses --line for playwright (robust, exact declaration
+    " line) and --name for vitest / deno (which have no line filter).
+    let args = [shellescape(a:position['file'])]
     let name = s:nearest_test(a:position)
     if !empty(name)
-      return [shellescape(a:position['file']), '--name', shellescape(name, 1)]
+      let args += ['--name', shellescape(name, 1)]
     endif
-    return [shellescape(a:position['file'])]
+    let line = s:nearest_line(a:position)
+    if line > 0
+      let args += ['--line', line]
+    endif
+    return args
   elseif a:type ==# 'file'
     return [shellescape(a:position['file'])]
   else
@@ -39,4 +46,17 @@ endfunction
 function! s:nearest_test(position) abort
   let name = test#base#nearest_test(a:position, g:test#javascript#patterns)
   return join(name['test'])
+endfunction
+
+" The nearest test's declaration line (the `test(` / `flowTest(` / `it(` call),
+" scanning up from the cursor. Playwright's file:line filter wants exactly this.
+function! s:nearest_line(position) abort
+  let lnum = a:position['line']
+  while lnum > 0
+    if getline(lnum) =~# '\v^\s*%(\w*[Tt]est|it)%(\.\w+)?\s*\('
+      return lnum
+    endif
+    let lnum -= 1
+  endwhile
+  return 0
 endfunction
