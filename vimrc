@@ -360,8 +360,14 @@ nmap <silent> <leader>T :TestNearest<CR>
 nmap <silent> <leader>t :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>lt :TestLast<CR>
-" Run tests asynchronously (tmux pane via dispatch); results land in quickfix
-let test#strategy = 'dispatch'
+" Single test / single file run inline and blocking (:!); the whole suite runs
+" async in a tmux pane via dispatch, results to quickfix.
+let test#strategy = {
+  \ 'nearest': 'basic',
+  \ 'file': 'basic',
+  \ 'last': 'basic',
+  \ 'suite': 'dispatch',
+  \}
 
 " vim-test's nearest-test patterns are line-based, so a test name prettier has
 " wrapped onto its own line (it(\n "name",) never matches. Append a pattern for
