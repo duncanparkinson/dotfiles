@@ -1121,3 +1121,10 @@ let g:projectionist_heuristics = {
       \   'supabase/migrations/*.sql': {'type': 'migration'},
       \   'app/tests/e2e/*.spec.ts': {'type': 'e2e'},
       \ }}
+
+let s:opener = has('mac') ? 'open' : 'xdg-open'
+if has('nvim')
+  execute 'command! -bar -nargs=1 Browse call jobstart([' . string(s:opener) . ', <q-args>])'
+else
+  execute 'command! -bar -nargs=1 Browse call job_start([' . string(s:opener) . ', <q-args>])'
+endif
