@@ -1106,15 +1106,31 @@ command! CI Dispatch bash -c 'set -ex;
 
 " monoco: alternate-file (:A / <Leader>.) + :Efunction/:Emigration navigation.
 " Heuristic keys on the repo having both app/src/ and supabase/functions/.
+" Component tests are jsdom-rendered and named <Component>.dom.test.tsx, with a
+" handful of older plain <Component>.test.tsx and one <Component>.interaction.
+" dom.test.tsx; projectionist picks the longest matching key, so the more
+" specific suffixes must each get their own entry or *.test.tsx swallows them.
 " Edge-fn tests live flat under supabase/functions/tests/ with three naming
 " conventions (<fn>.test.ts, <fn>-fn.test.ts, <fn>-decide.test.ts); alternate
 " lists try each, first match wins.
 let g:projectionist_heuristics = {
       \ 'app/src/&supabase/functions/': {
       \   'app/src/*.test.ts': {'alternate': 'app/src/{}.ts', 'type': 'test'},
+      \   'app/src/*.interaction.dom.test.tsx': {
+      \     'alternate': 'app/src/{}.tsx',
+      \     'type': 'test',
+      \   },
+      \   'app/src/*.dom.test.tsx': {'alternate': 'app/src/{}.tsx', 'type': 'test'},
       \   'app/src/*.test.tsx': {'alternate': 'app/src/{}.tsx', 'type': 'test'},
       \   'app/src/*.ts': {'alternate': 'app/src/{}.test.ts', 'type': 'source'},
-      \   'app/src/*.tsx': {'alternate': 'app/src/{}.test.tsx', 'type': 'source'},
+      \   'app/src/*.tsx': {
+      \     'alternate': [
+      \       'app/src/{}.dom.test.tsx',
+      \       'app/src/{}.test.tsx',
+      \       'app/src/{}.interaction.dom.test.tsx',
+      \     ],
+      \     'type': 'source',
+      \   },
       \   'supabase/functions/*/index.ts': {
       \     'alternate': [
       \       'supabase/functions/tests/{}.test.ts',
