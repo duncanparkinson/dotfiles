@@ -239,3 +239,7 @@ _git_l () { _git_log }
 (( $+functions[setup_git_alias_completion] )) && setup_git_alias_completion
 # <<< monoco <<<
 
+# Auto-name Claude Code sessions: hostname:dir-basename (e.g. macbook:monoco)
+claude() {
+  command claude --name "$(hostname -s):$(basename "$PWD")" "$@"
+}
