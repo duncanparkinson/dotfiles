@@ -191,15 +191,15 @@ let g:thematic#themes = {
 \    'colorscheme': 'grb256',
 \    'background': 'dark',
 \  },
-\  'light': {
-\    'colorscheme': 'solarized8',
-\    'airline-theme': 'solarized',
-\    'background': 'light',
-\  },
 \  'dark': {
-\    'colorscheme': 'solarized8',
-\    'airline-theme': 'solarized',
+\    'colorscheme': 'dracula_pro',
+\    'airline-theme': 'dracula_pro',
 \    'background': 'dark',
+\  },
+\  'light': {
+\    'colorscheme': 'dracula_pro_alucard',
+\    'airline-theme': 'dracula_pro',
+\    'background': 'light',
 \  },
 \  'default': {
 \    'colorscheme': 'dracula_pro',
@@ -208,9 +208,9 @@ let g:thematic#themes = {
 \  },
 \}
 let s:cache = expand('~/.cache/current-theme')
-let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'solarized_dark'
-command! Dark Thematic solarized_dark
-command! Light Thematic solarized_light
+let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'dracula'
+command! Dark Thematic dracula
+command! Light Thematic alucard
 function! s:SyncThemeFromCache()
   let cache = expand('~/.cache/current-theme')
   if !filereadable(cache) | return | endif
