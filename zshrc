@@ -232,5 +232,10 @@ autoload -Uz compinit && compinit -u
 # git-completion can't resolve `!` aliases, so point them at _git_log directly.
 _git_r () { _git_log }
 _git_l () { _git_log }
+
+# Register git completion for the g/gco/... aliases from ~/.aliases.
+# Must run after compinit — compdef is a no-op before it (that loop used to
+# run at ~/.aliases source time, pre-compinit, and was silently discarded).
+(( $+functions[setup_git_alias_completion] )) && setup_git_alias_completion
 # <<< monoco <<<
 

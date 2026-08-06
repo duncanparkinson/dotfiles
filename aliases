@@ -127,13 +127,17 @@ alias gstp='git stash pop'
 alias gup='git up'
 alias s='git status -sb $argv; return 0'
 alias d='gd $argv'
-# Git completion for aliases that accept completable arguments
-for _a in g ga gap gau gbr gch gco gcop gd 'gd.' gdc 'gdc.' gdt gf \
-           gm gmf gmt gp gr grb grba grbc grbi grh grp grs gs 'gs.' \
-           gst gstp gup s d; do
-  compdef $_a=git
-done
-unset _a
+# Git completion for aliases that accept completable arguments.
+# Canonical list lives here, but compdef is a no-op until compinit runs
+# (later in zshrc), so registration is invoked from zshrc after compinit.
+setup_git_alias_completion() {
+  local _a
+  for _a in g ga gap gau gbr gch gco gcop gd 'gd.' gdc 'gdc.' gdt gf \
+             gm gmf gmt gp gr grb grba grbc grbi grh grp grs gs 'gs.' \
+             gst gstp gup s d; do
+    compdef $_a=git
+  done
+}
 
 alias aliases='vim ~/.dotfiles/aliases; soaliases'
 alias dotfiles='cd ~/.dotfiles/'
