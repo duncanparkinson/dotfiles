@@ -73,6 +73,7 @@ Plug 'rizzatti/dash.vim', { 'on': '<Plug>DashSearch' }
 Plug 'AndrewRadev/deleft.vim'
 Plug 'dense-analysis/ale'
 Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors with vim-autotag
+Plug 'rishi-opensource/vim-claude-code'
 
 " Plug 'tpope/vim-haml'
 " Plug 'tpope/vim-rsi'
