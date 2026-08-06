@@ -201,6 +201,11 @@ let g:thematic#themes = {
 \    'airline-theme': 'dracula_pro',
 \    'background': 'light',
 \  },
+\  'cyf': {
+\    'colorscheme': 'cyf_demo',
+\    'airline-theme': 'papercolor',
+\    'background': 'light',
+\  },
 \  'default': {
 \    'colorscheme': 'dracula_pro',
 \    'airline-theme': 'dracula_pro',
@@ -211,6 +216,7 @@ let s:cache = expand('~/.cache/current-theme')
 let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'dracula'
 command! Dark Thematic dracula
 command! Light Thematic alucard
+command! CYF Thematic cyf
 function! s:SyncThemeFromCache()
   let cache = expand('~/.cache/current-theme')
   if !filereadable(cache) | return | endif

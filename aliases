@@ -178,3 +178,6 @@ alias zz="z -"
 tac() { tail -r -- "$@"; }
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+# Open a throwaway Ghostty window in the CYF brand light theme for screen-sharing
+alias demoterm='open -na Ghostty --args --theme=cyf'
