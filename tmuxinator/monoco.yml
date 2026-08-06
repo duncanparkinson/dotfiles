@@ -47,4 +47,4 @@ root: ~/projects/monoco
 windows:
   - vim: vim
   - c: claude
-  - server: tools/start_local.sh
+  - s: monoco s
