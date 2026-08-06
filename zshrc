@@ -223,4 +223,9 @@ export PATH="/Users/duncan/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
 
 bwst() { BWS_ACCESS_TOKEN="$(security find-generic-password -s bws-monoco -w)" bws "$@"; }
+# >>> monoco >>>
+export PATH="/Users/duncan/.local/bin:${PATH}"
+fpath=("/Users/duncan/projects/monoco/tools/completions" $fpath)
+autoload -Uz compinit && compinit -u
+# <<< monoco <<<
 
