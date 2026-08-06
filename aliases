@@ -89,6 +89,39 @@ alias grsh='git reset --soft HEAD~'
 alias grv='git remote -v'
 alias gs='git show'
 alias gs.='git show --color-words="."'
+# gs~ / gs~~ / gs~3 ... => git show HEAD~ / HEAD~~ / HEAD~3, and the same for
+# every prefix below. Add a prefix here and both the concrete aliases and the
+# fallback handler pick it up. Longest prefix first: the handler takes the
+# first match, so grbi must beat a hypothetical gr.
+typeset -ga _git_rev_alias_cmds=(
+  grbi 'git rebase -i'
+  grh  'git reset --hard'
+  gd   'git diff -M'
+  gs   'git show'
+)
+# Concrete aliases up to 50 so syntax highlighting and completion see them;
+# command_not_found_handler catches everything beyond.
+_git_rev_aliases() {
+  local prefix cmd n
+  for prefix cmd in $_git_rev_alias_cmds; do
+    for n in {1..50}; do
+      alias "$prefix~$n"="$cmd HEAD~$n"
+      (( n <= 10 )) && alias "$prefix${(l:n::~:):-}"="$cmd HEAD${(l:n::~:):-}"
+    done
+  done
+}
+_git_rev_aliases
+command_not_found_handler() {
+  local prefix cmd
+  for prefix cmd in $_git_rev_alias_cmds; do
+    if [[ $1 == ${prefix}[~^]* ]]; then
+      ${=cmd} "HEAD${1#$prefix}" "${@:2}"
+      return
+    fi
+  done
+  print -u2 "zsh: command not found: $1"
+  return 127
+}
 alias gst='git stash'
 alias gstp='git stash pop'
 alias gup='git up'
