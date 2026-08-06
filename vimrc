@@ -1066,6 +1066,12 @@ function! s:MonocoSetup() abort
   if l:path =~# '/monoco/supabase/functions/.*\.ts$'
     let b:ale_linters = ['deno']
     let b:ale_fixers = ['prettier']
+    " Pin the deno LSP to the workspace root. Each function has its own
+    " deno.json, so ALE's nearest-deno.json detection would otherwise start a
+    " separate server per function dir, each blind to cross-function and
+    " _shared imports. supabase/functions/deno.json declares the workspace.
+    let b:ale_deno_lsp_project_root =
+          \ substitute(l:path, '\v/monoco/supabase/functions/.*', '/monoco/supabase/functions', '')
   elseif l:path =~# '/monoco/shared/.*\.ts$'
     let b:ale_linters = []
     let b:ale_fixers = ['prettier']
