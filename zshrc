@@ -227,5 +227,10 @@ bwst() { BWS_ACCESS_TOKEN="$(security find-generic-password -s bws-monoco -w)" b
 export PATH="/Users/duncan/.local/bin:${PATH}"
 fpath=("/Users/duncan/projects/monoco/tools/completions" $fpath)
 autoload -Uz compinit && compinit -u
+
+# Complete shell-alias git log wrappers (`git r`, `git l`) like `git log`.
+# git-completion can't resolve `!` aliases, so point them at _git_log directly.
+_git_r () { _git_log }
+_git_l () { _git_log }
 # <<< monoco <<<
 
