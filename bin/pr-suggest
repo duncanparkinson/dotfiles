@@ -1,0 +1,472 @@
+#!/usr/bin/env python3
+"""Post working-copy edits to a GitHub PR as suggestion blocks in a pending review.
+
+Workflow
+--------
+Edit the working copy to make the changes you want to propose, annotating each
+one with a marker comment. Compile and test as normal: markers are ordinary
+line comments, so the tree still builds. Then run this script. It turns each
+annotated change into a GitHub suggestion block anchored on the lines it
+replaces, and attaches it to a single PENDING review that you submit or discard
+from the GitHub UI. Nothing is ever submitted for you.
+
+Because the suggestions are generated from the working copy, every line you
+propose has already been through the compiler.
+
+Markers
+-------
+A marker is a line comment whose text begins with ``PR:`` or ``PR?``. The
+comment introducer may be ``//``, ``#`` or ``--``. Consecutive marker lines form
+one block, and a marker line with nothing after the sigil is a blank line in the
+body, so bodies can hold paragraphs and fenced code.
+
+``PR:``  annotates a change. The block must sit immediately above the changed
+         lines, with no blank line between. The body becomes the comment; the
+         changed lines become the suggestion.
+
+``PR?``  is prose with no change attached. The block must sit immediately above
+         an unchanged line, which is what it anchors to. Give an explicit
+         anchor instead with ``PR?46`` or ``PR?46-52``.
+
+    // PR: The generator already produces this one, and `Tables<>` covers
+    // PR: views as well as tables.
+    type OnboardingStepsRow = Tables<"onboarding_steps">;
+
+    -- PR?46-52 This policy is wider than the view needs.
+
+Everything is validated before anything is posted: the local HEAD must match the
+PR head, every anchor must fall inside the PR's own diff, and every changed
+region must carry a marker. A failure at any point posts nothing.
+
+Defaults to a dry run. Pass --post to create the review.
+"""
+
+import argparse
+import difflib
+import json
+import os
+import re
+import subprocess
+import sys
+from dataclasses import dataclass, field
+
+MARKER = re.compile(r"^\s*(?://|#|--)\s*PR([:?])(\S*)(?:[ \t](.*))?$")
+ANCHOR_SPEC = re.compile(r"^(\d+)(?:-(\d+))?$")
+HUNK_HEADER = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@")
+
+
+class Problem(Exception):
+    pass
+
+
+@dataclass
+class Block:
+    kind: str
+    spec: str
+    body: list[str]
+    first_line: int
+    next_line: int
+
+
+@dataclass
+class Comment:
+    path: str
+    start_line: int
+    line: int
+    body: str
+    suggestion: list[str] | None = None
+
+    def rendered(self) -> str:
+        if self.suggestion is None:
+            return self.body
+        fence = "```"
+        while any(fence in line for line in self.suggestion):
+            fence += "`"
+        block = "\n".join([fence + "suggestion", *self.suggestion, fence])
+        return f"{self.body}\n\n{block}" if self.body else block
+
+
+@dataclass
+class Plan:
+    comments: list[Comment] = field(default_factory=list)
+    problems: list[str] = field(default_factory=list)
+    unannotated: list[str] = field(default_factory=list)
+
+
+def run(args: list[str], **kwargs) -> str:
+    result = subprocess.run(
+        args, capture_output=True, text=True, check=False, **kwargs
+    )
+    if result.returncode != 0:
+        raise Problem(f"{' '.join(args)} failed: {result.stderr.strip()}")
+    return result.stdout
+
+
+def split_lines(text: str) -> list[str]:
+    lines = text.split("\n")
+    if lines and lines[-1] == "":
+        lines.pop()
+    return lines
+
+
+def parse_markers(lines: list[str]) -> tuple[list[str], list[Block]]:
+    clean: list[str] = []
+    blocks: list[Block] = []
+    index = 0
+
+    while index < len(lines):
+        match = MARKER.match(lines[index])
+        if not match:
+            clean.append(lines[index])
+            index += 1
+            continue
+
+        kind, spec, body = match.group(1), match.group(2), match.group(3)
+        first_line = index + 1
+        block = Block(kind, spec, [body or ""], first_line, len(clean) + 1)
+
+        index += 1
+        while index < len(lines):
+            following = MARKER.match(lines[index])
+            if not following or following.group(1) != kind:
+                break
+            if following.group(2):
+                raise Problem(
+                    f"line {index + 1}: an anchor may only appear on the first "
+                    f"line of a marker block"
+                )
+            block.body.append(following.group(3) or "")
+            index += 1
+
+        blocks.append(block)
+
+    return clean, blocks
+
+
+def changed_regions(head: list[str], clean: list[str]) -> list[tuple[int, int, int, int]]:
+    matcher = difflib.SequenceMatcher(None, head, clean, autojunk=False)
+    regions: list[tuple[int, int, int, int]] = []
+
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            continue
+        if regions and regions[-1][1] == i1 and regions[-1][3] == j1:
+            previous = regions.pop()
+            regions.append((previous[0], i2, previous[2], j2))
+        else:
+            regions.append((i1, i2, j1, j2))
+
+    return regions
+
+
+def head_line_for(clean_line: int, head: list[str], clean: list[str]) -> int | None:
+    matcher = difflib.SequenceMatcher(None, head, clean, autojunk=False)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal" and j1 < clean_line <= j2:
+            return i1 + (clean_line - j1)
+    return None
+
+
+def diff_covered_lines(base: str, path: str) -> set[int]:
+    diff = run(["git", "diff", "--no-color", "-U3", f"{base}...HEAD", "--", path])
+    covered: set[int] = set()
+    cursor = 0
+
+    for line in diff.split("\n"):
+        header = HUNK_HEADER.match(line)
+        if header:
+            cursor = int(header.group(1))
+            continue
+        if not cursor or line.startswith("+++"):
+            continue
+        if line.startswith(("+", " ")):
+            covered.add(cursor)
+            cursor += 1
+        elif line.startswith("-"):
+            continue
+        else:
+            cursor = 0
+
+    return covered
+
+
+def plan_file(path: str, base: str, plan: Plan) -> None:
+    head = split_lines(run(["git", "show", f"HEAD:{path}"]))
+    working = split_lines(open(path, encoding="utf-8").read())
+    clean, blocks = parse_markers(working)
+    regions = changed_regions(head, clean)
+    covered = diff_covered_lines(base, path)
+    claimed: dict[int, Block] = {}
+
+    for block in blocks:
+        body = "\n".join(block.body).strip()
+        if not body:
+            plan.problems.append(f"{path}:{block.first_line}: marker block has no text")
+            continue
+
+        if block.kind == "?":
+            plan_prose(path, block, body, head, clean, covered, plan)
+            continue
+
+        if block.spec:
+            plan.problems.append(
+                f"{path}:{block.first_line}: PR: takes no anchor, the change "
+                f"below it decides the lines"
+            )
+            continue
+
+        index = next(
+            (n for n, r in enumerate(regions) if r[2] < block.next_line <= r[3]), None
+        )
+        if index is None:
+            plan.problems.append(
+                f"{path}:{block.first_line}: PR: must sit directly above a "
+                f"changed line, with no blank line between"
+            )
+            continue
+        if index in claimed:
+            plan.problems.append(
+                f"{path}:{block.first_line}: this change is already annotated at "
+                f"line {claimed[index].first_line}"
+            )
+            continue
+
+        claimed[index] = block
+        plan_suggestion(path, block, body, regions[index], head, clean, covered, plan)
+
+    for index, region in enumerate(regions):
+        if index not in claimed:
+            plan.unannotated.append(f"{path}: change at HEAD line {region[0] + 1}")
+
+
+def plan_suggestion(
+    path: str,
+    block: Block,
+    body: str,
+    region: tuple[int, int, int, int],
+    head: list[str],
+    clean: list[str],
+    covered: set[int],
+    plan: Plan,
+) -> None:
+    old_start, old_end, new_start, new_end = region
+    suggestion = clean[new_start:new_end]
+
+    if old_start == old_end:
+        above, below = old_start, old_start + 1
+        if above >= 1 and above in covered:
+            start_line = line = above
+            suggestion = [head[above - 1], *suggestion]
+        elif below <= len(head) and below in covered:
+            start_line = line = below
+            suggestion = [*suggestion, head[below - 1]]
+        else:
+            plan.problems.append(
+                f"{path}:{block.first_line}: an insertion has to anchor on the "
+                f"line above or below it, and the PR's diff covers neither line "
+                f"{above} nor line {below}"
+            )
+            return
+    else:
+        start_line = old_start + 1
+        line = old_end
+
+    missing = [n for n in range(start_line, line + 1) if n not in covered]
+    if missing:
+        plan.problems.append(
+            f"{path}:{start_line}-{line}: line(s) {missing} are not in the PR's "
+            f"diff, so GitHub will not accept a comment there"
+        )
+        return
+
+    plan.comments.append(Comment(path, start_line, line, body, suggestion))
+
+
+def plan_prose(
+    path: str,
+    block: Block,
+    body: str,
+    head: list[str],
+    clean: list[str],
+    covered: set[int],
+    plan: Plan,
+) -> None:
+    if block.spec:
+        spec = ANCHOR_SPEC.match(block.spec)
+        if not spec:
+            plan.problems.append(
+                f"{path}:{block.first_line}: cannot read the anchor "
+                f"'{block.spec}', expected PR?46 or PR?46-52"
+            )
+            return
+        start_line = int(spec.group(1))
+        line = int(spec.group(2) or spec.group(1))
+    else:
+        anchor = head_line_for(block.next_line, head, clean)
+        if anchor is None:
+            plan.problems.append(
+                f"{path}:{block.first_line}: PR? must sit directly above an "
+                f"unchanged line, or carry an explicit anchor such as PR?46"
+            )
+            return
+        start_line = line = anchor
+
+    if start_line > line:
+        plan.problems.append(f"{path}:{block.first_line}: anchor range runs backwards")
+        return
+
+    missing = [n for n in range(start_line, line + 1) if n not in covered]
+    if missing:
+        plan.problems.append(
+            f"{path}:{start_line}-{line}: line(s) {missing} are not in the PR's "
+            f"diff, so GitHub will not accept a comment there"
+        )
+        return
+
+    plan.comments.append(Comment(path, start_line, line, body))
+
+
+def resolve_pr(repo: str | None, number: int | None) -> dict:
+    args = ["gh", "pr", "view", "--json", "number,headRefOid,baseRefName,url"]
+    if number:
+        args.insert(3, str(number))
+    if repo:
+        args += ["--repo", repo]
+    return json.loads(run(args))
+
+
+def create_pending_review(repo: str, number: int) -> str:
+    created = json.loads(run(["gh", "api", f"repos/{repo}/pulls/{number}/reviews", "-X", "POST"]))
+    if created.get("node_id"):
+        return created["node_id"]
+
+    owner, name = repo.split("/")
+    query = """
+    query($owner:String!, $name:String!, $pr:Int!) {
+      repository(owner:$owner, name:$name) {
+        pullRequest(number:$pr) { reviews(last: 10) { nodes { id databaseId } } }
+      }
+    }"""
+    found = run([
+        "gh", "api", "graphql", "-f", f"query={query}",
+        "-f", f"owner={owner}", "-f", f"name={name}", "-F", f"pr={number}",
+        "--jq", f".data.repository.pullRequest.reviews.nodes[] "
+                f"| select(.databaseId == {created['id']}) | .id",
+    ]).strip()
+    if not found:
+        raise Problem("created a pending review but could not find its node id")
+    return found
+
+
+def add_thread(review_id: str, comment: Comment) -> None:
+    multiline = comment.start_line != comment.line
+    query = """
+    mutation($reviewId:ID!, $body:String!, $path:String!, $line:Int!%s) {
+      addPullRequestReviewThread(input:{
+        pullRequestReviewId: $reviewId, body: $body, path: $path,
+        line: $line, side: RIGHT%s
+      }) { thread { id } }
+    }""" % (
+        ", $startLine:Int!" if multiline else "",
+        ", startLine: $startLine, startSide: RIGHT" if multiline else "",
+    )
+
+    args = [
+        "gh", "api", "graphql", "-f", f"query={query}",
+        "-f", f"reviewId={review_id}", "-f", f"path={comment.path}",
+        "-F", f"line={comment.line}", "-f", f"body={comment.rendered()}",
+    ]
+    if multiline:
+        args += ["-F", f"startLine={comment.start_line}"]
+    run(args)
+
+
+def describe(comment: Comment) -> str:
+    where = (
+        f"{comment.path}:{comment.start_line}"
+        if comment.start_line == comment.line
+        else f"{comment.path}:{comment.start_line}-{comment.line}"
+    )
+    return f"\n\033[1m{where}\033[0m\n{comment.rendered()}\n"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("pr", nargs="?", type=int, help="PR number (default: current branch's)")
+    parser.add_argument("--repo", help="OWNER/NAME (default: current repository)")
+    parser.add_argument("--post", action="store_true", help="create the pending review")
+    parser.add_argument(
+        "--ignore-unannotated",
+        action="store_true",
+        help="allow changed regions that carry no marker; they are left alone",
+    )
+    parser.add_argument("paths", nargs="*", help="limit to these paths")
+    args = parser.parse_args()
+
+    paths = [os.path.abspath(path) for path in args.paths]
+    os.chdir(run(["git", "rev-parse", "--show-toplevel"]).strip())
+
+    pr = resolve_pr(args.repo, args.pr)
+    repo = args.repo or run(["gh", "repo", "view", "--json", "nameWithOwner", "--jq", ".nameWithOwner"]).strip()
+    local_head = run(["git", "rev-parse", "HEAD"]).strip()
+
+    if local_head != pr["headRefOid"]:
+        raise Problem(
+            f"local HEAD is {local_head[:8]} but PR #{pr['number']} is at "
+            f"{pr['headRefOid'][:8]}; line numbers would not line up"
+        )
+
+    base = run(["git", "merge-base", f"origin/{pr['baseRefName']}", "HEAD"]).strip()
+    changed = split_lines(run(["git", "diff", "--name-only", "HEAD", "--", *paths]))
+
+    if not changed:
+        print("No working-copy changes to suggest.")
+        return 0
+
+    plan = Plan()
+    for path in changed:
+        plan_file(path, base, plan)
+
+    if plan.unannotated and not args.ignore_unannotated:
+        for entry in plan.unannotated:
+            plan.problems.append(f"{entry} carries no marker")
+
+    if plan.problems:
+        print("Nothing posted. Fix these first:\n", file=sys.stderr)
+        for problem in plan.problems:
+            print(f"  {problem}", file=sys.stderr)
+        if plan.unannotated and not args.ignore_unannotated:
+            print(
+                "\nPass --ignore-unannotated to leave unmarked changes out of the review.",
+                file=sys.stderr,
+            )
+        return 1
+
+    if not plan.comments:
+        print("No markers found.")
+        return 0
+
+    for comment in plan.comments:
+        print(describe(comment))
+
+    if not args.post:
+        print(f"{len(plan.comments)} comment(s) planned. Re-run with --post to create the review.")
+        return 0
+
+    review_id = create_pending_review(repo, pr["number"])
+    for comment in plan.comments:
+        add_thread(review_id, comment)
+
+    print(f"{len(plan.comments)} comment(s) on a pending review, not submitted.")
+    print(f"Submit or discard at {pr['url']}/files")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Problem as problem:
+        print(f"error: {problem}", file=sys.stderr)
+        sys.exit(1)
