@@ -980,7 +980,7 @@ augroup AleNavMaps
         \ nmap <buffer> <silent> gR :ALEFindReferences<CR>|
         \ nmap <buffer> <silent> <Leader>rn :ALERename<CR>|
         \ nmap <buffer> <silent> <Leader>k :ALEHover<CR>|
-        \ nmap <buffer> <silent> <Leader>ca :ALECodeAction<CR>|
+        \ nmap <buffer> <silent> <Leader>ca :call search('\<'.expand('<cword>').'\>','bc',line('.'))<Bar>ALECodeAction<CR>|
         \ nmap <buffer> <silent> <Leader>ad :ALEDetail<CR>|
         \ nmap <buffer> <silent> <Leader>oi :ALEOrganizeImports<CR>|
         \ nmap <buffer> <silent> [w :ALEPreviousWrap<CR>|
