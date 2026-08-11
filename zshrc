@@ -38,7 +38,6 @@ fi
 # P9K_VCS_SHOW_CHANGESET=true
 # P9K_VCS_CHANGESET_HASH_LENGTH=6
 # P9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind git-stash git-remotebranch git-tagname)
-[ -d ~/projects/monoco/tools/completions ] && fpath+=(~/projects/monoco/tools/completions)
 
 source ~/.dotfiles/antigen.zsh
 # Load the oh-my-zsh's library.
@@ -174,9 +173,6 @@ export PATH=/usr/local/texlive/2025/bin/universal-darwin:$PATH
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Created by `pipx` on 2025-07-02 20:39:07
-export PATH="$PATH:/Users/duncan/.local/bin"
-
 export NVM_DIR="$HOME/.nvm"
 # Put default node's bin on PATH without sourcing nvm.sh (fast, and inherited by child processes).
 # Resolves $NVM_DIR/alias/default → highest matching versions/node/<ver> dir.
@@ -216,9 +212,6 @@ gh-pr-fill() {
   gh pr create --title "$title" --body-file "$body_file"
   rm -f "$desc_file" "$body_file"
 }
-
-# Added by Antigravity CLI installer
-export PATH="/Users/duncan/.local/bin:$PATH"
 
 eval "$(zoxide init zsh)"
 
