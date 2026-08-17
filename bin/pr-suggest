@@ -24,9 +24,10 @@ body, so bodies can hold paragraphs and fenced code.
          lines, with no blank line between. The body becomes the comment; the
          changed lines become the suggestion.
 
-``PR?``  is prose with no change attached. The block must sit immediately above
-         an unchanged line, which is what it anchors to. Give an explicit
-         anchor instead with ``PR?46`` or ``PR?46-52``.
+``PR?``  is prose with no change attached. It anchors on the lines below the
+         block, counted relative to it, so adding marker lines never moves an
+         anchor. Bare ``PR?`` is the single line below. ``PR?3`` is the next
+         three lines. ``PR?2-5`` is the second through the fifth line below.
 
 Bodies are hard-wrapped in the source for readability and rejoined into
 paragraphs before posting, because GitHub rewraps them and the source breaks
@@ -37,7 +38,7 @@ paragraph. Fenced code inside a body keeps its line structure.
     // PR: views as well as tables.
     type OnboardingStepsRow = Tables<"onboarding_steps">;
 
-    -- PR?46-52 This policy is wider than the view needs.
+    -- PR?3 This policy is wider than the view needs.
 
 Deleting the annotated lines outright is a change like any other: put a ``PR:``
 block directly above the gap the deletion leaves, and it posts an empty
@@ -348,23 +349,34 @@ def plan_prose(
         if not spec:
             plan.problems.append(
                 f"{path}:{block.first_line}: cannot read the anchor "
-                f"'{block.spec}', expected PR?46 or PR?46-52"
+                f"'{block.spec}', expected PR?3 for the next three lines or "
+                f"PR?2-5 for the second through fifth line below"
             )
             return
-        start_line = int(spec.group(1))
-        line = int(spec.group(2) or spec.group(1))
+        first, second = spec.group(1), spec.group(2)
+        start_offset = int(first) if second else 1
+        end_offset = int(second or first)
     else:
-        anchor = head_line_for(block.next_line, head, clean)
-        if anchor is None:
-            plan.problems.append(
-                f"{path}:{block.first_line}: PR? must sit directly above an "
-                f"unchanged line, or carry an explicit anchor such as PR?46"
-            )
-            return
-        start_line = line = anchor
+        start_offset = end_offset = 1
 
-    if start_line > line:
+    if start_offset < 1:
+        plan.problems.append(
+            f"{path}:{block.first_line}: an anchor counts lines below the "
+            f"block, so it starts at 1"
+        )
+        return
+    if start_offset > end_offset:
         plan.problems.append(f"{path}:{block.first_line}: anchor range runs backwards")
+        return
+
+    start_line = head_line_for(block.next_line + start_offset - 1, head, clean)
+    line = head_line_for(block.next_line + end_offset - 1, head, clean)
+    if start_line is None or line is None:
+        plan.problems.append(
+            f"{path}:{block.first_line}: PR? has to anchor on unchanged lines, "
+            f"and the {start_offset}-{end_offset} lines below it are not all "
+            f"unchanged"
+        )
         return
 
     missing = [n for n in range(start_line, line + 1) if n not in covered]
