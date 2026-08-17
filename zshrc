@@ -227,9 +227,16 @@ _git_r () { _git_log }
 _git_l () { _git_log }
 
 # Register git completion for the g/gco/... aliases from ~/.aliases.
-# Must run after compinit — compdef is a no-op before it (that loop used to
-# run at ~/.aliases source time, pre-compinit, and was silently discarded).
-(( $+functions[setup_git_alias_completion] )) && setup_git_alias_completion
+# Must run after compinit — compdef is a no-op before it. Antigen defers its own
+# compinit to a precmd hook that re-sources ~/.antigen/.zcompdump, and that file
+# replaces _comps wholesale, so registering here in .zshrc is undone before the
+# first prompt. Register from a precmd hook queued behind antigen's instead.
+_late_git_alias_completion () {
+  (( $+functions[setup_git_alias_completion] )) && setup_git_alias_completion
+  add-zsh-hook -d precmd _late_git_alias_completion
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _late_git_alias_completion
 # <<< monoco <<<
 
 # Auto-name Claude Code sessions: hostname:dir-basename (e.g. macbook:monoco)
