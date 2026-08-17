@@ -39,6 +39,10 @@ paragraph. Fenced code inside a body keeps its line structure.
 
     -- PR?46-52 This policy is wider than the view needs.
 
+Deleting the annotated lines outright is a change like any other: put a ``PR:``
+block directly above the gap the deletion leaves, and it posts an empty
+suggestion, which is how GitHub spells "remove these lines".
+
 Everything is validated before anything is posted: the local HEAD must match the
 PR head, every anchor must fall inside the PR's own diff, and every changed
 region must carry a marker. A failure at any point posts nothing.
@@ -257,12 +261,19 @@ def plan_file(path: str, base: str, plan: Plan) -> None:
             continue
 
         index = next(
-            (n for n, r in enumerate(regions) if r[2] < block.next_line <= r[3]), None
+            (
+                n
+                for n, r in enumerate(regions)
+                if (r[2] < block.next_line <= r[3])
+                or (r[2] == r[3] and block.next_line == r[2] + 1)
+            ),
+            None,
         )
         if index is None:
             plan.problems.append(
                 f"{path}:{block.first_line}: PR: must sit directly above a "
-                f"changed line, with no blank line between"
+                f"changed line, or directly above the gap left by deleted "
+                f"lines, with no blank line between"
             )
             continue
         if index in claimed:
