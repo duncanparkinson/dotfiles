@@ -28,6 +28,11 @@ body, so bodies can hold paragraphs and fenced code.
          an unchanged line, which is what it anchors to. Give an explicit
          anchor instead with ``PR?46`` or ``PR?46-52``.
 
+Bodies are hard-wrapped in the source for readability and rejoined into
+paragraphs before posting, because GitHub rewraps them and the source breaks
+land mid-sentence. Only a marker line with an empty body starts a new
+paragraph. Fenced code inside a body keeps its line structure.
+
     // PR: The generator already produces this one, and `Tables<>` covers
     // PR: views as well as tables.
     type OnboardingStepsRow = Tables<"onboarding_steps">;
@@ -107,6 +112,42 @@ def split_lines(text: str) -> list[str]:
     if lines and lines[-1] == "":
         lines.pop()
     return lines
+
+
+def reflow(body: list[str]) -> str:
+    """Join wrapped lines into paragraphs, keeping blank lines and fenced code.
+
+    Marker bodies are hard-wrapped to keep the source readable, but GitHub
+    rewraps them and the source breaks land mid-sentence. Only an explicit
+    blank marker line separates paragraphs.
+    """
+    out: list[str] = []
+    paragraph: list[str] = []
+    fenced = False
+
+    def flush() -> None:
+        if paragraph:
+            out.append(" ".join(paragraph))
+            paragraph.clear()
+
+    for raw in body:
+        stripped = raw.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            flush()
+            out.append(stripped)
+            fenced = not fenced
+            continue
+        if fenced:
+            out.append(raw.rstrip())
+            continue
+        if not stripped:
+            flush()
+            out.append("")
+            continue
+        paragraph.append(stripped)
+
+    flush()
+    return "\n".join(out).strip()
 
 
 def parse_markers(lines: list[str]) -> tuple[list[str], list[Block]]:
@@ -199,7 +240,7 @@ def plan_file(path: str, base: str, plan: Plan) -> None:
     claimed: dict[int, Block] = {}
 
     for block in blocks:
-        body = "\n".join(block.body).strip()
+        body = reflow(block.body)
         if not body:
             plan.problems.append(f"{path}:{block.first_line}: marker block has no text")
             continue
