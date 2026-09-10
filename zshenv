@@ -73,3 +73,5 @@ fi
 
 # Silence zoxide doctor false-positive in non-interactive/one-shot shells (e.g. Claude Bash)
 export _ZO_DOCTOR=0
+
+export MOSH_SERVER_SIGNAL_TMOUT=3600
