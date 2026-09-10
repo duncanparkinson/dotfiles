@@ -8,3 +8,4 @@ tags
 time.log
 tmux-client-*.log
 tmux-server-*.log
+__pycache__/
