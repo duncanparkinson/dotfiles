@@ -213,7 +213,7 @@ let g:thematic#themes = {
 \  },
 \}
 let s:cache = expand('~/.cache/current-theme')
-let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'dracula'
+let g:thematic#theme_name = filereadable(s:cache) ? trim(readfile(s:cache)[0]) : 'dark'
 command! Dark Thematic dracula
 command! Light Thematic alucard
 command! CYF Thematic cyf
