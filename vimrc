@@ -43,7 +43,6 @@ Plug 'ycm-core/YouCompleteMe', { 'on': [] }
 Plug 'pangloss/vim-javascript'
 Plug 'davidoc/taskpaper.vim'
 Plug 'chrisbra/csv.vim'
-Plug 'Chiel92/vim-autoformat'
 Plug 'kana/vim-textobj-indent'
 Plug 'christoomey/vim-sort-motion'
 Plug 'elzr/vim-json'
