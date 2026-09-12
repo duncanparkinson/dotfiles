@@ -537,7 +537,10 @@ set t_ZR=[23m
 set laststatus=2 "always show the status line
 
 " ================ Completion =======================
-set wildmode=list:longest
+" First <Tab> completes the longest common prefix, then matches appear in a
+" popup menu rather than a flat list across the bottom of the screen.
+set wildmode=longest:full,full
+set wildoptions=pum
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*vim/backups*
