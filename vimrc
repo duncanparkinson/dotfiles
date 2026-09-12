@@ -1009,11 +1009,6 @@ augroup MonocoAleFixers
         \ let b:ale_linters = ['deno']
 augroup END
 
-augroup tsx_filetype
-  autocmd!
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
-augroup END
-
 let g:gutentags_enabled = 0
 let g:gutentags_generate_on_write = 0
 let g:gutentags_generate_on_new = 0
