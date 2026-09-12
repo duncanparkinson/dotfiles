@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 
 " Plugins
 Plug 'sheerun/vim-polyglot'
-Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
@@ -925,10 +924,6 @@ command! Gwdelete Gwrite|bdelete
 
 " replace word under cursor
 nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
