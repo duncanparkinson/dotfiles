@@ -825,6 +825,9 @@ let g:tmuxline_preset = {
      \'z'       : ['%R', '%d-%b-%Y'],
      \'options' : {'status-justify' : 'left'}}
 
+" Align changed lines within a hunk instead of diffing the hunk as a block.
+set diffopt+=linematch:60
+
 " Faster sign updates for gitgutter (default 4s is too laggy for review work)
 set updatetime=100
 
