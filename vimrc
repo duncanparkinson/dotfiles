@@ -828,6 +828,10 @@ let g:tmuxline_preset = {
 " Align changed lines within a hunk instead of diffing the hunk as a block.
 set diffopt+=linematch:60
 
+" Keep the sign column open: gitgutter and ALE both use it, and letting it
+" open and close shifts the text sideways while typing.
+set signcolumn=yes
+
 " Faster sign updates for gitgutter (default 4s is too laggy for review work)
 set updatetime=100
 
