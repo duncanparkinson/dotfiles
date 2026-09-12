@@ -130,6 +130,7 @@ filetype plugin indent on
 
 " ================ General Config ====================
 set exrc                        "Enable project-specific vimrcs
+set secure                      "...but bar them from :autocmd, shell and :write
 let mapleader=","
 set number                      "Line numbers are good
 " set relativenumber
