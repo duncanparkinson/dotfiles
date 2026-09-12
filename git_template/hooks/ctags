@@ -1,6 +1,35 @@
 #!/bin/sh
 set -e
-PATH="/usr/local/bin:$PATH"
-trap "rm -f .git/tags.$$" EXIT
-ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --languages=-javascript,sql
-mv .git/tags.$$ .git/tags
+PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+dir="$(git rev-parse --git-dir)"
+lock="$dir/tags.lock"
+
+# A rebase fires post-checkout once per replayed commit, and each hook used to
+# start its own full-repo scan. Take a lock so a burst collapses to one run;
+# whichever run holds it produces tags for the tip that matters.
+if ! mkdir "$lock" 2>/dev/null; then
+  # A run killed before its trap fired leaves the lock behind. Anything younger
+  # than five minutes belongs to a live run, so leave it alone.
+  if [ -z "$(find "$lock" -maxdepth 0 -mmin +5 2>/dev/null)" ]; then
+    exit 0
+  fi
+  rmdir "$lock" 2>/dev/null || exit 0
+  mkdir "$lock" 2>/dev/null || exit 0
+fi
+
+trap 'rm -f "$dir/tags.$$" "$dir/tags.$$.tmp"; rmdir "$lock" 2>/dev/null' EXIT
+
+# Excludes match g:gutentags_ctags_extra_args in the vimrc. node_modules alone
+# was 96% of the runtime in monoco: 4.86s with it, 0.22s without.
+ctags --tag-relative -R -f "$dir/tags.$$" \
+  --exclude=.git \
+  --exclude=node_modules \
+  --exclude=log \
+  --exclude=tmp \
+  --exclude=vendor \
+  --exclude=public \
+  --exclude=build \
+  --exclude=dist \
+  --languages=-javascript,sql
+mv "$dir/tags.$$" "$dir/tags"
