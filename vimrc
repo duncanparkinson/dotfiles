@@ -1009,6 +1009,11 @@ augroup MonocoAleFixers
         \ let b:ale_linters = ['deno']
 augroup END
 
+" Read the tags file the git_template post-checkout hook maintains. The
+" trailing `;` searches upward from the file's directory, so it resolves from
+" anywhere in the tree.
+set tags^=.git/tags;
+
 let g:gutentags_enabled = 0
 let g:gutentags_generate_on_write = 0
 let g:gutentags_generate_on_new = 0
