@@ -26,7 +26,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'mbbill/undotree/'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
