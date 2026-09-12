@@ -124,7 +124,7 @@ let &t_fd = "\<Esc>[?1004l"
 execute "set <FocusGained>=\<Esc>[I"
 execute "set <FocusLost>=\<Esc>[O"
 
-runtime! macros/matchit.vim
+packadd! matchit
 
 filetype plugin indent on
 
