@@ -4,6 +4,7 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 
 " Plugins
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
@@ -920,8 +921,8 @@ nnoremap <Leader>gvr :%s/\<<C-r><C-w>\>//c<Left><Left>
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" pgsql.vim only claims *.pgsql on its own; without this, *.sql keeps the
-" generic dialect shipped in the Vim runtime.
+" pgsql.vim only claims *.pgsql on its own; without this, *.sql keeps
+" polyglot's generic dialect.
 let g:sql_type_default = 'pgsql'
 
 let test#javascript#reactscripts#options = '--watchAll=false'
