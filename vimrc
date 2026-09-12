@@ -74,6 +74,7 @@ Plug 'AndrewRadev/deleft.vim'
 Plug 'dense-analysis/ale'
 Plug 'kana/vim-textobj-entire' "disabled because it was causing weird errors with vim-autotag
 Plug 'rishi-opensource/vim-claude-code'
+Plug 'https://codeberg.org/lifepillar/pgsql.vim'
 
 " Plug 'tpope/vim-haml'
 " Plug 'tpope/vim-rsi'
@@ -921,6 +922,10 @@ if executable('ag')
 endif
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" pgsql.vim only claims *.pgsql on its own; without this, *.sql keeps
+" polyglot's generic dialect.
+let g:sql_type_default = 'pgsql'
 
 let test#javascript#reactscripts#options = '--watchAll=false'
 let g:test#javascript#cypress#file_pattern = '\v(__tests__/.*|(spec|test|cy))\.(js|jsx|coffee|ts|tsx)$|\.cy\.(js|jsx|ts|tsx)$'
