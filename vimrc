@@ -764,9 +764,8 @@ endfunction
 
 let @s = 'I"A " +'
 
-" The Silver Searcher
-" Use ag over grep
-set grepprg=ag\ --vimgrep\ $*
+" Use ripgrep over grep, matching :Files and the Rg mappings below.
+set grepprg=rg\ --vimgrep
 set grepformat=%f:%l:%c:%m
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
