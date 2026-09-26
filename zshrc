@@ -243,3 +243,28 @@ add-zsh-hook precmd _late_git_alias_completion
 claude() {
   command claude --name "$(hostname -s):$(basename "$PWD")" "$@"
 }
+
+# Replay a stack of branches onto main, regenerating the database types on each.
+# restack [merged PR] <each remaining PR number or branch, bottom first>
+restack() {
+  local -a types=(app/src/lib/db/DatabaseDefinitions.ts supabase/functions/_shared/DatabaseDefinitions.ts) moved
+  local old_base=origin/main new_base=origin/main parent x branch old_tip conflicted
+  [[ -z $(git status --porcelain) ]] || { echo "restack: working tree not clean" >&2; return 1; }
+  [[ $1 == <-> && $(gh pr view "$1" --json state -q .state) == MERGED ]] && { old_base=$(gh pr view "$1" --json headRefOid -q .headRefOid); shift; }
+  git fetch origin --prune || return
+  for x in "$@"; do
+    [[ $x == <-> ]] && branch=$(gh pr view "$x" --json headRefName -q .headRefName) || branch=$x
+    old_tip=$(git rev-parse "$branch") || return
+    [[ -n $parent ]] && old_base=$(git merge-base --fork-point "$parent" "$branch" || echo "$old_base")
+    git rebase --onto "$new_base" "$old_base" "$branch"
+    while [[ -d .git/rebase-merge || -d .git/rebase-apply ]]; do
+      conflicted=$(git diff --name-only --diff-filter=U)
+      [[ -n $conflicted && -z $(grep -v 'DatabaseDefinitions\.ts$' <<< $conflicted) ]] || { echo "restack: stopped on $branch with real conflicts; nothing pushed" >&2; return 1; }
+      git checkout --theirs -- ${(f)conflicted} && git add -- ${(f)conflicted} && GIT_EDITOR=true git rebase --continue || return
+    done
+    if [[ -z $parent ]]; then monoco db:reset || return; else monoco db:prepare || return; fi
+    git diff --quiet HEAD -- $types || git commit -q --amend --no-edit -- $types
+    old_base=$old_tip parent=$branch new_base=$branch moved+=("$branch")
+  done
+  git push --force-with-lease origin "${moved[@]}"
+}
