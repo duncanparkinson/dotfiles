@@ -268,3 +268,34 @@ restack() {
   done
   git push --force-with-lease origin "${moved[@]}"
 }
+
+# Squash merge a stack onto main, rebasing each PR onto the last and checking main ends on the tree CI tested.
+# land-stack [merged PR] <each remaining PR number, bottom first>
+land-stack() {
+  local prev parent n b old t
+  [[ -z $(git status --porcelain) ]] || { echo "land-stack: working tree not clean" >&2; return 1; }
+  [[ $1 == <-> && $(gh pr view "$1" --json state -q .state) == MERGED ]] && { parent=$(gh pr view "$1" --json headRefName,headRefOid -q '.headRefName + " " + .headRefOid'); shift; }
+  git fetch -q origin || return
+  for n in "$@"; do
+    b=$(gh pr view "$n" --json headRefName -q .headRefName) || return
+    old=$(git rev-parse "$b") && t=$(git rev-parse "$b^{tree}") || return
+    [[ $old == $(git rev-parse "origin/$b") ]] || { echo "land-stack: $b local and origin differ" >&2; return 1; }
+    [[ -n $parent ]] && { prev=$(git merge-base --fork-point "${parent% *}" "$b" 2>/dev/null || echo "${parent#* }"); parent=; }
+    if [[ -n $prev ]]; then
+      git rebase -q --onto origin/main "$prev" "$b" || { echo "land-stack: rebase of $b halted; resolve or abort" >&2; return 1; }
+      [[ $(git rev-parse "$b^{tree}") == $t ]] || { echo "land-stack: $b tree changed in rebase" >&2; return 1; }
+      git push -q --force-with-lease="$b:$old" origin "$b" || { echo "land-stack: push of $b refused" >&2; return 1; }
+      gh pr edit "$n" --base main >/dev/null || return
+      sleep 15
+    fi
+    [[ $(gh pr view "$n" --json baseRefName -q .baseRefName) == main ]] || { echo "land-stack: #$n does not target main; pass its merged parent PR first" >&2; return 1; }
+    git merge-base --is-ancestor origin/main "$b" || { echo "land-stack: main moved under $b" >&2; return 1; }
+    gh pr merge "$n" --squash --admin --match-head-commit "$(git rev-parse "$b")" || { echo "land-stack: merge of #$n failed" >&2; return 1; }
+    sleep 5
+    git fetch -q origin
+    [[ $(git rev-parse "origin/main^{tree}") == $t ]] || { echo "land-stack: main after #$n is not the tree CI tested" >&2; return 1; }
+    echo "merged #$n $b"
+    prev=$old
+  done
+  echo "land-stack: done; QA deploys overlapped, so check the one for $(git rev-parse --short origin/main) and gh run rerun <id> --failed if it failed"
+}
