@@ -64,6 +64,8 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen apply
 
+ZSH_HIGHLIGHT_STYLES[comment]='fg=8'
+
 export PATH="/Users/duncan/.rbenv/shims:$PATH"
 
 export RBENV_ROOT="/Users/duncan/.rbenv"
