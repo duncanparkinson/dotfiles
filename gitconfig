@@ -109,6 +109,7 @@
   # the usual default is to push all branches
   default = current
   followTags = true
+	autoSetupRemote = true
 [core]
   autocrlf = input
   editor = vim
